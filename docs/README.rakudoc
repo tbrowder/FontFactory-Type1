@@ -39,9 +39,6 @@ Font family: 'Zapfdingbats'          (alias: 'z')
 programs without more investigation. See the notes later in this
 document.)
 
-
-
-
 Get a copy of the factory for use in your program:
 
 =begin code :lang<raku>
