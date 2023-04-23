@@ -1,10 +1,10 @@
 use Test;
-use PDF::Content;
-use PDF::Lite;
-use Font::AFM;
+#use PDF::Content;
+#use PDF::Lite;
+#use Font::AFM;
 use Proc::Easier;
 #use PDF::Document;
-use FontFactory;
+use FontFactory::Type1;
 
 plan 1;
 

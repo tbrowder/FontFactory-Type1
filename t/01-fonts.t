@@ -2,8 +2,8 @@ use Test;
 use PDF::Content;
 use PDF::Lite;
 use Font::AFM;
-use FontFactory;
-use FontFactory::Utils;
+use FontFactory::Type1;
+use FontFactory::Type1::Utils;
 
 plan 119;
 

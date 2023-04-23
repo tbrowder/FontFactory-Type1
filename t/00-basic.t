@@ -1,5 +1,5 @@
 use Test;
-use FontFactory;
+use FontFactory::Type1;
 
 pass "replace me";
 

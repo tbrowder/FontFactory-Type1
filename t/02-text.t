@@ -2,8 +2,8 @@ use Test;
 use PDF::Content;
 use PDF::Lite;
 use Font::AFM;
-use FontFactory;
-use FontFactory::Utils;
+use FontFactory::Type1;
+use FontFactory::Type1::Utils;
 
 plan 12;
 
@@ -56,11 +56,13 @@ lives-ok {
 
 # quickie font factory checks
 lives-ok {
-    $ffact = FontFactory.new: :$pdf;
+    $ffact = FontFactory::Type1.new: :$pdf;
 }, "getting a font factory";
+
 lives-ok {
     my $f = $ffact.get-font: 't12d1';
 }, "getting a font from the -font factory";
+
 lives-ok {
     my $f = $ffact.get-font: 't12d2';
 }, "getting a font from the -font factory";

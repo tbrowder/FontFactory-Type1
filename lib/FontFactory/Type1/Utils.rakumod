@@ -1,4 +1,4 @@
-unit module FontFactory::Utils;
+unit module FontFactory::Type1::Utils;
 
 use PDF::Lite;
 use PDF::Content;

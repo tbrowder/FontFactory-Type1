@@ -9,17 +9,17 @@
   ],
   "description": "Provides the standard PostSript fonts in a friendly package for use with many 'PDF::*' modules",
   "license": "Artistic-2.0",
-  "name": "FontFactory",
+  "name": "FontFactory::Type1",
   "perl": "6.d",
   "provides": {
-    "FontFactory": "lib/FontFactory.rakumod",
-    "FontFactory::Utils": "lib/FontFactory/Utils.rakumod"
+    "FontFactory::Type1": "lib/FontFactory/Type1.rakumod",
+    "FontFactory::Type1::Utils": "lib/FontFactory/Type1/Utils.rakumod"
   },
   "resources": [
     "fonts/MICREncoding.pfa",
     "fonts/MICREncoding.afm"
   ],
-  "source-url": "",
+  "source-url": "https://github.com/tbrowder/FontFactory-Type1.git",
   "tags": [
   ],
   "test-depends": [
