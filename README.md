@@ -55,6 +55,7 @@ say "size: {$t12d1.size}"; # OUTOUT: «size: 12.1␤»
 Define another `DocFont`:
 
 ```raku
+my $c10 = $ff.get-font: 'c10';
 say "name: {$c10.name}"; # OUTPUT: «name: Courier␤»
 say "size: {$c10.size}"; # OUTOUT: «size: 10␤»
 ```
