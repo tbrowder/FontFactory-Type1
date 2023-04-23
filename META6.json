@@ -12,9 +12,12 @@
   "name": "FontFactory",
   "perl": "6.d",
   "provides": {
-    "FontFactory": "lib/FontFactory.rakumod"
+    "FontFactory": "lib/FontFactory.rakumod",
+    "FontFactory::Utils": "lib/FontFactory/Utils.rakumod"
   },
   "resources": [
+    "fonts/MICREncoding.pfa",
+    "fonts/MICREncoding.afm"
   ],
   "source-url": "",
   "tags": [
