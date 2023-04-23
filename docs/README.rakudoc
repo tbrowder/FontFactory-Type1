@@ -35,7 +35,7 @@ Font family: 'Times-Roman'           (alias: 't')
 Font family: 'Zapfdingbats'          (alias: 'z')
 =end code
 
-(B<C<*>>Note font family C<MICREncoding> is B<not> usable in commercial
+(C<*>Note font family C<MICREncoding> is B<not> usable in commercial
 programs without more investigation. See the notes later in this
 document.)
 
