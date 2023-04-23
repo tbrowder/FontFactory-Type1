@@ -1,0 +1,25 @@
+{
+  "auth": "zef:tbrowder",
+  "authors": [
+    "Tom Browder"
+  ],
+  "build-depends": [
+  ],
+  "depends": [
+  ],
+  "description": "Provides the standard PostSript fonts in a friendly package for use with many 'PDF::*' modules",
+  "license": "Artistic-2.0",
+  "name": "FontFactory",
+  "perl": "6.d",
+  "provides": {
+    "FontFactory": "lib/FontFactory.rakumod"
+  },
+  "resources": [
+  ],
+  "source-url": "",
+  "tags": [
+  ],
+  "test-depends": [
+  ],
+  "version": "0.0.1"
+}
