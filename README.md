@@ -26,7 +26,7 @@ Font family: 'Helvetica'             (alias: 'h')
 Font family: 'Helvetica-Bold'        (alias: 'hb')
 Font family: 'Helvetica-BoldOblique' (alias: 'hbo')
 Font family: 'Helvetica-Oblique'     (alias: 'ho')
-*Font family: 'MICREncoding'          (alias: 'm')
+Font family: 'MICREncoding'          (alias: 'm')
 Font family: 'Symbol'                (alias: 's')
 Font family: 'Times-Bold'            (alias: 'tb')
 Font family: 'Times-BoldItalic'      (alias: 'tbi')
@@ -35,7 +35,7 @@ Font family: 'Times-Roman'           (alias: 't')
 Font family: 'Zapfdingbats'          (alias: 'z')
 ```
 
-(***NOTE** font family `MICREncoding` is **not** usable in commercial programs without more investigation. See the notes later in this document.)
+(**NOTE:** font family `MICREncoding` is **not** usable in commercial programs without more investigation. See the notes later in this document.)
 
 Get a copy of the factory for use in your program:
 
