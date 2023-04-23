@@ -35,7 +35,7 @@ Font family: 'Times-Roman'           (alias: 't')
 Font family: 'Zapfdingbats'          (alias: 'z')
 ```
 
-(Note font family `MICREncoding` is **not** usable in commercial programs without more investigation. See the notes later in this document.)
+(***** Note font family `MICREncoding` is **not** usable in commercial programs without more investigation. See the notes later in this document.)
 
 Get a copy of the factory for use in your program:
 
@@ -68,10 +68,10 @@ DESCRIPTION
 
   * PDF::Document
 
-A future module, **FontFactory::TT** will provide the same benefits for *TrueType* (and *OpenType*) fonts, but it will require the user to provide his or her own font files (the author recommends using Google's free fonts as a starting point for a collection of fonts);
+A future module, **FontFactory::TT**, will provide the same benefits for *TrueType* (and *OpenType*) fonts, but it will require the user to provide his or her own font files (the author recommends using Google's free fonts as a starting point for a collection of fonts);
 
 MICR Encoding (MICRE) font
-==========================
+--------------------------
 
 The MICR Encoding font for bank checks was optained from [1001fonts.com](https://www.1001fonts.com/micr-encoding-font.html).
 
