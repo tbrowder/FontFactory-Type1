@@ -73,12 +73,12 @@ fonts used in PDF document creation using mdules such as:
 =item PDF::Lite
 =item PDF::Document
 
-A future module, B<FontFactory::TT> will provide the same benefits for
+A future module, B<FontFactory::TT>, will provide the same benefits for
 I<TrueType> (and I<OpenType>) fonts, but it will require the user to
 provide his or her own font files (the author recommends using
 Google's free fonts as a starting point for a collection of fonts);
 
-=head1 MICR Encoding (MICRE) font
+=head2 MICR Encoding (MICRE) font
 
 The MICR Encoding font for bank checks was optained from
 L<1001fonts.com|https://www.1001fonts.com/micr-encoding-font.html>.
