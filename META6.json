@@ -6,6 +6,8 @@
   "build-depends": [
   ],
   "depends": [
+    "PDF::Lite",
+    "Font::AFM"
   ],
   "description": "Provides the standard PostSript fonts in a friendly package for use with many 'PDF::*' modules",
   "license": "Artistic-2.0",
@@ -21,6 +23,7 @@
   ],
   "source-url": "https://github.com/tbrowder/FontFactory-Type1.git",
   "tags": [
+    "PDF Fonts"
   ],
   "test-depends": [
   ],
