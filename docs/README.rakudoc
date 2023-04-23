@@ -78,7 +78,7 @@ Google's free fonts as a starting point for a collection of fonts);
 
 =head2 MICR Encoding (MICRE) font
 
-The MICR Encoding font for bank checks was optained from
+The MICR Encoding font for bank checks was obtained from
 L<1001fonts.com|https://www.1001fonts.com/micr-encoding-font.html>.
 
 The downloaded file was named C<micr-encoding.zip> (which was deleted

@@ -74,7 +74,7 @@ A future module, **FontFactory::TT**, will provide the same benefits for *TrueTy
 MICR Encoding (MICRE) font
 --------------------------
 
-The MICR Encoding font for bank checks was optained from [1001fonts.com](https://www.1001fonts.com/micr-encoding-font.html).
+The MICR Encoding font for bank checks was obtained from [1001fonts.com](https://www.1001fonts.com/micr-encoding-font.html).
 
 The downloaded file was named `micr-encoding.zip` (which was deleted after unzipping it).
 
