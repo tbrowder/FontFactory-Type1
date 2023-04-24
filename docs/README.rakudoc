@@ -63,10 +63,17 @@ say "name: {$c10.name}"; # OUTPUT: «name: Courier␤»
 say "size: {$c10.size}"; # OUTOUT: «size: 10␤»
 =end code
 
+In addition to those attributes, all the attributes from C<Font::AFM>
+are also available, For example:
+
+=begin code
+=end code
+
 =head1 DESCRIPTION
 
-B<FontFactory> provides easy access to the Adobe standard Type 1
-fonts used in PDF document creation using mdules such as:
+B<FontFactory> provides easy access to the Adobe standard Type 1 fonts
+(and their metrics) as used in PDF document creation using modules such
+as:
 
 =item PDF::Lite
 =item PDF::Document

@@ -6,6 +6,7 @@
   "build-depends": [
   ],
   "depends": [
+    "Proc::Easier",
     "PDF::Lite",
     "Text::Utils",
     "Font::AFM"

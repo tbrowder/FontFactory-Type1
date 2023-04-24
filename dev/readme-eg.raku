@@ -3,6 +3,7 @@
 use lib <./lib ../lib>;
 
 use PDF::Lite;
+use Font::AFM;
 use FontFactory::Type1;
 use FontFactory::Type1::Utils;
 
@@ -22,3 +23,9 @@ say "size: {$t12d1.size}";
 my $c10   = $ff.get-font: 'c10';
 say "name: {$c10.name}";
 say "size: {$c10.size}";
+
+say $c10.first-line-height;
+say $c10.UnderlinePosition;
+say $c10.UnderlineThickness;
+say $c10.FontBBox;
+say $c10.stringwidth("my pet cat");

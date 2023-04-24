@@ -102,7 +102,7 @@ class DocFont is export {
     # convenience attrs
     has $.afm;  #= the the Font::AFM object
     has $.font; #= the PDF::Lite font object
-    has $!sf;   #= scale factor for the afm attrs vs the font size
+    has $.sf;   #= scale factor for the afm attrs vs the font size
 
     submethod TWEAK {
         $!sf = $!size / 1000;
@@ -120,7 +120,9 @@ class DocFont is export {
     method UnderlinePosition {
         $!afm.UnderlinePosition * $!sf
     }
-    method upos { self.UnderlinePosition }
+    method upos {
+        self.UnderlinePosition
+    }
 
     method spos {
         # define the position of the strikethrough line
@@ -138,7 +140,9 @@ class DocFont is export {
     method UnderlineThickness {
         $!afm.UnderlineThickness * $!sf
     }
-    method uthk { self.UnderlineThickness() }
+    method uthk {
+        self.UnderlineThickness()
+    }
 
     # ($kerned, $width) = $afm.kern($string, $fontsize?, :%glyphs?)
     # Kern the string. Returns an array of string segments, separated
@@ -154,9 +158,11 @@ class DocFont is export {
     # $afm.stringwidth($string, $fontsize?, :$kern, :%glyphs)
     #| stringwidth
     method stringwidth($string, :$kern, :%glyphs) {
-        $!afm.stringwidth: $string, $!size, :$kern, :%glyphs
+        $!afm.stringwidth: $string, $!size, :$kern?, :%glyphs?
     }
-    method sw($string, :$kern, :%glyphs) { stringwidth: $string, :$kern, :%glyphs }
+    method sw($string, :$kern, :%glyphs) {
+        stringwidth: $string, :$kern, :%glyphs
+    }
 
     method IsFixedPitch {
         $!afm.IsFixedPitch

@@ -8,9 +8,6 @@ use Font::AFM;
 use FontFactory::Type1::Utils;
 
 has $.pdf is required;
-#submethod TWEAK {
-#    $!pdf = PDF::Lite.new;
-#}
 
 # hash of BaseFonts keyed by their alias name
 has BaseFont %.basefonts;
