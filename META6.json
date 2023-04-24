@@ -9,6 +9,8 @@
     "Proc::Easier",
     "PDF::Lite",
     "Text::Utils",
+    "PDF::Font::Loader",
+    "File::Find",
     "Font::AFM"
   ],
   "description": "Provides the standard PostSript fonts in a friendly package for use with many 'PDF::*' modules",
