@@ -1,14 +1,15 @@
 use Test;
-#use PDF::Content;
-#use PDF::Lite;
-#use Font::AFM;
 use Proc::Easier;
-#use PDF::Document;
 use FontFactory::Type1;
 
-plan 1;
+plan 2;
 
 lives-ok {
     my $args = "./dev/check-fonts.raku";
+    my $cmd  = cmd $args, :die;
+}, "checking bulk font setting";
+
+lives-ok {
+    my $args = "./dev/readme-eg.raku";
     my $cmd  = cmd $args, :die;
 }, "checking bulk font setting";

@@ -48,8 +48,8 @@ class BaseFont is export {
     has PDF::Lite $.pdf is required;
     has $.name is required;    #= the recognized font name
     has $.rawfont is required; #= the font object from PDF::Lite
-    has $.rawafm is required;  #= the afm object from Font::AFM
-    has $.is-corefont is required;
+    has Font::AFM $.rawafm is required;  #= the afm object 
+    has $.is-corefont is required; 
 }
 
 sub find-basefont(PDF::Lite :$pdf!,
@@ -102,18 +102,15 @@ sub find-basefont(PDF::Lite :$pdf!,
 
 class DocFont is export {
     has BaseFont $.basefont is required;
-    has $.name is required; # font name
-    has Real $.size is required;
-
+    has $.name is required; # font name or alias
+    has $.size is required;
+    has $.afm is required;  #= the the Font::AFM object
+    has $.font is required; #= the PDF::Lite font object
     # convenience attrs
-    has $.afm;  #= the the Font::AFM object
-    has $.font; #= the PDF::Lite font object
     has $.sf;   #= scale factor for the afm attrs vs the font size
 
     submethod TWEAK {
         $!sf   = $!size / 1000;
-        $!afm  = $!basefont.rawafm;
-        $!font = $!basefont.rawfont; 
     }
 
     # Convenience methods (and aliases) from the afm object and size.
@@ -163,14 +160,21 @@ class DocFont is export {
         $!afm.KernData
     }
 
-    # $afm.stringwidth($string, $fontsize?, :$kern, :%glyphs)
+    # $afm.stringwidth($string, $fontsize?, Bool:$kern is copy, :%glyphs)
     #| stringwidth
     method stringwidth($string, :$kern, :%glyphs) {
-        $!afm.stringwidth: $string, $!size, :$kern, :%glyphs
+        if $kern {
+            $!afm.stringwidth: $string, $!size, :$kern, :%glyphs
+        }
+        else {
+            $!afm.stringwidth: $string, $!size
+        }
     }
+    =begin comment
     method sw($string, :$kern, :%glyphs) {
-        stringwidth: $string, :$kern, :%glyphs
+        stringwidth: $string, $size,:$kern, :%glyphs
     }
+    =end comment
 
     method IsFixedPitch {
         $!afm.IsFixedPitch
@@ -237,7 +241,9 @@ class DocFont is export {
 sub select-docfont(BaseFont :$basefont!,
                    Real :$size!
                    --> DocFont) is export {
-    my $df = DocFont.new: :$basefont, :name($basefont.name), :font($basefont.rawfont),
-                          :afm($basefont.rawafm), :$size;
-    $df
+    DocFont.new: :$basefont, 
+                 :name($basefont.name), 
+                 :font($basefont.rawfont),
+                 :afm($basefont.rawafm), 
+                 :$size;
 }

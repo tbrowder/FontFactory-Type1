@@ -60,10 +60,12 @@ say "name: {$c10.name}"; # OUTPUT: «name: Courier␤»
 say "size: {$c10.size}"; # OUTOUT: «size: 10␤»
 ```
 
+In addition to those attributes, all the attributes from `Font::AFM` are also available, For example:
+
 DESCRIPTION
 ===========
 
-**FontFactory** provides easy access to the Adobe standard Type 1 fonts used in PDF document creation using mdules such as:
+**FontFactory** provides easy access to the Adobe standard Type 1 fonts (and their metrics) as used in PDF document creation using modules such as:
 
   * PDF::Lite
 
