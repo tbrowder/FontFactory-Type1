@@ -7,7 +7,6 @@ use Font::AFM;
 
 constant %MyFonts is export = [
     # These are the "core" fonts from PostScript (Type 1)
-    # and have short names as keys
     Courier               => "c",
     Courier-Oblique       => "co",
     Courier-Bold          => "ch",
@@ -27,6 +26,7 @@ constant %MyFonts is export = [
     MICREncoding          => "m", # converted from .ttf via fontforge
 ];
 
+# invert the has and have short names (aliases) as keys
 our %MyFontAliases is export = %MyFonts.invert;
 
 sub show-myfonts is export {
@@ -68,8 +68,12 @@ sub find-basefont(PDF::Lite :$pdf!,
 
     # make provision for local fonts
     my ($rawfont, $rawafm);
+
+    # get the PDF::Content::FontObj, if any exists in the core fonts
     $rawfont = $pdf.core-font(:family($fnam));
+
     my $is-corefont;
+
     if not $rawfont  {
         $is-corefont = False;
         use PDF::Font::Loader :&load-font;
@@ -81,6 +85,7 @@ sub find-basefont(PDF::Lite :$pdf!,
         my $pfa = %?RESOURCES<fonts/MICREncoding.pfa>.absolute;
         my $afm = %?RESOURCES<fonts/MICREncoding.afm>.absolute;
 
+        # the PDF::Content::FontObj:
         $rawfont = load-font :file($pfa); # use the .pfa for PostScript Type 1 fonts
 
         # also get the afm file
@@ -99,13 +104,16 @@ class DocFont is export {
     has BaseFont $.basefont is required;
     has $.name is required; # font name
     has Real $.size is required;
+
     # convenience attrs
     has $.afm;  #= the the Font::AFM object
     has $.font; #= the PDF::Lite font object
     has $.sf;   #= scale factor for the afm attrs vs the font size
 
     submethod TWEAK {
-        $!sf = $!size / 1000;
+        $!sf   = $!size / 1000;
+        $!afm  = $!basefont.rawafm;
+        $!font = $!basefont.rawfont; 
     }
 
     # Convenience methods (and aliases) from the afm object and size.
@@ -158,7 +166,7 @@ class DocFont is export {
     # $afm.stringwidth($string, $fontsize?, :$kern, :%glyphs)
     #| stringwidth
     method stringwidth($string, :$kern, :%glyphs) {
-        $!afm.stringwidth: $string, $!size, :$kern?, :%glyphs?
+        $!afm.stringwidth: $string, $!size, :$kern, :%glyphs
     }
     method sw($string, :$kern, :%glyphs) {
         stringwidth: $string, :$kern, :%glyphs

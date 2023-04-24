@@ -7,6 +7,7 @@ use Font::AFM;
 
 use FontFactory::Type1::Utils;
 
+# needed to access corefonts
 has $.pdf is required;
 
 # hash of BaseFonts keyed by their alias name
@@ -15,7 +16,11 @@ has BaseFont %.basefonts;
 # hash of DocFonts keyed by an alias name which includes the font's size
 has DocFont %.docfonts;
 
-method get-font($name) {
+submethod TWEAK {
+    $!pdf = PDF::Lite.new;
+}
+
+method get-font($name --> DocFont) {
     # "name" is a key in a specific format
     my $key;
 
