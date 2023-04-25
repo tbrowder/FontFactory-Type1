@@ -48,8 +48,8 @@ class BaseFont is export {
     has PDF::Lite $.pdf is required;
     has $.name is required;    #= the recognized font name
     has $.rawfont is required; #= the font object from PDF::Lite
-    has Font::AFM $.rawafm is required;  #= the afm object 
-    has $.is-corefont is required; 
+    has Font::AFM $.rawafm is required;  #= the afm object
+    has $.is-corefont is required;
 }
 
 sub find-basefont(PDF::Lite :$pdf!,
@@ -241,9 +241,9 @@ class DocFont is export {
 sub select-docfont(BaseFont :$basefont!,
                    Real :$size!
                    --> DocFont) is export {
-    DocFont.new: :$basefont, 
-                 :name($basefont.name), 
+    DocFont.new: :$basefont,
+                 :name($basefont.name),
                  :font($basefont.rawfont),
-                 :afm($basefont.rawafm), 
+                 :afm($basefont.rawafm),
                  :$size;
 }
