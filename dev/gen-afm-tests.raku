@@ -5,9 +5,9 @@ use Font::AFM;
 my $debug = 0;
 if not @*ARGS {
     print qq:to/HERE/;
-    Usage: {$*PROGRAM.basename} go | debug
+    Usage: {$*PROGRAM.basename} go
 
-    Exerxises the 'Font::AFM' methods.
+    Generates a set of tests for the 'Font::AFM' methods.
     HERE
     exit
 }
