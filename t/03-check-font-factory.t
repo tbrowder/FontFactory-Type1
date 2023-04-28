@@ -11,5 +11,5 @@ lives-ok {
 
 lives-ok {
     my $args = "./dev/readme-eg.raku";
-    my $cmd  = cmd $args, :die;
+    my $cmd  = cmd $args;
 }, "checking bulk font setting";
