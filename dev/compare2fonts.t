@@ -1,5 +1,4 @@
-#!/usr/bin/env raku
-
+use Test;
 use Font::AFM;
 
 my $debug = 0;
@@ -55,113 +54,96 @@ for @k -> $name {
     note "DEBUG: name: $name";
     note "DEBUG: size: $size";
 
-    my Font::AFM $afm;
-
+sub test2(Font::AFM $a, FontFactory::Type1 $b) {
+    # the two arg classes should have the same metrics
+    my ($av, $bv);
+    =begin comment
     # 1 use lives-ok
     # the name here should be an absolute path
     my $path = "./{$name}".IO.absolute;
     #$afm = Font::AFM.new: :name($path); #"./{$name}.afm");
     $afm = Font::AFM.new: :$name; #"./{$name}.afm");
+    =end comment
 
     # 2
-    $res = $afm.FontName;
-    note "DEBUG: \$res = '$res'" if $debug;
-    %results{$name}.push: "$res";
+    $res = $a.FontName;
+    $res = $b.FontName;
 
     # 3
     $res = $afm.FullName;
-    note "DEBUG: \$res = '$res'" if $debug;
-    %results{$name}.push: "$res";
+    $res = $afm.FullName;
 
     # 4
     $res = $afm.FamilyName;
-    note "DEBUG: \$res = '$res'" if $debug;
-    %results{$name}.push: "$res";
+    $res = $afm.FamilyName;
 
     # 5
     $res = $afm.Weight;
-    note "DEBUG: \$res = '$res'" if $debug;
-    %results{$name}.push: "$res";
+    $res = $afm.Weight;
 
     # 6
     $res = $afm.ItalicAngle;
-    note "DEBUG: \$res = '$res'" if $debug;
-    %results{$name}.push: "$res";
+    $res = $afm.ItalicAngle;
 
     # 7
     $res = $afm.IsFixedPitch;
-    note "DEBUG: \$res = '$res'" if $debug;
-    %results{$name}.push: "$res";
+    $res = $afm.IsFixedPitch;
 
     # 8
     $res = $afm.FontBBox;
-    note "DEBUG: \$res = '$res'" if $debug;
-    %results{$name}.push: "$res.gist";
+    $res = $afm.FontBBox;
 
     # 9
     $res = $afm.KernData;
-    note "DEBUG: \$res = '$res'" if $debug;
-    %results{$name}.push: "KernData"; # $res";
+    $res = $afm.KernData;
 
     # 10
     $res = $afm.UnderlinePosition;
-    note "DEBUG: \$res = '$res'" if $debug;
-    %results{$name}.push: "$res";
+    $res = $afm.UnderlinePosition;
 
     # 11
     $res = $afm.UnderlineThickness;
-    note "DEBUG: \$res = '$res'" if $debug;
-    %results{$name}.push: "$res";
+    $res = $afm.UnderlineThickness;
 
     # 12
     $res = $afm.Version;
-    note "DEBUG: \$res = '$res'" if $debug;
-    %results{$name}.push: "$res";
+    $res = $afm.Version;
 
     # 13
     $res = $afm.Notice;
-    note "DEBUG: \$res = '$res'" if $debug;
-    %results{$name}.push: "$res";
+    $res = $afm.Notice;
 
     # 14
     $res = $afm.Comment;
-    note "DEBUG: \$res = '$res'" if $debug;
-    %results{$name}.push: "$res";
+    $res = $afm.Comment;
 
     # 15
     $res = $afm.EncodingScheme;
-    note "DEBUG: \$res = '$res'" if $debug;
-    %results{$name}.push: "$res";
+    $res = $afm.EncodingScheme;
 
     # 16
     $res = $afm.CapHeight;
-    note "DEBUG: \$res = '$res'" if $debug;
-    %results{$name}.push: "$res";
+    $res = $afm.CapHeight;
 
     # 17
     $res = $afm.XHeight;
-    note "DEBUG: \$res = '$res'" if $debug;
-    %results{$name}.push: "$res";
+    $res = $afm.XHeight;
 
     # 18
     $res = $afm.Ascender;
-    note "DEBUG: \$res = '$res'" if $debug;
-    %results{$name}.push: "$res";
+    $res = $afm.Ascender;
 
     # 19
     $res = $afm.Descender;
-    note "DEBUG: \$res = '$res'" if $debug;
-    %results{$name}.push: "$res";
+    $res = $afm.Descender;
 
     # 20
     $res = $afm.Wx;
-    note "DEBUG: \$res = '$res'" if $debug;
-    %results{$name}.push: "Wx"; #$res";
+    $res = $afm.Wx;
 
     # 21
     $res = $afm.BBox;
-    note "DEBUG: \$res = '$res'" if $debug;
-    %results{$name}.push: "BBox"; #$res";
+    $res = $afm.BBox;
 
     # 22
     my $fontsize = $size;
@@ -182,4 +164,3 @@ for @k -> $name {
     note "DEBUG: \$width = '$width'" if $debug;
     %results{$name}.push: "$width";
 }
-note %results.gist;

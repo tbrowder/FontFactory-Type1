@@ -4,32 +4,21 @@ use Font::AFM;
 
 my $debug = 0;
 
-if not @*ARGS  {
-    print qq:to/HERE/;
-    Usage: go
+my $string = "A very long line Excelently done eXactly and Carefully to Test Kerning.";
 
-    Shows the methods for module 'Font::AFM'.
-    HERE
-    exit
-}
+my %results = [
+    Times-Roman  => [],
+    Times-Italic => [],
+    Courier      => [],
+];
+my %f = [
+    Times-Roman  => 12.3,
+    Times-Italic => 12.3,
+    Courier      => 10,
+];
+my @k = %f.keys.sort;
 
-my $afm = Font::AFM.new: :name<Times-Roman>;
-#say $afm.FontName;
-
-say "methods:";
-#my @m = $afm.^methods(:local).gist.words;
-my @m = $afm.^methods.gist.words;
-say "  $_" for @m;
-my %h = $afm.metrics;
-my @k = $afm.metrics.keys.sort;
-for @k -> $k {
-    my $v = %h{$k};
-    say "$k => $v";
-}
-
-
-
-=finish
+my (@res, $res, $name, $fontsize, $size, $width, $font, $kerned);
 
 =begin comment 
 # this line is wrong in PDF::AFM: my Font::AFM $afm .= core-font: $name;

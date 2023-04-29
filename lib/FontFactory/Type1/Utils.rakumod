@@ -170,6 +170,7 @@ class DocFont is export {
             $!afm.stringwidth: $string, $!size
         }
     }
+
     =begin comment
     method sw($string, :$kern, :%glyphs) {
         stringwidth: $string, $size,:$kern, :%glyphs

@@ -1,23 +1,30 @@
 use Test;
 use Font::AFM;
 use FontFactory::Type1;
+use FontFactory::Type1::Utils;
 
 # get the Font::AFM object to compare with
 my Font::AFM $a;
 my $name = "Times-Roman";
 my $size = 10.3;
 lives-ok {
-    $a .= core-font($name);;
+    $a .= core-font($name);
 }
 is $a.FontName, "Times-Roman";
 
 # get the FF equivalent
-my $b;
+my $ff;
 lives-ok {
-    $b = FontFactory::Type1.new: :get-font("t10d3");
+    $ff = FontFactory::Type1.new;
 }
 
-#is $b.basefont.FontName, "Times-Roman";
+my $b;
+lives-ok {
+    $b = $ff.get-font("t10d3");
+}
+
+is $b.FontName, "Times-Roman";
+is $b.size, 10.3;
 
 done-testing;
 
