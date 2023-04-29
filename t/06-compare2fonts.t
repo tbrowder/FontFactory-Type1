@@ -25,7 +25,7 @@ subtest {
 my $ff-font = $ff.get-font("t10d3");
 
 subtest {
-    plan 18;
+    plan 24;
     test2 :$afm-obj, :$fontsize, :$ff-font;
 }
 
@@ -126,9 +126,10 @@ sub test2(Font::AFM :$afm-obj,
     is $av, $bv, "UnderLinePosition";
 
     # test 10
-# Failed test at ../t/06-compare2fonts.t line 114
-# expected: '0.515'
-#      got: '50'
+    # not ok 10 -
+    # Failed test at ../t/06-compare2fonts.t line 114
+    # expected: '0.515'
+    #      got: '50'
     $av = $a.UnderlineThickness;
     $bv = $b.UnderlineThickness;
     is $av, $bv, "UnderlineThickness";
@@ -173,36 +174,48 @@ sub test2(Font::AFM :$afm-obj,
     $bv = $b.Descender;
     is $av, $bv;
 
-    =begin comment
-    # TODO the following 5 need deeper tests:
-
     # test 19
     $av = $a.Wx;
-    $av = $a.Wx;
+    $bv = $b.Wx;
     is $av, $bv;
 
     # test 20
     $av = $a.BBox;
-    $av = $a.BBox;
+    $bv = $b.BBox;
     is $av, $bv;
 
+    my $string = "The Quick Brown Fox Jumped Over the Lazy Dog. That Was Silly, Wasn't It?";
+
     # test 21
-    my $fontsize = $size;
     $av = $a.stringwidth($string, $fontsize, :kern);
-    note "DEBUG: \$av = '$av'" if $debug;
-    %avults{$name}.push: "$av";
+    $bv = $b.stringwidth($string, :kern);
+    is $av, $bv, "compare stringwidth, kerned";
+    # not ok 21 - 
+    # Failed test at ../t/06-compare2fonts.t line 193
+    # expected: '0'
+    #      got: '319.4236'
 
     # test 22
     $av = $a.stringwidth($string, $fontsize, :!kern);
-    note "DEBUG: \$av = '$av'" if $debug;
-    %avults{$name}.push: "$av";
+    $bv = $b.stringwidth($string, :!kern);
+    is $av, $bv, "compare stringwidth, no kern";
+
+    my %glyphs;
+    my ($akerned, $bkerned, $awidth, $bwidth);
+    ($akerned, $awidth) = $a.kern($string, $fontsize, :kern, :%glyphs);
+    ($bkerned, $bwidth) = $b.kern($string, $fontsize, :kern, :%glyphs);
 
     # test 23
-    my %glyphs;
-    ($kerned, $width) = $a.kern($string, $fontsize, :kern, :%glyphs);
-    note "DEBUG: \$kerned = '$kerned'" if $debug;
-    %avults{$name}.push: "$kerned";
-    note "DEBUG: \$width = '$width'" if $debug;
-    %avults{$name}.push: "$width";
-    =end comment
+    is $akerned, $bkerned, "compare kerned letters";
+    # not ok 23 - 
+    # Failed test at ../t/06-compare2fonts.t line 205
+    # expected: (Any)
+    #      got: ''
+
+    # test 24
+    is $awidth, $bwidth, "compare kerned letters/width";
+    # not ok 24 - 
+    # Failed test at ../t/06-compare2fonts.t line 206
+    # expected: (Any)
+    #      got: '0'
 }
