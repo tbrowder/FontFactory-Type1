@@ -123,7 +123,7 @@ class DocFont is export {
 
     #| UnderlinePosition
     method UnderlinePosition {
-        $!afm.UnderlinePosition * $!sf
+        $!afm.UnderlinePosition
     }
     method upos {
         self.UnderlinePosition
@@ -143,7 +143,7 @@ class DocFont is export {
 
     #| UnderlineThickness
     method UnderlineThickness {
-        $!afm.UnderlineThickness * $!sf
+        $!afm.UnderlineThickness
     }
     method uthk {
         self.UnderlineThickness()
@@ -153,6 +153,12 @@ class DocFont is export {
     # Kern the string. Returns an array of string segments, separated
     # by numeric kerning distances, and the overall width of the string.
     method kern($string, $fontsize?, :%glyphs?) {
+        if %glyphs {
+            $!afm.stringwidth: $string, $!size, :kern, :%glyphs;
+        }
+        else {
+            $!afm.stringwidth: $string, $!size, :kern;
+        }
     }
 
     # A two dimensional hash containing from and to glyphs and kerning widths.
@@ -162,12 +168,12 @@ class DocFont is export {
 
     # $afm.stringwidth($string, $fontsize?, Bool:$kern is copy, :%glyphs)
     #| stringwidth
-    method stringwidth($string, :$kern, :%glyphs) {
+    method stringwidth($string, :$kern) {
         if $kern {
-            $!afm.stringwidth: $string, $!size, :$kern, :%glyphs
+            $!afm.stringwidth: $string, $!size, :kern
         }
         else {
-            $!afm.stringwidth: $string, $!size
+            $!afm.stringwidth: $string, $!size, :!kern
         }
     }
 
