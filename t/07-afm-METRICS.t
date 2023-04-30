@@ -1,57 +1,37 @@
 use Test;
 use Font::AFM;
 
-plan 2;
+my $first-line = "StartFontMetrics 4.1";
+
+plan 6;
 
 my @fonts = <
-   ti.afm
-   ti
+   c.afm
+   c
+   foo.afm
+   foo
 >;
  
 %*ENV<METRICS> = "./t/fonts";
-my $f;
+my ($f, $file, $nam);
 for @fonts {
+    $file = "./t/fonts/$_";
+    if $file.IO.lines.head ne $first-line {
+        next;
+    }
+
     lives-ok {
         $f = Font::AFM.new: :name($_);
+    }
+
+    isa-ok $f, Font::AFM;
+
+    lives-ok {
+        $f.FontName;
     }
 }
 
 =finish
-
-my $
-my $name = "Times-Roman";
-
-my $name = "Times-Roman";
-my Font::AFM $afm;
-my $size = 10;
-my $text = "A very long line Excently done eXactly and Carefully to Test Kerning.";
-my $width;
-my $res;
-my $kerned;
-plan 5;
-
-lives-ok {
-    $afm .= core-font($name);
-}
-$width = $afm.stringwidth($text, $size);
-is $width, 283.84;
-$width = $afm.stringwidth($text, $size, :kern);
-is $width, 282.56;
-$width = $afm.stringwidth($text);
-is $width, 28384;
-$width = $afm.stringwidth($text, :kern);
-is $width, 28256;
-
-
-=finish
-
-#| The name of the font as presented to the PostScript language
-#| findfont operator, for instance "Times-Roman".
-$afm.FontName
-
-#| Unique, human-readable name for an individual font, for instance
-#| "Times Roman".
-$afm.FullName
 
 #| Human-readable name for a group of fonts that are stylistic
 #| variants of a single design. All fonts that are members of such a
