@@ -26,10 +26,11 @@ lives-ok {
 is $b.FontName, "Times-Roman";
 is $b.size, 10.3;
 
+my $text = "A very long line Excently done eXactly and Carefully to Test Kerning.";
+
 done-testing;
 
 =finish
-my $text = "A very long line Excently done eXactly and Carefully to Test Kerning.";
 my $width;
 my $res;
 my $kerned;
