@@ -10,6 +10,8 @@ my $fontsize = 10.3;
 my $afm-obj;
 my $ff;
 
+plan 2;
+
 subtest {
     plan 2;
 
