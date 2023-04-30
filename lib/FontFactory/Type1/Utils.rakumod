@@ -152,13 +152,18 @@ class DocFont is export {
     # ($kerned, $width) = $afm.kern($string, $fontsize?, :%glyphs?)
     # Kern the string. Returns an array of string segments, separated
     # by numeric kerning distances, and the overall width of the string.
-    method kern($string, $fontsize?, :%glyphs?) {
+    method kern($string, $fontsize?) {
+        my @arr; #($kerned, $width);
+        @arr = $!afm.kern: $string, $!size; #, :%glyphs;
+        =begin comment
         if %glyphs {
-            $!afm.stringwidth: $string, $!size, :kern, :%glyphs;
+            ($kerned, $width) = $!afm.kern: $string, $!size, :%glyphs;
         }
         else {
-            $!afm.stringwidth: $string, $!size, :kern;
+            ($kerned, $width) = $!afm.kern: $string, $!size;
         }
+        =end comment
+        @arr
     }
 
     # A two dimensional hash containing from and to glyphs and kerning widths.
@@ -179,7 +184,8 @@ class DocFont is export {
 
     =begin comment
     method sw($string, :$kern, :%glyphs) {
-        stringwidth: $string, $size,:$kern, :%glyphs
+        my ($kerned, $width) = $!afm.stringwidth($string, $!size, :$kern, :%glyphs);
+        $kerned, $width
     }
     =end comment
 

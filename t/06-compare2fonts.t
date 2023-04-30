@@ -196,13 +196,18 @@ sub test2(Font::AFM :$afm-obj!,
     $bv = $b.stringwidth($string, :!kern);
     is $av, $bv, "compare stringwidth, no kern";
 
-    =begin comment
+
     my %glyphs;
-    my ($akerned, $bkerned, $awidth, $bwidth);
-    ($akerned, $awidth) = $a.kern($string, $fontsize, :kern, :%glyphs);
-    ($bkerned, $bwidth) = $b.kern($string, $fontsize, :kern, :%glyphs);
+    my (@a, @b, $akerned, $bkerned, $awidth, $bwidth);
+    @a = $a.kern($string, $fontsize, :kern, :%glyphs);
+    @b = $b.kern($string, $fontsize, :kern, :%glyphs);
 
     # test 23
+    is-deeply, @a, @b;
+
+    =begin comment
+    ($akerned, $awidth) = $a.kern($string, $fontsize, :kern, :%glyphs);
+    ($bkerned, $bwidth) = $b.kern($string, $fontsize, :kern, :%glyphs);
     is $akerned, $bkerned, "compare kerned letters";
     # not ok 23 - 
     # Failed test at ../t/06-compare2fonts.t line 205
@@ -215,5 +220,6 @@ sub test2(Font::AFM :$afm-obj!,
     # Failed test at ../t/06-compare2fonts.t line 206
     # expected: (Any)
     #      got: '0'
+
     =end comment
 }
