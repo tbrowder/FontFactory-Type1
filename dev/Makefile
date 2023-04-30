@@ -1,5 +1,6 @@
 #all: test4
 #all: test5
+#all: test6
 all: test6
 
 test3:
@@ -13,3 +14,6 @@ test5:
 
 test6:
 	raku -I.. ../t/*6*t
+
+test7:
+	raku -I.. ../t/*7*t
