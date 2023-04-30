@@ -42,8 +42,7 @@ document.)
 Get a copy of the factory for use in your program:
 
 =begin code :lang<raku>
-my $pdf = PDF::Lite.new;
-my $ff  = FontFactory::Type1.new :$pdf;
+my $ff = FontFactory::Type1.new;
 =end code
 
 Define a C<DocFont>. Use a name that indicates its face and size for easy
@@ -77,6 +76,9 @@ as:
 
 =item PDF::Lite
 =item PDF::Document
+=item PDF::Writer
+=item Slidemaker
+=item CheckWriter
 
 A future module, B<FontFactory::TT>, will provide the same benefits for
 I<TrueType> (and I<OpenType>) fonts, but it will require the user to
