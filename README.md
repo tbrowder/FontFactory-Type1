@@ -11,7 +11,6 @@ SYNOPSIS
 Find the fonts available in the current version along with their aliases:
 
 ```raku
-use PDF::Lite;
 use FontFactory::Type1;
 use FontFactory::Type1::Utils;
 
@@ -40,8 +39,7 @@ Font family: 'Zapfdingbats'          (alias: 'z')
 Get a copy of the factory for use in your program:
 
 ```raku
-my $pdf = PDF::Lite.new;
-my $ff  = FontFactory::Type1.new :$pdf;
+my $ff = FontFactory::Type1.new;
 ```
 
 Define a `DocFont`. Use a name that indicates its face and size for easy use later. For fractional points use a 'd' for the decimal point:
@@ -70,6 +68,12 @@ DESCRIPTION
   * PDF::Lite
 
   * PDF::Document
+
+  * PDF::Writer
+
+  * Slidemaker
+
+  * CheckWriter
 
 A future module, **FontFactory::TT**, will provide the same benefits for *TrueType* (and *OpenType*) fonts, but it will require the user to provide his or her own font files (the author recommends using Google's free fonts as a starting point for a collection of fonts);
 

@@ -11,7 +11,6 @@ Find the fonts available in the current version along with their
 aliases:
 
 =begin code :lang<raku>
-use PDF::Lite;
 use FontFactory::Type1;
 use FontFactory::Type1::Utils;
 
