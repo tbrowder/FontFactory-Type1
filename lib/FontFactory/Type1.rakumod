@@ -8,7 +8,7 @@ use Font::AFM;
 use FontFactory::Type1::Utils;
 
 # needed to access corefonts
-has $.pdf is required;
+has PDF::Lite $.pdf; # can be provided by the caller
 
 # hash of BaseFonts keyed by their alias name
 has BaseFont %.basefonts;
@@ -17,6 +17,8 @@ has BaseFont %.basefonts;
 has DocFont %.docfonts;
 
 submethod TWEAK {
+    # provide if using standalone
+    return if $!pdf;
     $!pdf = PDF::Lite.new;
 }
 

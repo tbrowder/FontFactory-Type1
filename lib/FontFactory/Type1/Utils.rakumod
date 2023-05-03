@@ -123,7 +123,7 @@ class DocFont is export {
 
     #| UnderlinePosition
     method UnderlinePosition {
-        $!afm.UnderlinePosition * $!sf
+        $!afm.UnderlinePosition
     }
     method upos {
         self.UnderlinePosition
@@ -143,7 +143,7 @@ class DocFont is export {
 
     #| UnderlineThickness
     method UnderlineThickness {
-        $!afm.UnderlineThickness * $!sf
+        $!afm.UnderlineThickness
     }
     method uthk {
         self.UnderlineThickness()
@@ -152,7 +152,18 @@ class DocFont is export {
     # ($kerned, $width) = $afm.kern($string, $fontsize?, :%glyphs?)
     # Kern the string. Returns an array of string segments, separated
     # by numeric kerning distances, and the overall width of the string.
-    method kern($string, $fontsize?, :%glyphs?) {
+    method kern($string, $fontsize?) {
+        my @arr; #($kerned, $width);
+        @arr = $!afm.kern: $string, $!size; #, :%glyphs;
+        =begin comment
+        if %glyphs {
+            ($kerned, $width) = $!afm.kern: $string, $!size, :%glyphs;
+        }
+        else {
+            ($kerned, $width) = $!afm.kern: $string, $!size;
+        }
+        =end comment
+        @arr
     }
 
     # A two dimensional hash containing from and to glyphs and kerning widths.
@@ -162,17 +173,19 @@ class DocFont is export {
 
     # $afm.stringwidth($string, $fontsize?, Bool:$kern is copy, :%glyphs)
     #| stringwidth
-    method stringwidth($string, :$kern, :%glyphs) {
+    method stringwidth($string, :$kern) {
         if $kern {
-            $!afm.stringwidth: $string, $!size, :$kern, :%glyphs
+            $!afm.stringwidth: $string, $!size, :kern
         }
         else {
-            $!afm.stringwidth: $string, $!size
+            $!afm.stringwidth: $string, $!size, :!kern
         }
     }
+
     =begin comment
     method sw($string, :$kern, :%glyphs) {
-        stringwidth: $string, $size,:$kern, :%glyphs
+        my ($kerned, $width) = $!afm.stringwidth($string, $!size, :$kern, :%glyphs);
+        $kerned, $width
     }
     =end comment
 

@@ -11,7 +11,6 @@ SYNOPSIS
 Find the fonts available in the current version along with their aliases:
 
 ```raku
-use PDF::Lite;
 use FontFactory::Type1;
 use FontFactory::Type1::Utils;
 
@@ -40,8 +39,7 @@ Font family: 'Zapfdingbats'          (alias: 'z')
 Get a copy of the factory for use in your program:
 
 ```raku
-my $pdf = PDF::Lite.new;
-my $ff  = FontFactory::Type1.new :$pdf;
+my $ff = FontFactory::Type1.new;
 ```
 
 Define a `DocFont`. Use a name that indicates its face and size for easy use later. For fractional points use a 'd' for the decimal point:
@@ -62,6 +60,11 @@ say "size: {$c10.size}"; # OUTOUT: «size: 10␤»
 
 In addition to those attributes, all the attributes from `Font::AFM` are also available, For example:
 
+    # for typesetting, find the width of a kerned string in PostScript points (72/inch):
+    my $text = "Some string of text to be typeset in a beautiful PDF document.";
+    my $wk = $t12d1.stringwidth($text, :kern);
+    say "kerned width: $wk"; # OUTPUT: kerned width: 302.3064
+
 DESCRIPTION
 ===========
 
@@ -69,7 +72,13 @@ DESCRIPTION
 
   * PDF::Lite
 
-  * PDF::Document
+  * PDF::Document (WIP)
+
+  * PDF::Writer (WIP)
+
+  * Slidemaker (WIP)
+
+  * CheckWriter (WIP)
 
 A future module, **FontFactory::TT**, will provide the same benefits for *TrueType* (and *OpenType*) fonts, but it will require the user to provide his or her own font files (the author recommends using Google's free fonts as a starting point for a collection of fonts);
 

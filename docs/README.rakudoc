@@ -11,7 +11,6 @@ Find the fonts available in the current version along with their
 aliases:
 
 =begin code :lang<raku>
-use PDF::Lite;
 use FontFactory::Type1;
 use FontFactory::Type1::Utils;
 
@@ -42,8 +41,7 @@ document.)
 Get a copy of the factory for use in your program:
 
 =begin code :lang<raku>
-my $pdf = PDF::Lite.new;
-my $ff  = FontFactory::Type1.new :$pdf;
+my $ff = FontFactory::Type1.new;
 =end code
 
 Define a C<DocFont>. Use a name that indicates its face and size for easy
@@ -67,6 +65,10 @@ In addition to those attributes, all the attributes from C<Font::AFM>
 are also available, For example:
 
 =begin code
+# for typesetting, find the width of a kerned string in PostScript points (72/inch):
+my $text = "Some string of text to be typeset in a beautiful PDF document.";
+my $wk = $t12d1.stringwidth($text, :kern);
+say "kerned width: $wk"; # OUTPUT: kerned width: 302.3064
 =end code
 
 =head1 DESCRIPTION
@@ -76,7 +78,10 @@ B<FontFactory> provides easy access to the Adobe standard Type 1 fonts
 as:
 
 =item PDF::Lite
-=item PDF::Document
+=item PDF::Document (WIP)
+=item PDF::Writer (WIP)
+=item Slidemaker (WIP)
+=item CheckWriter (WIP)
 
 A future module, B<FontFactory::TT>, will provide the same benefits for
 I<TrueType> (and I<OpenType>) fonts, but it will require the user to
