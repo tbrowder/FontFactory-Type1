@@ -1,4 +1,4 @@
-use Test;
+use Test; 
 use Font::AFM;
 use FontFactory::Type1;
 
@@ -10,7 +10,7 @@ my $fontsize = 10.3;
 my $afm-obj;
 my $ff;
 
-plan 2;
+plan 2; # 2 subtests
 
 subtest {
     plan 2;
@@ -27,11 +27,9 @@ subtest {
 my $ff-font = $ff.get-font("t10d3");
 
 subtest {
-    #plan 24;
-    plan 22;
+    plan 24;
     test2 :$afm-obj, :$fontsize, :$ff-font;
 }
-
 
 =begin comment 
 if 0 {
@@ -58,27 +56,17 @@ if 0 {
 }
 =end comment
 
-#sub test2(Font::AFM :$afm-obj, 
-#          :$fontsize,
-#          :$ff-font,
-
 sub test2(Font::AFM :$afm-obj!, 
           :$fontsize!,
           :$ff-font!,
          ) {
     my $a = $afm-obj;
     my $b = $ff-font;
+    my $sf = $fontsize / 1000.0; # scale factor
 
     # the two arg classes should have the same metrics
+    # after adjusting by the scale factor
     my ($av, $bv);
-
-    =begin comment
-    # 1 use lives-ok
-    # the name here should be an absolute path
-    my $path = "./{$name}".IO.absolute;
-    #$a = Font::AFM.new: :name($path); #"./{$name}.afm");
-    $a = Font::AFM.new: :$name; #"./{$name}.afm");
-    =end comment
 
     # test 1
     $av = $a.FontName;
@@ -111,24 +99,35 @@ sub test2(Font::AFM :$afm-obj!,
     is $av, $bv;
 
     # test 7
+    # array
     $av = $a.FontBBox;
     $bv = $b.FontBBox;
-    is $av, $bv;
+    is-deeply $av >>*>> $sf, $bv;
 
     # test 8
+    # two-dimensional hash
     $av = $a.KernData;
     $bv = $b.KernData;
-    is $av, $bv;
+
+    # unpack the structure to multiply Font::AFM values by the scale factor
+    # see helper prog /dev/try-db1-hash.raku 
+    for $av.keys -> $k {
+        for $av{$k}.kv -> $k2, $v is copy {
+            $av{$k}{$k2} = $v *= $sf;
+        }
+    }
+    # now do the test
+    is-deeply $av, $bv, "2d-hash check";
 
     # test 9
     $av = $a.UnderlinePosition;
     $bv = $b.UnderlinePosition;
-    is $av, $bv, "UnderLinePosition";
+    is $av*$sf, $bv, "UnderLinePosition";
 
     # test 10
     $av = $a.UnderlineThickness;
     $bv = $b.UnderlineThickness;
-    is $av, $bv, "UnderlineThickness";
+    is $av*$sf, $bv, "UnderlineThickness";
 
     # test 11
     $av = $a.Version;
@@ -153,32 +152,34 @@ sub test2(Font::AFM :$afm-obj!,
     # test 15
     $av = $a.CapHeight;
     $bv = $b.CapHeight;
-    is $av, $bv;
+    is $av*$sf, $bv;
 
     # test 16
     $av = $a.XHeight;
     $bv = $b.XHeight;
-    is $av, $bv;
+    is $av*$sf, $bv;
 
     # test 17
     $av = $a.Ascender;
     $bv = $b.Ascender;
-    is $av, $bv;
+    is $av*$sf, $bv;
 
     # test 18
     $av = $a.Descender;
     $bv = $b.Descender;
-    is $av, $bv;
+    is $av*$sf, $bv;
 
     # test 19
+    # hash
     $av = $a.Wx;
     $bv = $b.Wx;
-    is $av, $bv;
+    is-deeply $av>>.map({$_ * $sf}), $bv;
 
     # test 20
+    # hash
     $av = $a.BBox;
     $bv = $b.BBox;
-    is $av, $bv;
+    is-deeply $av>>.map({$_ * $sf}), $bv;
 
     my $string = "The Quick Brown Fox Jumped Over the Lazy Dog. That Was Silly, Wasn't It?";
 
@@ -186,43 +187,22 @@ sub test2(Font::AFM :$afm-obj!,
     $av = $a.stringwidth($string, $fontsize, :kern);
     $bv = $b.stringwidth($string, :kern);
     is $av, $bv, "compare stringwidth, kerned";
-    # not ok 21 - 
-    # Failed test at ../t/06-compare2fonts.t line 193
-    # expected: '0'
-    #      got: '319.4236'
 
     # test 22
     $av = $a.stringwidth($string, $fontsize, :!kern);
     $bv = $b.stringwidth($string, :!kern);
     is $av, $bv, "compare stringwidth, no kern";
 
-
-    my %glyphs;
-    my (@a, @b, $akerned, $bkerned, $awidth, $bwidth);
-    @a = $a.kern($string, $fontsize, :kern, :%glyphs);
-    @b = $b.kern($string, $fontsize, :kern, :%glyphs);
-
-    # The following tests are not needed because method 'kern'
+    # The following tests are not really needed because method 'kern'
     # is used internally by method 'stringwidth' and thus not 
     # needed by this caller.
 
-    =begin comment
-    # test 23
-    is-deeply, @a, @b;
+    my ($akerned, $awidth) = $a.kern($string, $fontsize, :kern);
+    my ($bkerned, $bwidth) = $b.kern($string, $fontsize, :kern);
 
-    ($akerned, $awidth) = $a.kern($string, $fontsize, :kern, :%glyphs);
-    ($bkerned, $bwidth) = $b.kern($string, $fontsize, :kern, :%glyphs);
-    is $akerned, $bkerned, "compare kerned letters";
-    # not ok 23 - 
-    # Failed test at ../t/06-compare2fonts.t line 205
-    # expected: (Any)
-    #      got: ''
+    # test 23
+    is $awidth, $bwidth, "compare kerned letters/width";
 
     # test 24
-    is $awidth, $bwidth, "compare kerned letters/width";
-    # not ok 24 - 
-    # Failed test at ../t/06-compare2fonts.t line 206
-    # expected: (Any)
-    #      got: '0'
-    =end comment
+    is-deeply $akerned.kv, $bkerned.kv;
 }

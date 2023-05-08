@@ -1,6 +1,17 @@
 Revision history for FontFactory::Type1
 
 {{$NEXT}}
+    - Changed 'MyFonts' to 'Fonts'
+    - All DocBox methods have correct adjustments for scale factor
+    - Corrected scale factor calculations
+    - Added more rigorous tests for application of scale factor
+    - Split DocFont and BaseFont classes into their own files
+    - Renamed file 'Utils.rakumod' to 'Subs.rakumod'
+    - Put the font list into new file FontList.rakumod as template
+      for upcoming Build method for module FontFactory::TT
+    - Added new DocFont methods currently not found in Font::AFM:
+      + StrikethroughPosition - at the midpoint height of the'm' character
+      + StrikethroughThickness - same as UnderlineThickness
 
 0.0.1  2023-04-30T19:50:06-05:00
     - Initial version

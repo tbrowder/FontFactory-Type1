@@ -14,6 +14,7 @@ if not @*ARGS {
 ++$debug if @*ARGS.head ~~ /d/;
 
 my $kern-test-string = "With Viry City Did Fir Yp Care To Test Kern On Pip Que Rg";
+my $string = "With Viry City Did Fir Yp Care To Test Kern On Pip Que Rg";
 
 my %results = [
     Times-Roman  => [],
@@ -63,41 +64,46 @@ for @k -> $name {
 
     # 2
     $res = $afm.FontName;
-    note "DEBUG: \$res = '$res'" if $debug;
+    note "DEBUG: \$res = '$res'" if 0 and $debug;
     %results{$name}.push: "$res";
 
     # 3
     $res = $afm.FullName;
-    note "DEBUG: \$res = '$res'" if $debug;
+    note "DEBUG: \$res = '$res'" if 0 and $debug;
     %results{$name}.push: "$res";
 
     # 4
     $res = $afm.FamilyName;
-    note "DEBUG: \$res = '$res'" if $debug;
+    note "DEBUG: \$res = '$res'" if 0 and $debug;
     %results{$name}.push: "$res";
 
     # 5
     $res = $afm.Weight;
-    note "DEBUG: \$res = '$res'" if $debug;
+    note "DEBUG: \$res = '$res'" if 0 and $debug;
     %results{$name}.push: "$res";
 
     # 6
     $res = $afm.ItalicAngle;
-    note "DEBUG: \$res = '$res'" if $debug;
+    note "DEBUG: \$res = '$res'" if 0 and $debug;
     %results{$name}.push: "$res";
 
     # 7
     $res = $afm.IsFixedPitch;
-    note "DEBUG: \$res = '$res'" if $debug;
+    note "DEBUG: \$res = '$res'" if 0 and $debug;
     %results{$name}.push: "$res";
 
     # 8
     $res = $afm.FontBBox;
-    note "DEBUG: \$res = '$res'" if $debug;
+    note "DEBUG: \$res = '$res'" if 0 and $debug;
     %results{$name}.push: "$res.gist";
 
     # 9
     $res = $afm.KernData;
+    if $debug {
+        note $afm.KernData.raku;
+        exit
+    }
+
     note "DEBUG: \$res = '$res'" if $debug;
     %results{$name}.push: "KernData"; # $res";
 
