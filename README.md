@@ -5,6 +5,9 @@ NAME
 
 **FontFactory::Type1** - Provides the standard *Adobe PostScript* fonts in a friendly package for use with many *PDF::** modules
 
+WARNING: THIS VERSION (v.0.0.1) HAS SERIOUS PROBLEMS AND IT SHOULD NOT BE USED. A NEW VERSION WILL BE RELEASED SOON
+==================================================================================================================
+
 SYNOPSIS
 ========
 
