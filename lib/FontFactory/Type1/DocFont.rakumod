@@ -4,6 +4,11 @@ use PDF::Lite;
 use Font::AFM;
 use FontFactory::Type1::BaseFont;
 
+constant LLX  = 0; # bbox index for left bound
+constant LLY  = 1; # bbox index for lower bound
+constant URX  = 2; # bbox index for right bound
+constant URY  = 3; # bbox index for upper bound
+
 #use Data::Dump;
 
 #| This class represents the final font object and it includes the final size
@@ -36,134 +41,147 @@ method StrikethroughThickness {
 
 # See Font::AFM for details.
 
-#| Get the bounding box for a string
-method StringBBox(Str $s, :$kern --> List) {
-    my $width;
-    if $kern.defined {
-        $width = self.stringthwidth($s, :kern);
-    }
-    else {
-        $width = self.stringthwidth($s, :!kern);
-    }
-    my ($llx, $lly, $urx, $ury) = 0, 0, $width, 0;
-    my @chars = $s.comb;
-    for @chars -> $char {
-        my $bbox = $!afm.BBox{$char};
-        my $ly = $bbox[1];
-        my $uy = $bbox[3];
-        $lly = $ly if $ly > $lly;
-        $ury = $uy if $uy > $ury;
-    }
-    # $llx and $urx are already correct for the desired font size
-    $lly *= $!sf; # adjust for the desired font size
-    $ury *= $!sf; # adjust for the desired font size
-
-    $llx, $lly, $urx, $ury
-}
-method sbb() {
-}
+#| According to the Redbook, Type 1 fonts usually have their left
+#| sidebearing at or right of the glyph's origin. The bounding box is
+#| always in reference to the origin which has its Y=0 on the baseline
+#| and its X=0 is the print point of reference for the caller.  So the
+#| left sidebearing is defined as the first character's BBox[0]
+#| distance, positive to the right of the origin.  And we define a
+#| right sidebearing as total stringwidth.
 
 #| Get the value of the leftmost outline in a string
-#|
-#| According to the Redbook, Type 1 fonts usually have their left sidebearing at or right of the
-#| glyph's origin. The bounding box is always in reference to the origin which has its Y=0 on the
-#| baseline and its X=0 is the print point of reference for the caller.
-#| So the left sidebearing is defined as the first character's BBox[0] distance, positive to the right of the origin.
-#| And we can define a right sidebearing as total stringwidth less the last character's Width - (BBox[3] - BBox[1]).
-method LeftBearing(Str $s) {
+method LeftBearing(Str $s?) {
+    if not $s.defined {
+        return self.FontBBox[LLX]
+    }
     my $char = $s.comb.head;
-    self.BBox{$char}[0];
+    $char = 'space' if $char !~~ /\S/;
+    self.BBox{$char}[LLX]
 }
-method lb(Str $s) {
+method lb(Str $s?) {
     self.LeftBearing($s)
 }
 
-#| Get the value of the rightmost outline in a character
-method RightBearing(Str $s) {
-    my $char = $s.comb.head;
-    my $rb = self.Wx{$char} - self.BBox{$char}[2];
-    $rb
+#| Get the value of the rightmost outline in a string
+method RightBearing(Str $s?, :$kern) {
+    if not $s.defined {
+        return self.FontBBox[URX]
+    }
+    # get the horizontal bound
+    my $str-width = self.stringwidth($s, :$kern);
+    my $last-char = $s.comb.tail;
+    $last-char    = 'space' if $last-char !~~ /\S/;
+    my $lc-urx    = self.BBox{$last-char}[URX];
+    my $lc-w      = self.Wx{$last-char};
+    my $str-rb    = $str-width - $lc-w + $lc-urx;
+    $str-rb
 }
-method rb(Str $s) {
+method rb(Str $s?, :$kern) {
     self.RightBearing($s)
+}
+
+# Returns a list of the bounding box of the input string or the
+# FonBBox if a string is not provided.  The user may choose to to kern
+# the string.
+method StringBBox(Str $s?, :$kern --> List) {
+    if not $s.defined {
+        return self.FontBBox
+    }
+
+    # get the vertical bounds
+    my $ury = 0;
+    my $lly = 0;
+    my @chars = $s.comb;
+    for @chars -> $c is copy {
+        # a space has a name
+        $c = 'space' if $c !~~ /\S/;
+
+        my $uy = self.BBox{$c}[URY];
+        $ury = $uy if $uy > $ury;
+
+        my $ly = self.BBox{$c}[LLY];
+        $lly   = $ly if $ly < $lly;
+    }
+    # get the horizontal bounds
+    my $llx = self.BBox{$s.comb.head}[LLX];
+    my $width = self.stringwidth($s, :$kern);
+    my $lchar = $s.comb.tail;
+    my $wlchar = self.Wx{$lchar};
+    my $urx = self.BBox{$lchar}[URX];
+    $urx = $width - $wlchar + $urx;
+
+    $llx, $lly, $urx, $ury
+}
+method sbb(Str $s?, :$kern --> List) {
+    self.StringBBox($s, :$kern)
+}
+
+method tb(Str $s?) {
+    self.TopBearing($s)
 }
 
 #| Get the height of the topmost outline in a string or the entire font if no string is provided
 method TopBearing(Str $s?) {
-    my $ury = 0;
-    my $i   = 3;
-    if $s.defined {
-        my @chars = $s.comb;
-        for @chars -> $c {
-            # must ignore spaces for this method
-            next if $c !~~ /\S/;
-            my $y = self.BBox{$c}[$i];
-            $ury = $y if $y > $ury;
-        }
+    if not $s.defined {
+        return self.FontBBox[URY];
     }
-    else {
-        $ury = self.FontBBox[$i];
+    my $ury = 0;
+    my @chars = $s.comb;
+    for @chars -> $c is copy {
+        # a space has a name
+        $c = 'space' if $c !~~ /\S/;
+        my $y = self.BBox{$c}[URY];
+        $ury = $y if $y > $ury;
     }
     $ury
 }
-method tb(Str $s?) {
-    if $s.defined {
-        self.TopBearing($s)
-    }
-    else {
-        self.TopBearing
-    }
-}
 
-#| Get the value of the bottommost outline in a string or the entire font if no string is provided
+#| Get the value of the lowest outline outline in a string or the entire font if no string is provided
 method BottomBearing(Str $s?) {
-    my $lly = 0;
-    my $i   = 1;
-    if $s.defined {
-        my @chars = $s.comb;
-        for @chars -> $c {
-            # must ignore spaces for this method
-            next if $c !~~ /\S/;
-            my $y = self.BBox{$c}[$i];
-            $lly = $y if $y < $lly;
-        }
+    if not $s.defined {
+        return self.FontBBox[LLY];
     }
-    else {
-        $lly = self.FontBBox[$i];
+    my $lly = 0;
+    my @chars = $s.comb;
+    for @chars -> $c is copy {
+        # space has a name
+        $c = 'space' if $c !~~ /\S/;
+        my $y = self.BBox{$c}[LLY];
+        $lly = $y if $y < $lly;
     }
     $lly
 }
 method bb(Str $s?) {
-    if $s.defined {
-        self.BottomBearing($s)
-    }
-    else {
-        self.BottomBearing
-    }
+    self.BottomBearing($s)
 }
 
 #| Get the maximum vertical space required for any single line of
 #| text or, optionally, for a specific string
 method LineHeight(Str $s?) {
-    if $s.defined {
-        my $tb = self.TopBearing($s);
-        my $bb = self.BottomBearing($s);
-        $tb - $bb
+    if not $s.defined {
+        return self.FontBBox[URY] - self.FontBBox[LLY]
     }
-    else {
-        self.FontBBox[3] - self.FontBBox[1]
+    # get the vertical bounds
+    my $ury = 0;
+    my $lly = 0;
+    my @chars = $s.comb;
+    for @chars -> $c is copy {
+        # space has a name
+        $c = 'space' if $c !~~ /\S/;
+        my $uy = self.BBox{$c}[URY];
+        $ury = $uy if $uy > $ury;
+
+        my $ly = self.BBox{$c}[LLY];
+        $lly   = $ly if $ly < $lly;
     }
+
+    $ury - $lly
 }
 method lh(Str $s?) {
-    if $s.defined {
-        self.LineHeight($s)
-    }
-    else {
-        self.LineHeight
-    }
+    self.LineHeight($s)
 }
 
-# FontAFM methods ==============================
+# FontAFM standard methods follow: ==============================
 
 #| UnderlinePosition
 method UnderlinePosition {
@@ -186,6 +204,7 @@ method kern($string, $fontsize?) {
 
 #| A two-dimensional hash containing from and to glyphs and kerning widths.
 method KernData {
+    note "TODO: use >>.map and >>*>>";
     my $av; # = $!afm.KernData;
     for $!afm.KernData.keys -> $k {
         for $!afm.KernData{$k}.kv -> $k2, $v is copy {
@@ -275,7 +294,8 @@ method Descender {
 }
 
 #| hash of glyph names and their width
-method Wx {
+method Wx(--> Hash) {
+    note "TODO: use >>.map and >>*>>";
     my %h;
     for $!afm.Wx.kv -> $k, $v {
         %h{$k} = $v * $!sf # adjust for the desired font size
@@ -284,7 +304,6 @@ method Wx {
 }
 
 #| hash of glyph names and their bounding boxes
-method BBox {
-    $!afm.BBox>>.map({$_ * $!sf}) # multiply hash values by $!sf
-    # adjust for the desired font size
+method BBox(--> Hash) {
+    $!afm.BBox>>.map({$_ >>*>> $!sf}) # multiply hash values by $!sf
 }

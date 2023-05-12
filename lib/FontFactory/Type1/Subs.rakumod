@@ -7,7 +7,7 @@ use FontFactory::Type1::FontList;
 use FontFactory::Type1::BaseFont;
 use FontFactory::Type1::DocFont;
 
-sub show-myfonts is export {
+sub show-fonts is export {
     my $max = 0;
     for %Fonts.keys -> $k {
         my $n = $k.chars;

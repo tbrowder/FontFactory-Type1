@@ -21,5 +21,5 @@ constant %Fonts is export = [
     MICREncoding          => "m", # converted from .ttf via fontforge
 ];
 
-# invert the has and have short names (aliases) as keys
+# invert the hash and have short names (aliases) as keys
 our %FontAliases is export = %Fonts.invert;

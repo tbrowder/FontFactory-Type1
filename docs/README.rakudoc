@@ -3,7 +3,9 @@
 =head1 NAME
 
 B<FontFactory::Type1> - Provides the standard I<Adobe PostScript>
-fonts in a friendly package for use with many I<PDF::*> modules
+fonts in a friendly package for use with many I<PDF::*> modules.
+
+B<WARNING> The previous version had some erroneous methods and shoud not be used!>
 
 =head1 SYNOPSIS
 
@@ -12,9 +14,9 @@ aliases:
 
 =begin code :lang<raku>
 use FontFactory::Type1;
-use FontFactory::Type1::Utils;
+use FontFactory::Type1::Subs;
 
-show-myfonts;
+show-fonts;
 
 # output:
 Font family: 'Courier'               (alias: 'c')
@@ -62,7 +64,7 @@ say "size: {$c10.size}"; # OUTOUT: «size: 10␤»
 =end code
 
 In addition to those attributes, all the attributes from C<Font::AFM>
-are also available, For example:
+are also available plus some added for convenience, For example:
 
 =begin code
 # for typesetting, find the width of a kerned string in PostScript points (72/inch):
@@ -73,7 +75,7 @@ say "kerned width: $wk"; # OUTPUT: kerned width: 302.3064
 
 =head1 DESCRIPTION
 
-B<FontFactory> provides easy access to the Adobe standard Type 1 fonts
+B<FontFactory::Type1> provides easy access to the Adobe standard Type 1 fonts
 (and their metrics) as used in PDF document creation using modules such
 as:
 
@@ -87,6 +89,9 @@ A future module, B<FontFactory::TT>, will provide the same benefits for
 I<TrueType> (and I<OpenType>) fonts, but it will require the user to
 provide his or her own font files (the author recommends using
 Google's free fonts as a starting point for a collection of fonts);
+
+See the accompanying L<METHODS|METHODS.md> for details on the methods and their use
+in your own PDF document.
 
 =head2 MICR Encoding (MICRE) font
 

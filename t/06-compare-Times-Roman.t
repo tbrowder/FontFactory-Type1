@@ -27,7 +27,6 @@ subtest {
 my $ff-font = $ff.get-font("t10d3");
 
 subtest {
-    plan 24;
     test2 :$afm-obj, :$fontsize, :$ff-font;
 }
 
@@ -117,7 +116,7 @@ sub test2(Font::AFM :$afm-obj!,
         }
     }
     # now do the test
-    is-deeply $av, $bv, "2d-hash check";
+    is-deeply $av, $bv, "2d-hash check, multi-test 8";
 
     # test 9
     $av = $a.UnderlinePosition;
@@ -167,19 +166,55 @@ sub test2(Font::AFM :$afm-obj!,
     # test 18
     $av = $a.Descender;
     $bv = $b.Descender;
-    is $av*$sf, $bv;
+    is $av*$sf, $bv, "test 18";
 
     # test 19
-    # hash
+    # hash keyed by char, value char width
     $av = $a.Wx;
     $bv = $b.Wx;
-    is-deeply $av>>.map({$_ * $sf}), $bv;
+    if 1 {
+        for $av.keys -> $k {
+            my $v = $av{$k} * $sf;
+            $av{$k} = $v; #.Array; #List; 
+        }
+    }
+
+    #is-deeply $aav, $bv, "test 19";
+    #is-deeply $av>>.map({$_ * $sf}), $bv, "test 19";
+    is-deeply $av, $bv, "test 19";
 
     # test 20
-    # hash
-    $av = $a.BBox;
+    # hash of lists keyed by character name
+    $av = $a.BBox>>.map({$_ >>*>> $sf});
     $bv = $b.BBox;
-    is-deeply $av>>.map({$_ * $sf}), $bv;
+    =begin comment
+        if 0 {
+            note qq:to/HERE/;
+            av type: {$av.WHAT}
+            bv type: {$bv.WHAT}
+            HERE
+            note "DEBUG exit";exit;
+        }
+    for $av.keys -> $c {
+        my $alist = $av{$c};
+        my $aalist = $alist >>*>> $sf;
+        $av{$c} = $aalist; #.List; #.Array;
+        my $blist = $bv{$c};
+        if 0 {
+            note qq:to/HERE/;
+            char: '$c'
+            alist type: {$alist.WHAT}
+            blist type: {$blist.WHAT}
+            HERE
+            note "DEBUG exit";exit;
+        }
+
+        #is $aalist, $blist, "compare test BBox with mine, test 20";
+        #is-deeply $aalist, $blist, "compare test BBox with mine, test 20";
+        #is-deeply $blist, $alist >>*>> $sf, "compare my BBox with the test's, test 20";
+    }
+    =end comment
+    is-deeply $av, $bv, "compare my BBox with the test's, test 20";
 
     my $string = "The Quick Brown Fox Jumped Over the Lazy Dog. That Was Silly, Wasn't It?";
 
