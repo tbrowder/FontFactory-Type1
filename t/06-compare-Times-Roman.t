@@ -170,9 +170,9 @@ sub test2(Font::AFM :$afm-obj!,
 
     # test 19
     # hash keyed by char, value char width
-    $av = $a.Wx;
+    $av = $a.Wx>>.map({$_ >>*>> $sf});
     $bv = $b.Wx;
-    if 1 {
+    if 0 {
         for $av.keys -> $k {
             my $v = $av{$k} * $sf;
             $av{$k} = $v; #.Array; #List; 

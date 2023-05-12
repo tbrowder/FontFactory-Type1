@@ -295,12 +295,7 @@ method Descender {
 
 #| hash of glyph names and their width
 method Wx(--> Hash) {
-    note "TODO: use >>.map and >>*>>";
-    my %h;
-    for $!afm.Wx.kv -> $k, $v {
-        %h{$k} = $v * $!sf # adjust for the desired font size
-    }
-    %h
+    $!afm.Wx>>.map({ $_ >>*>> $!sf }) # adjust for the desired font size
 }
 
 #| hash of glyph names and their bounding boxes
