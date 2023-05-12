@@ -1,6 +1,12 @@
 #!/bin/env raku
 
-# prog: try-db1-hash.raku
+if not @*ARGS {
+    print qq:to/HERE/
+    Exercise multiplying values by a factor in hashes and maps
+    HERE
+    exit
+}
+
 
 # create a structure as seen in Font::AFM
 my @a = <a b c>;

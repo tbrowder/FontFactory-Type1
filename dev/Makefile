@@ -4,11 +4,11 @@
 #all: test4
 #all: test5
 #all: test6
-#all: test6
+all: test6
 #all: test7
 #all: test8
 #all: test99
-all: test1 test2 test3 test4 test5 test6 test7 test8 test99
+#all: test1 test2 test3 test4 test5 test6 test7 test8 test99
 
 test1:
 	(cd ..; raku -Ilib ./t/*1*t)

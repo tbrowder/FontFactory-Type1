@@ -29,7 +29,7 @@ sub bar($s?, :$kern) {
     else {
         say "bar: \$kern is NOT defined";
     }
-    
+
 }
 
 
@@ -48,5 +48,5 @@ sub foo($s?, :$kern) {
         say "foo: \$kern is NOT defined";
     }
     bar($s, :$kern);
+    #bar(|c);
 }
-
