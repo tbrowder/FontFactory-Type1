@@ -1,129 +1,120 @@
-**DocFont methods**
-===================
+**Digital Typesetting**
+=======================
 
-****
-====
+Modern typesetting involves using text and digital typefaces (fonts) placed on a page mimicing the earlier printing era with hand-placed lead type on a printing press, covered with a thin layer of ink, and pressed against paper to produce a printed page. While retaining some of the old terminology, modern typesetting results in more accurate and easier production of beautiful printed products.
 
-****
-====
+A few terms need to be explained to understand the application of digital fonts using this module as well as **Font::AFM** which is central to it.
 
-****
-====
+Placing a single line of text using a font of a specific size (expressed as a hight of N points) involves knowledge both a single glyph's metrics as well as its collective metrics when gathered as a multi-glyph line.
 
-****
-====
+A glyph is a character in the chosen font and it has the following metric characteristics described for our use in placing the character:
 
-****
-====
+  * Origin - Vertically centered on the baseline of line of text, it is the reference point to be used when placing the glyph on the baseline
 
-****
-====
+  * Bounding box ('bbox' or 'BBox') - (1) The rectangle that bounds the horizontal and vertical limits of the outline of a glyph; the bounding box is described as a list of four numbers, expressed as PostScript points (72 per inch), representing the `x` and `y` of the lower-left corner and the `x` and `y` of the upper-right corner from the glyph's origin. (2) The same as the first definition but applied to a set of glyphs as a line of text.
 
-****
-====
+  * Width - (1) The horizontal distance from a glyph's origin to the right to the point where the next glyph's origin is designed to be placed. (2) The same as the first definition but applied to a set of glyphs as a line of text.
 
-****
-====
+  * Font bounding box - The rectangle that bounds the smallest outline which compasses all the glyphs in the font when placed with their origins at the same origin
 
-    method X() {...}
+  * Left bearing - the `x` value of the left side of a glyph's bounding box
 
-****
-====
+  * Top bearing - the `y` value of the top side of of a glyph's bounding box
 
-    method X() {...}
+  * Bottom bearing - the `y` value of the bottom side of a glyph's bounding box
 
-****
-====
+  * Right bearing - the `x` value of the right side of a glyph's bounding box
 
-    method X() {...}
+  * Scale factor - A font's metrics are typically described as being in a rectangular coordinate system with a width of 1000 units. To get the equivalent of the dimensions in the chosen point size the values are multiplied by a scale factor: point size / 1000.
 
-****
-====
+    For example, given a font with size of 12.3 points and a raw metrics width of 700 units, find the final width in points:
 
-    method X() {...}
+**class DocFont methods**
+=========================
 
-****
-====
+### **StrikethroughThickness**
 
-    method X() {...}
+Provides the position of the strikethrough line as the midheight of the lower-case 'm'
 
-****
-====
+    method StrikethroughPosition {...}
 
-    method X() {...}
+### **StrikethroughThickness**
 
-****
-====
+    method StrikethroughThickness {...}
+
+### **** Yhe left sidebearing is defined as the first character's BBox[0] distance, positive to the right of the origin.
+
+    method LeftBearing(Str $s) {...}
+
+### **** Get the value of the rightmost outline in a character
+
+    method RightBearing(Str $s) {...}
+
+### ****
 
     method X() {...}
 
-****
-====
+### ****
 
     method X() {...}
 
-****
-====
+### ****
 
     method X() {...}
 
-****
-====
+### ****
 
     method X() {...}
 
-****
-====
+### ****
 
     method X() {...}
 
-****
-====
+### ****
 
     method X() {...}
 
-****
-====
+### ****
 
     method X() {...}
 
-****
-====
+### ****
 
     method X() {...}
 
-****
-====
+### ****
 
     method X() {...}
 
-****
-====
+### ****
 
     method X() {...}
 
-****
-====
+### ****
 
     method X() {...}
 
-****
-====
+### ****
 
     method X() {...}
 
-****
-====
+### ****
 
     method X() {...}
 
-****
-====
+### ****
 
     method X() {...}
 
-****
-====
+### ****
+
+    method X() {...}
+
+### ****
+
+    method X() {...}
+
+### ****
 
     method X() {...}
 

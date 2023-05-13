@@ -49,6 +49,7 @@ For example, given a font with size of 12.3 points and a raw metrics width of 70
 find the final width in points:
 
 
+=end item 
 
 
 

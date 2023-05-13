@@ -47,7 +47,8 @@ method StrikethroughThickness {
 #| and its X=0 is the print point of reference for the caller.  So the
 #| left sidebearing is defined as the first character's BBox[0]
 #| distance, positive to the right of the origin.  And we define a
-#| right sidebearing as total stringwidth.
+#| right sidebearing as total stringwidth less the last char's width plus
+#| the right char's right bearing.
 
 #| Get the value of the leftmost outline in a string
 method LeftBearing(Str $s?) {
@@ -81,7 +82,7 @@ method rb(Str $s?, :$kern) {
 }
 
 # Returns a list of the bounding box of the input string or the
-# FonBBox if a string is not provided.  The user may choose to to kern
+# FontBBox if a string is not provided.  The user may choose to to kern
 # the string.
 method StringBBox(Str $s?, :$kern --> List) {
     if not $s.defined {
@@ -102,6 +103,7 @@ method StringBBox(Str $s?, :$kern --> List) {
         my $ly = self.BBox{$c}[LLY];
         $lly   = $ly if $ly < $lly;
     }
+
     # get the horizontal bounds
     my $llx = self.BBox{$s.comb.head}[LLX];
     my $width = self.stringwidth($s, :$kern);
@@ -309,5 +311,5 @@ method Wx(--> Hash) {
 
 #| hash of glyph names and their bounding boxes
 method BBox(--> Hash) {
-    $!afm.BBox>>.map({$_ >>*>> $!sf}) # multiply hash values by $!sf
+    $!afm.BBox>>.map({ $_ >>*>> $!sf }) # multiply hash values by $!sf
 }

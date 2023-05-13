@@ -35,7 +35,6 @@ lives-ok {
 $a = $afm.BBox<m>[3] * $f.sf * 0.5;
 $v = $f.StrikethroughPosition;
 is $a, $v;
-
 $a = $afm.UnderlineThickness * $f.sf;
 $v = $f.StrikethroughThickness;
 is $a, $v;
@@ -69,29 +68,63 @@ $v = $f.lb($text);
 is $a, $v, "LeftBearing with input string";
 
 $text = 'a Spoor';
+
+note "last char: {$text.comb.tail}";
+$bbox = $afm.BBox<r> >>*>> $f.sf;
 $exp = $afm.stringwidth($text, $f.size);
+note "exp (width): $exp";
+my $cw = $f.sf * $afm.Wx{$text.comb.tail};
 $exp -= $f.sf * $afm.Wx{$text.comb.tail};
+note "exp (less char width $cw): $exp";
+my $crb = $f.sf * $afm.BBox{$text.comb.tail}[2];
 $exp += $f.sf * $afm.BBox{$text.comb.tail}[2];
+note "exp (plus last char right bearing $crb): $exp";
+
+{
+my $lc = $text.comb.tail;
+my $w = $f.stringwidth($text);
+my $lw = $f.Wx{$lc};
+my $lcb = $f.BBox{$lc}[2];
+
+note "got (width): $w";
+note "got ($w less char width $lw): {$w - $lw}";
+note "got (plus last char right bearing $lcb): {$w - $lw + $lcb}";
+}
+
 $got = $f.RightBearing($text);
 
 if 0 {
-    note "afm.Wx<a>:";
-    note Dump($afm.Wx<a>, :gist, :no-postfix); # - $bbox[2];
 
-    note "afm.Wx<a> * f.sf:";
-    note Dump($afm.Wx<a> * $f.sf, :gist, :no-postfix); # - $bbox[2];
+    note "expected:";
+    note Dump($exp, :gist, :no-postfix); # - $bbox[2];
+    note "got:";
+    note Dump($got, :gist, :no-postfix); # - $bbox[2];
 
-    note "afm.BBbox<a>[2]:";
-    note Dump($afm.BBox<a>[2], :gist, :no-postfix); # - $bbox[2];
 
-    note "bbox[2]:";
-    note Dump($bbox[2], :gist); # - $bbox[2];
+    note "afm.Wx<r>:";
+    note Dump($afm.Wx<r>, :gist, :no-postfix); # - $bbox[2];
+    note "afm.Wx<r> * f.sf:";
+    note Dump($afm.Wx<r> * $f.sf, :gist, :no-postfix); # - $bbox[2];
 
-    note "f.Wx<a>:";
-    note Dump($f.Wx<a>, :gist); # - $bbox[2];
+    note "afm.BBbox<r>[2]:";
+    note Dump($afm.BBox<r>[2], :gist, :no-postfix); # - $bbox[2];
+    note "afm.BBbox<r>[2] * f.sf:";
+    #note "bbox[2]:";
+    note Dump($afm.BBox<r>[2] * $f.sf, :gist, :no-postfix); # - $bbox[2];
+    #note Dump($bbox[2], :gist); # - $bbox[2];
 
-    note "f.BBbox<a>[2]:";
-    note Dump($f.BBox<a>[2], :gist); # - $bbox[2];
+    note "f.Wx<r>:";
+    note Dump($f.Wx<r>, :gist); # - $bbox[2];
+
+    note "f.BBbox<r>[2]:";
+    note Dump($f.BBox<r>[2], :gist); # - $bbox[2];
+
+    my $wid = $afm.stringwidth($text, $f.size);
+    my $wid2 = $f.stringwidth($text);
+    note "afm width:";
+    note Dump($wid, :gist); # - $bbox[2];
+    note "f.width:";
+    note Dump($wid2, :gist); # - $bbox[2];
 
     #note "bbox:";
     #note Dump($bbox);
@@ -185,11 +218,11 @@ is-deeply $got, $exp, "StringBBox, no kern";
 
 $width = $afm.stringwidth($text, $f.size, :kern);
 
-my $fchar = $text.comb.head;
+$fchar = $text.comb.head;
 $llx = $f.sf * $afm.BBox{$fchar}[0];
-my $lchar = $text.comb.tail;
+$lchar = $text.comb.tail;
 $urx = $f.sf * $afm.BBox{$lchar}[2];
-my $wlchar = $f.sf * $afm.Wx{$lchar};
+$wlchar = $f.sf * $afm.Wx{$lchar};
 $urx = $width - $wlchar + $urx;
 
 $exp = ($llx, $lly, $urx, $ury);
