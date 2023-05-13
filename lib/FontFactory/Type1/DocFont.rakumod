@@ -197,13 +197,21 @@ method UnderlineThickness {
 # Kern the string. Returns an array of string segments, separated
 # by numeric kerning distances, and the overall width of the string.
 method kern($string, $fontsize?) {
-    my @arr; #($kerned, $width);
-    @arr = $!afm.kern: $string, $!size; #, :%glyphs;
-    @arr
+    #note "TODO: use >>.map and >>*>>";
+    #my @arr; #($kerned, $width);
+    #@arr = $!afm.kern: $string, $!size; #, :%glyphs;
+    #@arr
+    $!afm.kern($string, $!size); #, :%glyphs;
 }
 
 #| A two-dimensional hash containing from and to glyphs and kerning widths.
 method KernData {
+    # hash -> hash -> number
+    # lizmat's solution
+    $!afm.KernData.deepmap({$_ *= $!sf });
+
+    #$!afm.KernData>>.map({ $_>>.map({ $_ * $!sf }) }); #.keys -> $k {
+    =begin comment
     note "TODO: use >>.map and >>*>>";
     my $av; # = $!afm.KernData;
     for $!afm.KernData.keys -> $k {
@@ -214,6 +222,7 @@ method KernData {
         }
     }
     $av
+    =end comment
 }
 
 # $afm.stringwidth($string, $fontsize?, Bool:$kern is copy, :%glyphs)

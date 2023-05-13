@@ -105,9 +105,14 @@ sub test2(Font::AFM :$afm-obj!,
 
     # test 8
     # two-dimensional hash
-    $av = $a.KernData;
+    # see helper prog /dev/try-db1-hash.raku 
+    # hash -> hash -> number
+    $av = $a.KernData.deepmap({ $_ * $sf });
+    # hash -> hash -> number
+#    $!afm.KernData>>.map({ $_>>.map({ $_ * $!sf }) }); #.keys -> $k {
     $bv = $b.KernData;
 
+    =begin comment
     # unpack the structure to multiply Font::AFM values by the scale factor
     # see helper prog /dev/try-db1-hash.raku 
     for $av.keys -> $k {
@@ -116,6 +121,7 @@ sub test2(Font::AFM :$afm-obj!,
         }
     }
     # now do the test
+    =end comment
     is-deeply $av, $bv, "2d-hash check, multi-test 8";
 
     # test 9
