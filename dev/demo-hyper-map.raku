@@ -76,8 +76,9 @@ sub BBox(:$bb, :$sf) is export {
     say "Original:";
     say "  ", $bb.gist;
 
-    my $bb2 = $bb>>.map({$_ >>*>> $sf });
+    my $bb2 = $bb>>.map({ $_ >>*>> $sf });
 
+    say();
     say "Scaled for the using font:";
     say "  ", $bb2.gist;
     say "Looks good!";
@@ -85,32 +86,17 @@ sub BBox(:$bb, :$sf) is export {
 }
 
 sub KernData(:$kd, :$sf) is export {
+    # solution provided by Lizmat on #raku, 2023-05-13
     say "Updating the .KernData with the scale factor: $sf"; 
     say();
     say "Original:";
-    say "  ", say $kd.gist;
+    say "  ", $kd.gist;
 
-    my $kd2 = $kd>>.map({$_>>.map({$_ >>*>> $sf }) });
+    my $kd2 = $kd.deepmap({$_ *= $sf });
 
+    say();
     say "Scaled for the using font:";
     say "  ", $kd2.gist;
+    say "Looks good!";
 }
-
-=finish
-
-my %h2 = %h>>.map({ $_>>.map({ $_ * 1 }) });
-my %h2 = %h>>.map({ $_>>.map({ $_ * 1 }) });
-# a simple map application won't work
-# do this:
-for %h.keys -> $k {
-    for %h{$k}.kv -> $k2, $v {
-        %h{$k}{$k2} = $v>>.map({$_ * 2});
-    }
-}
-say "method 1: the output data: {%h.gist}";
-
-#my %h2 = %h>>.map({ $_>>.map({ $_ * 1 }) });
-my %h2 = %h>>.map({ $_ })>>.map({ $_ * 1 }) });
-
-say "method 2: the output data: {%h2.gist}";
 
