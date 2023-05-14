@@ -14,10 +14,10 @@ my $name2 = "Courier";
 my $fontsize  = 10.3;
 my $fontsize2 = 10;
 my ($ff, $f, $f2, $v, $a, $afm, $afm2, $text, $text2, $bbox, $bbox1, $bbox2);
-my ($width, $llx, $lly, $urx, $ury);
+my ($width, $width2, $llx, $lly, $urx, $ury);
 my ($got, $exp);
 
-plan 9;
+plan 8;
 
 lives-ok {
     $afm = Font::AFM.new: :$name;
@@ -39,13 +39,19 @@ $text = 'a Spoor';
 $text = 'Bo Do Fo Io Jo Ko Oo Po To Uo Vo Wo Yo';
 
 # test use of kern with afm.stringwidth
-$width = $afm.stringwidth: $text, $fontsize;
+$width  = $afm.stringwidth: $text, $fontsize;
+$width2 = $f.stringwidth: $text;
+is $width2, $width;
 note "width 1 without kern: $width";
 
-$width = $afm.stringwidth: $text, $fontsize, :kern;
+$width  = $afm.stringwidth: $text, $fontsize, :kern;
+$width2 = $f.stringwidth: $text, :kern;
+is $width2, $width;
 note "width 2 with :kern: $width";
 
-$width = $afm.stringwidth: $text, $fontsize, :!kern;
+$width  = $afm.stringwidth: $text, $fontsize, :!kern;
+$width2 = $f.stringwidth: $text, :!kern;
+is $width2, $width;
 note "width 3 with :!kern: $width";
 
 =finish
