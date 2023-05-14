@@ -3,18 +3,18 @@ unit module Utils;
 use Font::AFM;
 
 constant LLX = 0;
-constant LLX = 1;
+constant LLY = 1;
 constant URX = 2;
-constant URX = 3;
+constant URY = 3;
 
-sub string-bbox($s, :$name!, :$size!, :$kern, :$debug) is export {
+sub string-bbox($s, :$name!, :$size!, :$kern = False, :$debug) is export {
     my $afm = Font::AFM.new: :$name;
 
     my ($llx, $lly, $urx, $ury) = 0, 0, 0, 0;
 
     # get the vertical bounds
     for $s.comb -> $c is copy {
-        $c = 'space' if !~~ /\S/;
+        $c = 'space' if $c !~~ /\S/;
         my $ly = $afm.BBox{$c}[LLY];
         $lly = $ly if $ly < $lly;
         my $uy = $afm.BBox{$c}[URY];
@@ -29,7 +29,7 @@ sub string-bbox($s, :$name!, :$size!, :$kern, :$debug) is export {
     my $Lrb   = $afm.BBox{$Fchar}[URX];              # right bearing
     my $Lwid  = $afm.Wx{$Lchar};                     # width of last character
     $llx = $Flb;
-    $urx = $width - $Lwid + $Lrb
+    $urx = $width - $Lwid + $Lrb;
 
     # the solution
     $llx, $lly, $urx, $ury
