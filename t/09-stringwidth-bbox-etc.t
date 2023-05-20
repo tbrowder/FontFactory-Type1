@@ -13,11 +13,12 @@ my $name  = "Times-Roman";
 my $name2 = "Courier";
 my $fontsize  = 10.3;
 my $fontsize2 = 10;
+
 my ($ff, $f, $f2, $v, $a, $afm, $afm2, $text, $text2, $bbox, $bbox1, $bbox2);
 my ($width, $width2, $llx, $lly, $urx, $ury);
 my ($got, $exp);
 
-plan 8;
+#plan 8;
 
 lives-ok {
     $afm = Font::AFM.new: :$name;
@@ -37,24 +38,23 @@ lives-ok {
 
 $text = 'a Spoor';
 $text = 'Bo Do Fo Io Jo Ko Oo Po To Uo Vo Wo Yo';
+#$text = 'BoDoFoIoJoKoOoPoToUoVoWoYo';
 
 # test use of kern with afm.stringwidth
 $width  = $afm.stringwidth: $text, $fontsize;
 $width2 = $f.stringwidth: $text;
 is $width2, $width;
-note "width 1 without kern: $width";
+note "width 1 without kern: $width" if $debug;
 
 $width  = $afm.stringwidth: $text, $fontsize, :kern;
 $width2 = $f.stringwidth: $text, :kern;
 is $width2, $width;
-note "width 2 with :kern: $width";
+note "width 2 with :kern: $width" if $debug;
 
 $width  = $afm.stringwidth: $text, $fontsize, :!kern;
 $width2 = $f.stringwidth: $text, :!kern;
 is $width2, $width;
-note "width 3 with :!kern: $width";
-
-=finish
+note "width 3 with :!kern: $width" if $debug;
 
 $bbox1 = string-bbox $text, :$name, :size($fontsize);
 $bbox2 = $f.StringBBox: $text, :$name, :size($fontsize);
@@ -62,6 +62,10 @@ is-deeply $bbox2, $bbox1;
 
 $bbox1 = string-bbox $text, :$name, :size($fontsize), :kern;
 $bbox2 = $f.StringBBox: $text, :$name, :size($fontsize), :kern;
+is-deeply $bbox2, $bbox1;
+
+$bbox1 = string-bbox $text, :$name, :size($fontsize), :!kern;
+$bbox2 = $f.StringBBox: $text, :$name, :size($fontsize), :!kern;
 is-deeply $bbox2, $bbox1;
 
 done-testing;

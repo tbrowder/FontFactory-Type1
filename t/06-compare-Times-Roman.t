@@ -1,6 +1,8 @@
 use Test; 
 use Font::AFM;
 use FontFactory::Type1;
+use lib <./t/lib>;
+use Utils;
 
 my $debug = 0;
 
@@ -176,7 +178,7 @@ sub test2(Font::AFM :$afm-obj!,
 
     # test 19
     # hash keyed by char, value char width
-    $av = $a.Wx>>.map({$_ >>*>> $sf});
+    $av = afmWx; # $a.Wx>>.map({$_ >>*>> $sf});
     $bv = $b.Wx;
     if 0 {
         for $av.keys -> $k {
@@ -191,35 +193,8 @@ sub test2(Font::AFM :$afm-obj!,
 
     # test 20
     # hash of lists keyed by character name
-    $av = $a.BBox>>.map({$_ >>*>> $sf});
+    $av = afmBBox; #$a.BBox>>.map({$_ >>*>> $sf});
     $bv = $b.BBox;
-    =begin comment
-        if 0 {
-            note qq:to/HERE/;
-            av type: {$av.WHAT}
-            bv type: {$bv.WHAT}
-            HERE
-            note "DEBUG exit";exit;
-        }
-    for $av.keys -> $c {
-        my $alist = $av{$c};
-        my $aalist = $alist >>*>> $sf;
-        $av{$c} = $aalist; #.List; #.Array;
-        my $blist = $bv{$c};
-        if 0 {
-            note qq:to/HERE/;
-            char: '$c'
-            alist type: {$alist.WHAT}
-            blist type: {$blist.WHAT}
-            HERE
-            note "DEBUG exit";exit;
-        }
-
-        #is $aalist, $blist, "compare test BBox with mine, test 20";
-        #is-deeply $aalist, $blist, "compare test BBox with mine, test 20";
-        #is-deeply $blist, $alist >>*>> $sf, "compare my BBox with the test's, test 20";
-    }
-    =end comment
     is-deeply $av, $bv, "compare my BBox with the test's, test 20";
 
     my $string = "The Quick Brown Fox Jumped Over the Lazy Dog. That Was Silly, Wasn't It?";

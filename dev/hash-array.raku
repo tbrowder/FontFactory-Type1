@@ -1,31 +1,79 @@
 #!/bin/env raku
 
+use Data::Dump;
+use Data::Dump::Tree;
+use Font::AFM;
+use Test;
+use lib <../lib>;
+use FontFactory::Type1;
+#use FontFactory::Type1::DocFont;
+
 if not @*ARGS {
-    print qq:to/HERE/
+    print qq:to/HERE/;
+    Usage: {$*PROGRAM.basename} go
+
     Exercise multiplying values by a factor in hashes and maps
     HERE
     exit
 }
 
+my $afm  = Font::AFM.new: :name<Times-Roman>;
+my $size = 10.3;
+my $sf   = $size/1000.0;
+my $ff   = FontFactory::Type1.new;
+my $f    = $ff.get-font: 't10d3';
 
-# create a structure as seen in Font::AFM
-my @a = <a b c>;
-my @b = <x y z>;
+#is $f.sf, $sf;
 
-my $n = 0;
-my %h;
-for @a -> $a {
-    for @b -> $b {
-        %h{$a}{$b} = ++$n;
-    }
+if 1 {
+say "\$afm type: ", $afm.WHAT;
+say "\$afm.Wx type: ", $afm.Wx.WHAT;
+say "\$afm.Wx<a> type: ", $afm.Wx<a>.WHAT;
+say "\$afm.BBox type: ", $afm.BBox.WHAT;
+say "\$afm.BBox<a> type: ", $afm.BBox<a>.WHAT;
+#ddt $afm.Wx;
+#ddt $afm.BBox;
 }
-say "the input data (emulating .BBox): {%h.gist}";
 
-# a simple map application won't work
-# do this:
-for %h.keys -> $k {
-    for %h{$k}.kv -> $k2, $v {
-        %h{$k}{$k2} = $v>>.map({$_ * 2});
-    }
+
+if 1 {
+say "\$f type: ", $f.WHAT;
+say "\$f.Wx type: ", $f.Wx.WHAT;
+say "\$f.Wx<a> type: ", $f.Wx<a>.WHAT;
+say "\$f.BBox type: ", $f.BBox.WHAT;
+say "\$f.BBox<a> type: ", $f.BBox<a>.WHAT;
+#.ddt $f.BBox;
 }
-say "the output data: {%h.gist}";
+
+
+=finish
+
+# create structures as seen in Font::AFM
+my $bbox := [
+    a => [1.1, 2, 3, 4],
+    b => [1.1, 2, 3, 4],
+    c => [1.1, 2, 3, 4],
+];
+
+my $wx := [
+    a => 1.1,
+    b => 1.1,
+    c => 1.1,
+];
+
+say "the input data (emulating .BBox):";
+say Dump($bbox, :no-postfix, :skip-methods);
+# use map
+#my $b = %bbox>>.map({ $_ >>*>> 2 });
+my $b = $bbox>>.map({ $_ >>*>> 2 });
+
+say "the output data:";
+say Dump($b, :no-postfix, :skip-methods);
+say();
+
+say "the input data (emulating .Wx):";
+say Dump($wx, :no-postfix, :skip-methods);
+# use map
+my $w = $wx>>.map({ $_ >>*>> 2 });
+say "the output data:";
+say Dump($w, :no-postfix, :skip-methods);

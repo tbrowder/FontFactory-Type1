@@ -69,6 +69,8 @@ method RightBearing(Str $s?, :$kern) {
         return self.FontBBox[URX]
     }
     # get the horizontal bound
+    #    my $delta = $Last-width - $Last-urx; # amount of width past the $ux of the last char
+
     my $str-width = self.stringwidth($s, :$kern);
     my $last-char = $s.comb.tail;
     $last-char    = 'space' if $last-char !~~ /\S/;
@@ -105,12 +107,33 @@ method StringBBox(Str $s?, :$kern --> List) {
     }
 
     # get the horizontal bounds
-    my $llx = self.BBox{$s.comb.head}[LLX];
-    my $width = self.stringwidth($s, :$kern);
-    my $lchar = $s.comb.tail;
-    my $wlchar = self.Wx{$lchar};
-    my $urx = self.BBox{$lchar}[URX];
-    $urx = $width - $wlchar + $urx;
+    #    my $delta = $Last-width - $Last-urx; # amount of width past the $ux of the last char
+    my $width;
+    if $kern {
+        $width = self.stringwidth($s, :kern);  # kerned
+        #$width = $!afm.stringwidth($s, self.size, :kern);  # kerned
+    }
+    else {
+        $width = self.stringwidth($s, :!kern); # not kerned
+        #$width = $!afm.stringwidth($s, self.size, :!kern); # not kerned
+    }
+
+    my $Fchar = $s.comb.head;                         # first character
+    my $Lchar = $s.comb.tail;                         # last character
+
+    =begin comment
+    my $Flb   = $sf * $afm.BBox{$Fchar}[LLX];         # left bearing
+    my $Lrb   = $sf * $afm.BBox{$Lchar}[URX];         # right bearing
+    my $Lwid  = $sf * $afm.Wx{$Lchar};                # width of last character
+    $llx = $Flb;
+    $urx = $width - $Lwid + $Lrb;
+    =end comment
+
+    my $Flb  = self.BBox{$Fchar}[LLX]; # first character left bearing
+    my $Lrb  = self.BBox{$Lchar}[URX]; # last character right bearing
+    my $Lwid = self.Wx{$Lchar};        # last character width
+    my $llx  = $Flb;
+    my $urx  = $width - $Lwid + $Lrb;
 
     $llx, $lly, $urx, $ury
 }
@@ -306,10 +329,21 @@ method Descender {
 
 #| hash of glyph names and their width
 method Wx(--> Hash) {
-    $!afm.Wx>>.map({ $_ >>*>> $!sf }) # adjust for the desired font size
+    #$!afm.Wx>>.map( { $_ >>*>> $!sf } ) # adjust for the desired font size
+    my %h;
+    for $!afm.Wx.kv -> $k, $v {
+        %h{$k} = $v * $!sf
+    }
+    %h
 }
 
 #| hash of glyph names and their bounding boxes
 method BBox(--> Hash) {
-    $!afm.BBox>>.map({ $_ >>*>> $!sf }) # multiply hash values by $!sf
+    #$!afm.BBox>>.map( { $_ >>*>> $!sf } ) # multiply hash values by $!sf
+    my %h;
+    for $!afm.BBox.kv -> $k, $v {
+        %h{$k} = $v >>*>> $!sf 
+    }
+    %h
 }
+
