@@ -222,10 +222,6 @@ method UnderlineThickness {
 # Kern the string. Returns an array of string segments, separated
 # by numeric kerning distances, and the overall width of the string.
 method kern($string, $fontsize?) {
-    #note "TODO: use >>.map and >>*>>";
-    #my @arr; #($kerned, $width);
-    #@arr = $!afm.kern: $string, $!size; #, :%glyphs;
-    #@arr
     $!afm.kern($string, $!size); #, :%glyphs;
 }
 
@@ -233,21 +229,8 @@ method kern($string, $fontsize?) {
 method KernData {
     # hash -> hash -> number
     # lizmat's solution
-    $!afm.KernData.deepmap({$_ *= $!sf });
-
-    #$!afm.KernData>>.map({ $_>>.map({ $_ * $!sf }) }); #.keys -> $k {
-    =begin comment
-    note "TODO: use >>.map and >>*>>";
-    my $av; # = $!afm.KernData;
-    for $!afm.KernData.keys -> $k {
-        for $!afm.KernData{$k}.kv -> $k2, $v is copy {
-            # adjust for the desired font size
-            $v *= $!sf * 1.0;
-            $av{$k}{$k2} = $v.Real; # >>*>> $!sf
-        }
-    }
-    $av
-    =end comment
+    #$!afm.KernData.deepmap({$_ *= $!sf }) # adjust for the desired font size
+    $!afm.KernData.deepmap({$_ * $!sf }) # adjust for the desired font size
 }
 
 # $afm.stringwidth($string, $fontsize?, Bool:$kern is copy, :%glyphs)
@@ -329,21 +312,11 @@ method Descender {
 
 #| hash of glyph names and their width
 method Wx(--> Hash) {
-    #$!afm.Wx>>.map( { $_ >>*>> $!sf } ) # adjust for the desired font size
-    my %h;
-    for $!afm.Wx.kv -> $k, $v {
-        %h{$k} = $v * $!sf
-    }
-    %h
+    $!afm.Wx.deepmap({ $_ * $!sf }) # adjust for the desired font size
 }
 
 #| hash of glyph names and their bounding boxes
 method BBox(--> Hash) {
-    #$!afm.BBox>>.map( { $_ >>*>> $!sf } ) # multiply hash values by $!sf
-    my %h;
-    for $!afm.BBox.kv -> $k, $v {
-        %h{$k} = $v >>*>> $!sf 
-    }
-    %h
+    $!afm.BBox.deepmap({ $_ * $!sf }) # adjust for the desired font size
 }
 
