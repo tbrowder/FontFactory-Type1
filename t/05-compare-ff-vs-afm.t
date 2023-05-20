@@ -11,7 +11,6 @@ my Font::AFM $a;
 my $name = "Times-Roman";
 my $size = 10.3;
 
-
 # test 1
 lives-ok {
     $a .= core-font($name);

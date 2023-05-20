@@ -10,6 +10,13 @@ my $text = "Some string";
 
 my ($llx, $lly, $urx, $ury);
 
-($llx, $lly, $urx, $ury) = string-bbox($text, :$name, :$size);
-($llx, $lly, $urx, $ury) = string-bbox($text, :$name, :$size, :kern);
+lives-ok {
+    ($llx, $lly, $urx, $ury) = string-bbox($text, :$name, :$size);
+}
+
+lives-ok {
+    ($llx, $lly, $urx, $ury) = string-bbox($text, :$name, :$size, :kern);
+}
+
+done-testing;
 
