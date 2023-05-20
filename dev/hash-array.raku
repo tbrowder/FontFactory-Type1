@@ -6,7 +6,6 @@ use Font::AFM;
 use Test;
 use lib <../lib>;
 use FontFactory::Type1;
-#use FontFactory::Type1::DocFont;
 
 if not @*ARGS {
     print qq:to/HERE/;
@@ -17,6 +16,22 @@ if not @*ARGS {
     exit
 }
 
+my Hash $h = { a => (1,2) };
+#say $h.gist;
+my $a = $h.deepmap({ $_ * 2 });
+#say $a.gist;
+$h>>.deepmap({ $_ * 2 });
+
+say f;
+
+sub f {
+    my Hash $h = { a => (1,2) };
+    #say $h.gist;
+    my $a = $h.deepmap({ $_ * 2 });
+    #say $a.gist;
+    #$a
+}
+
 my $afm  = Font::AFM.new: :name<Times-Roman>;
 my $size = 10.3;
 my $sf   = $size/1000.0;
@@ -25,7 +40,7 @@ my $f    = $ff.get-font: 't10d3';
 
 #is $f.sf, $sf;
 
-if 1 {
+if 0 {
 say "\$afm type: ", $afm.WHAT;
 say "\$afm.Wx type: ", $afm.Wx.WHAT;
 say "\$afm.Wx<a> type: ", $afm.Wx<a>.WHAT;
@@ -35,8 +50,7 @@ say "\$afm.BBox<a> type: ", $afm.BBox<a>.WHAT;
 #ddt $afm.BBox;
 }
 
-
-if 1 {
+if 0 {
 say "\$f type: ", $f.WHAT;
 say "\$f.Wx type: ", $f.Wx.WHAT;
 say "\$f.Wx<a> type: ", $f.Wx<a>.WHAT;
