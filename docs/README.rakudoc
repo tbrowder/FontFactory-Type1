@@ -5,7 +5,7 @@
 B<FontFactory::Type1> - Provides the standard I<Adobe PostScript>
 fonts in a friendly package for use with many I<PDF::*> modules.
 
-B<WARNING> The previous version had some erroneous methods and shoud not be used!>
+B<WARNING> The previous version had some erroneous methods and should not be used!
 
 =head1 SYNOPSIS
 
@@ -64,13 +64,13 @@ say "size: {$c10.size}"; # OUTOUT: «size: 10␤»
 =end code
 
 In addition to those attributes, all the attributes from C<Font::AFM>
-are also available plus some added for convenience, For example:
+are also available plus some added for convenience. For example:
 
 =begin code
 # for typesetting, find the width of a kerned string in PostScript points (72/inch):
 my $text = "Some string of text to be typeset in a beautiful PDF document.";
 my $wk = $t12d1.stringwidth($text, :kern);
-say "kerned width: $wk"; # OUTPUT: kerned width: 302.3064
+say "kerned width: $wk"; # OUTPUT: «kerned width: 302.3064␤»
 =end code
 
 =head1 DESCRIPTION

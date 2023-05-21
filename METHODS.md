@@ -11,7 +11,11 @@ A glyph is a digital character in the chosen font and it has the following metri
 
   * Origin - Vertically centered on the baseline of the line of text, it is the reference point to be used when placing the glyph on the desired baseline.
 
-  * Bounding box ('bbox' or 'BBox') - (1) The rectangle that bounds the horizontal and vertical limits of the outline of a glyph; the bounding box is described as a list of four numbers, expressed as PostScript points (72 per inch), representing the `x` and `y` coordinates of the lower-left corner and the `x` and `y` coordinates of the upper-right corner from the glyph's origin. (2) The same as the first definition but applied to a set of glyphs as a line of text.
+  * Bounding box ('bbox' or 'BBox') 
+
+      * (1) The rectangle that bounds the horizontal and vertical limits of the outline of a glyph. The bounding box is described as a list of four numbers, expressed as PostScript points (72 per inch), representing the `x` and `y` coordinates of the lower-left corner and the `x` and `y` coordinates of the upper-right corner from the glyph's origin. 
+
+      * (2) The same as the first definition but applied to a set of glyphs as a line of text.
 
   * Width - (1) The horizontal distance from a glyph's origin to the right to the point where the next glyph's origin is designed to be placed. (2) The same as the first definition but applied to a set of glyphs as a line of text.
 
