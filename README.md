@@ -3,9 +3,9 @@
 NAME
 ====
 
-**FontFactory::Type1** - Provides the standard *Adobe PostScript* fonts in a friendly package for use with many *PDF::** modules.
+**FontFactory::Type1** - Provides the standard *Adobe PostScript Type 1* fonts in a friendly package for use with many *PDF::** modules.
 
-A `DocFont` object is a Type 1 font of a specific name and point size. It provides all the methods available in module `Font::AFM` plus some extra convenient methods. All its methods provide outputs properly scaled for its font and point size.
+A `DocFont` object is a Type 1 font of a specific name and point size. It provides all the methods available in module `Font::AFM` plus some extra convenient methods (and aliases). All its methods provide outputs properly scaled for its font and point size.
 
 **WARNING** The previous version had some erroneous methods and should not be used!
 
@@ -88,8 +88,8 @@ A future module, **FontFactory::TT**, will provide the same benefits for *TrueTy
 
 See the accompanying [METHODS](METHODS.md) for details on the methods and their use in your own PDF document.
 
-MICR Encoding (MICRE) font
---------------------------
+Notes on the MICR Encoding (MICRE) font
+---------------------------------------
 
 The MICR Encoding font for bank checks was obtained from [1001fonts.com](https://www.1001fonts.com/micr-encoding-font.html).
 
