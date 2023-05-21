@@ -99,6 +99,7 @@ alias: C<st>
 =head3 B<LeftBearing>
 
 The left sidebearing is defined as the first character's BBox[0] distance from its origin.
+
 =begin code
 method LeftBearing(Str $s?) {...}
 =end code
@@ -106,6 +107,7 @@ method LeftBearing(Str $s?) {...}
 alias: C<lb>
 
 =head3 B<RightBearing>
+
 Get the value of the rightmost outline in a character or string
 =begin code
 method RightBearing(Str $s?) {...}
@@ -114,6 +116,7 @@ method RightBearing(Str $s?) {...}
 alias: C<rb>
 
 =head3 B<TopBearing>
+
 Get the value of the topmost outline in a character or string
 =begin code
 method TopBearing(Str $s?) {...}
@@ -122,6 +125,7 @@ method TopBearing(Str $s?) {...}
 alias: C<tb>
 
 =head3 B<BottomBearing>
+
 Get the value of the bottommost outline in a character or string
 =begin code
 method BottomBearing(Str $s?) {...}
@@ -142,6 +146,7 @@ method StringBBox(Str $s?, :$kern --> List) {...}
 alias: C<sbb>
 
 =head3 B<LineHeight>
+
 Get the maximum vertical space required for any single line of
 text or, optionally, for a specific string
 =begin code
@@ -157,18 +162,21 @@ file for the given font. The data returned by this module has the
 values adjusted for the C<DocFont> object's font size.
 
 =head3 B<Wx>
+
 Hash of glyph names and their width
 =begin code
 method Wx(--> Hash) {...}
 =end code
 
 =head3 B<BBox>
+
 Hash of glyph names and their bounding boxes
 =begin code
 method BBox(--> Hash) {...}
 =end code
 
 =head3 B<stringwidth>
+
 Provides the width of string for the font size. The kerned width is provided
 if C<$kern> is C<True>.
 =begin code
@@ -176,12 +184,14 @@ method stringwidth($string, Bool :$kern) {...}
 =end code
 
 =head3 B<FontBBox>
+
 Array of the overall font bounding box
 =begin code
 method FontBBox(--> Array) {...}
 =end code
 
 =head3 B<UnderlinePosition>
+
 Provides the designed distance of the underline below the baseline for the font size
 =begin code
 method UnderlinePosition {...}
@@ -190,6 +200,7 @@ method UnderlinePosition {...}
 alias: C<up>
 
 =head3 B<UnderlineThickness>
+
 Provides the designed thickness of the underline for the font size
 =begin code
 method UnderlineThickness {...}
@@ -198,72 +209,86 @@ method UnderlineThickness {...}
 alias: C<ut>
 
 =head3 B<IsFixedPitch>
+
 =begin code
 method IsFixedPitch {...}
 =end code
 
 =head3 B<FontName>
+
 Usually with no spaces
 =begin code
 method FontName {...}
 =end code
 
 =head3 B<FullName>
+
 =begin code
 method FullName {...}
 =end code
 
 =head3 B<FamilyName>
+
 =begin code
 method FamilyName {...}
 =end code
 
 =head3 B<Weight>
+
 =begin code
 method Weight {...}
 =end code
 
 =head3 B<ItalicAngle>
+
 =begin code
 method ItalicAngle {...}
 =end code
 
 =head3 B<Version>
+
 =begin code
 method Version {...}
 =end code
 
 =head3 B<Notice>
+
 =begin code
 method Notice {...}
 =end code
 
 =head3 B<Comment>
+
 =begin code
 method Comment {...}
 =end code
 
 =head3 B<>
+
 =begin code
 method X() {...}
 =end code
 
 =head3 B<EncodingScheme>
+
 =begin code
 method EncodingScheme {...}
 =end code
 
 =head3 B<CapHeight>
+
 =begin code
 method CapHeight {...}
 =end code
 
 =head3 B<XHeight>
+
 =begin code
 method XHeight {...}
 =end code
 
 =head3 B<Ascender>
+
 =begin code
 method Ascender {...}
 =end code
@@ -275,6 +300,7 @@ not be needed. The author believes they should be C<private> methods
 only used during the construction of the C>Font::AFM> class.
 
 =head3 B<kern>
+
 Kern the string. Returns an array of string segments, separated
 by numeric kerning distances, and the overall width of the string.
 =begin code
@@ -282,6 +308,7 @@ method kern($string --> List) {...}
 =end code
 
 =head3 B<KernData>
+
 A two-dimensional hash containing glyphs as keys, each with a hash of kerning characters and kern widths for the top-level glyph.
 =begin code
 method KernData(--> Hash) {...}
