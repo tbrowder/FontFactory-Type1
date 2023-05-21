@@ -33,10 +33,16 @@ method StrikethroughPosition {
     my ($llx, $lly, $urx, $ury) = $!afm.BBox{schar} >>*>> $!sf; # adjust for the desired font size
     0.5 * ($ury - $lly)
 }
+method sp(Str $s?) {
+    self.StrikethroughPosition($s)
+}
 
 #| Not having found any other source to dispute this, use same as underline thickness
 method StrikethroughThickness {
     $!afm.UnderlineThickness * $!sf # adjust for the desired font size
+}
+method st(Str $s?) {
+    self.StrikethroughThickness($s)
 }
 
 # See Font::AFM for details.
@@ -121,14 +127,6 @@ method StringBBox(Str $s?, :$kern --> List) {
     my $Fchar = $s.comb.head;                         # first character
     my $Lchar = $s.comb.tail;                         # last character
 
-    =begin comment
-    my $Flb   = $sf * $afm.BBox{$Fchar}[LLX];         # left bearing
-    my $Lrb   = $sf * $afm.BBox{$Lchar}[URX];         # right bearing
-    my $Lwid  = $sf * $afm.Wx{$Lchar};                # width of last character
-    $llx = $Flb;
-    $urx = $width - $Lwid + $Lrb;
-    =end comment
-
     my $Flb  = self.BBox{$Fchar}[LLX]; # first character left bearing
     my $Lrb  = self.BBox{$Lchar}[URX]; # last character right bearing
     my $Lwid = self.Wx{$Lchar};        # last character width
@@ -139,10 +137,6 @@ method StringBBox(Str $s?, :$kern --> List) {
 }
 method sbb(Str $s?, :$kern --> List) {
     self.StringBBox($s, :$kern)
-}
-
-method tb(Str $s?) {
-    self.TopBearing($s)
 }
 
 #| Get the height of the topmost outline in a string or the entire font if no string is provided
@@ -159,6 +153,9 @@ method TopBearing(Str $s?) {
         $ury = $y if $y > $ury;
     }
     $ury
+}
+method tb(Str $s?) {
+    self.TopBearing($s)
 }
 
 #| Get the value of the lowest outline outline in a string or the entire font if no string is provided
@@ -212,16 +209,22 @@ method lh(Str $s?) {
 method UnderlinePosition {
     $!afm.UnderlinePosition * $!sf # adjust for the desired font size
 }
+method up {
+    self.UnderlinePositon
+}
 
 #| UnderlineThickness
 method UnderlineThickness {
     $!afm.UnderlineThickness * $!sf # adjust for the desired font size
 }
+method ut {
+    self.UnderlineThickness
+}
 
 # ($kerned, $width) = $afm.kern($string, $fontsize?, :%glyphs?)
 # Kern the string. Returns an array of string segments, separated
 # by numeric kerning distances, and the overall width of the string.
-method kern($string, $fontsize?) {
+method kern($string) {
     $!afm.kern($string, $!size); #, :%glyphs;
 }
 
@@ -265,7 +268,7 @@ method ItalicAngle {
     $!afm.ItalicAngle
 }
 
-#| array of the overall font bounding box
+#| Array of the overall font bounding box
 method FontBBox {
     $!afm.FontBBox >>*>> $!sf # adjust for the desired font size
 }
@@ -310,13 +313,12 @@ method Descender {
     $!afm.Descender * $!sf # adjust for the desired font size
 }
 
-#| hash of glyph names and their width
+#| Hash of glyph names and their width
 method Wx(--> Hash) {
     $!afm.Wx.deepmap({ $_ * $!sf }) # adjust for the desired font size
 }
 
-#| hash of glyph names and their bounding boxes
+#| Hash of glyph names and their bounding boxes
 method BBox(--> Hash) {
     $!afm.BBox.deepmap({ $_ * $!sf }) # adjust for the desired font size
 }
-
