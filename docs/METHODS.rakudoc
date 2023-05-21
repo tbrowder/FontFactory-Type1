@@ -143,6 +143,17 @@ method BottomBearing(Str $s?) {...}
 
 alias: C<bb>
 
+=head3 B<LineHeight>
+
+Get the maximum vertical space required for any single line of
+text or, optionally, for a specific string
+
+=begin code
+method LineHeight(Str $s?) {...}
+=end code
+
+alias: C<lh>
+
 =head3 B<StringBBox>
 
 Returns a list of the bounding box of the input string or the FontBBox
@@ -150,20 +161,10 @@ if a string is not provided.  The user may choose to to kern the
 string.
 
 =begin code
-method StringBBox(Str $s?, :$kern --> List) {...}
+method StringBBox(Str $s?, Bool :$kern --> List) {...}
 =end code
 
 alias: C<sbb>
-
-=head3 B<LineHeight>
-
-Get the maximum vertical space required for any single line of
-text or, optionally, for a specific string
-=begin code
-method LineHeight(Str $s?) {...}
-=end code
-
-alias: C<lh>
 
 =head2 B<Methods found in Font::AFM>
 
