@@ -5,6 +5,11 @@
 B<FontFactory::Type1> - Provides the standard I<Adobe PostScript>
 fonts in a friendly package for use with many I<PDF::*> modules.
 
+A C<DocFont> object is a Type 1 font of a specific name and point size. It 
+provides all the methods available in module C<Font::AFM>
+plus some extra convenient methods. All its methods 
+provide outputs properly scaled for its font and point size.
+
 B<WARNING> The previous version had some erroneous methods and should not be used!
 
 =head1 SYNOPSIS
@@ -63,7 +68,7 @@ say "name: {$c10.name}"; # OUTPUT: «name: Courier␤»
 say "size: {$c10.size}"; # OUTOUT: «size: 10␤»
 =end code
 
-In addition to those attributes, all the attributes from C<Font::AFM>
+As stated above, in addition to those attributes, all the attributes from C<Font::AFM>
 are also available plus some added for convenience. For example:
 
 =begin code

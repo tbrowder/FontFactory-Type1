@@ -5,6 +5,8 @@ NAME
 
 **FontFactory::Type1** - Provides the standard *Adobe PostScript* fonts in a friendly package for use with many *PDF::** modules.
 
+A `DocFont` object is a Type 1 font of a specific name and point size. It provides all the methods available in module `Font::AFM` plus some extra convenient methods. All its methods provide outputs properly scaled for its font and point size.
+
 **WARNING** The previous version had some erroneous methods and should not be used!
 
 SYNOPSIS
@@ -60,7 +62,7 @@ say "name: {$c10.name}"; # OUTPUT: «name: Courier␤»
 say "size: {$c10.size}"; # OUTOUT: «size: 10␤»
 ```
 
-In addition to those attributes, all the attributes from `Font::AFM` are also available plus some added for convenience. For example:
+As stated above, in addition to those attributes, all the attributes from `Font::AFM` are also available plus some added for convenience. For example:
 
     # for typesetting, find the width of a kerned string in PostScript points (72/inch):
     my $text = "Some string of text to be typeset in a beautiful PDF document.";
