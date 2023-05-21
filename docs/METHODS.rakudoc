@@ -29,19 +29,25 @@ the desired baseline.
 =begin item 
 Bounding box ('bbox' or 'BBox') 
 
-(1) The rectangle that bounds the horizontal and vertical limits of the outline of a glyph. 
+1. The rectangle that bounds the horizontal and vertical limits of the outline of a glyph. 
 The bounding box is described as a list of four numbers, expressed as
 PostScript points (72 per inch), representing the C<x> and C<y>
 coordinates of the lower-left corner and the C<x> and C<y> coordinates
 of the upper-right corner from the glyph's origin. 
 
-(2) The same as the first definition but applied to a set of glyphs as a line of text.
+2. The same as the first definition but applied to a set of glyphs as a line of text.
 =end item
 
-=item Width - (1) The horizontal distance from a glyph's origin to the
+=begin item 
+Width 
+
+1. The horizontal distance from a glyph's origin to the
 right to the point where the next glyph's origin is designed to be
-placed. (2) The same as the first definition but applied to a set of
+placed. 
+
+2. The same as the first definition but applied to a set of
 glyphs as a line of text.
+=end item
 
 =item Font bounding box - The rectangle that bounds the smallest
 outline which encompasses all the glyphs in the font when placed with
