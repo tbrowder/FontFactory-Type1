@@ -80,11 +80,11 @@ Some methods have short aliases for convenience in coding.
 Provides the position of the strikethrough line as the midheight of
 the lower-case 'm'
 
-alias: C<sp>
-
 =begin code
 method StrikethroughPosition {...}
 =end code
+
+alias: C<sp>
 
 =head3 B<StrikethroughThickness>
 

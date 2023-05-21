@@ -46,9 +46,9 @@ Some methods have short aliases for convenience in coding.
 
 Provides the position of the strikethrough line as the midheight of the lower-case 'm'
 
-alias: `sp`
-
     method StrikethroughPosition {...}
+
+alias: `sp`
 
 ### **StrikethroughThickness**
 
