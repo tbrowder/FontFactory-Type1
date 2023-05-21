@@ -14,7 +14,7 @@ my ($ff, $f, $f2, $v, $a, $afm, $afm2, $text, $bbox, $bbox2);
 my ($width, $llx, $lly, $urx, $ury);
 my ($got, $exp);
 
-plan 21;
+plan 41;
 
 lives-ok {
     $afm = Font::AFM.new: :$name;
@@ -35,9 +35,16 @@ lives-ok {
 $a = $afm.BBox<m>[3] * $f.sf * 0.5;
 $v = $f.StrikethroughPosition;
 is $a, $v;
+$v = $f.sp;
+is $a, $v, "sp alias";
+
+# no such animal in AFM
+# use UnderLineThickness
 $a = $afm.UnderlineThickness * $f.sf;
 $v = $f.StrikethroughThickness;
 is $a, $v;
+$v = $f.st;
+is $a, $v, "st alias";
 
 # an input string =====
 $text = 'a Spoor';
@@ -65,8 +72,7 @@ $a = $bbox[0];
 $v = $f.LeftBearing($text);
 is $a, $v, "LeftBearing with input string";
 $v = $f.lb($text);
-is $a, $v, "LeftBearing with input string";
-
+is $a, $v, "LeftBearing with input string, alias";
 
 $text = 'a Spoor';
 
@@ -76,7 +82,7 @@ $a = $bbox[1];
 $v = $f.BottomBearing($text);
 is $a, $v, "BottomBearing with input string";
 $v = $f.bb($text);
-is $a, $v, "BottomBearing with input string";
+is $a, $v, "BottomBearing with input string, alias";
 
 #===== without input string =====
 $bbox = $afm.FontBBox >>*>> $f.sf;
@@ -85,13 +91,13 @@ $a = $bbox[3];
 $v = $f.TopBearing;
 is $a, $v, "TopBearing without input string";
 $v = $f.tb;
-is $a, $v, "TopBearing without input string";
+is $a, $v, "TopBearing without input string, alias";
 
 $a = $bbox[1];
 $v = $f.BottomBearing;
 is $a, $v, "BottomBearing without input string";
 $v = $f.bb;
-is $a, $v, "BottomBearing without input string";
+is $a, $v, "BottomBearing without input string, alias";
 
 #===== more new methods =====
 # with an input line
@@ -101,7 +107,7 @@ $a *= $f.sf;
 $v = $f.LineHeight($text);
 is $a, $v, "LineHeight with text input";
 $v = $f.lh($text);
-is $a, $v, "LineHeight with text input";
+is $a, $v, "LineHeight with text input, alias";
 
 # without an input line
 $a = $afm.FontBBox[3] - $afm.FontBBox[1];
@@ -109,5 +115,36 @@ $a *= $f.sf;
 $v = $f.LineHeight;
 is $a, $v, "LineHeight without text input";
 $v = $f.lh;
-is $a, $v, "LineHeight without text input";
+is $a, $v, "LineHeight without text input, alias";
 
+# other aliases
+# alias: C<up>
+# alias: C<ut>
+
+$a = $afm.UnderlinePosition * $f.sf;
+$v = $f.UnderlinePosition;
+is $a, $v;
+$v = $f.up;
+is $a, $v, "up alias";
+
+$a = $afm.UnderlineThickness * $f.sf;
+$v = $f.UnderlineThickness;
+is $a, $v;
+$v = $f.ut;
+is $a, $v, "ut alias";
+
+is $afm.IsFixedPitch, $f.IsFixedPitch;
+is $afm.FontName, $f.FontName;
+is $afm.FullName, $f.FullName;
+is $afm.FamilyName, $f.FamilyName;
+is $afm.Weight, $f.Weight;
+is $afm.ItalicAngle, $f.ItalicAngle;
+is $afm.Version, $f.Version;
+is $afm.Notice, $f.Notice;
+is $afm.Comment, $f.Comment;
+is $afm.EncodingScheme, $f.EncodingScheme;
+
+is $afm.CapHeight * $f.sf, $f.CapHeight;
+is $afm.XHeight * $f.sf, $f.XHeight;
+is $afm.Ascender * $f.sf, $f.Ascender;
+is $afm.Descender * $f.sf, $f.Descender;

@@ -33,16 +33,16 @@ method StrikethroughPosition {
     my ($llx, $lly, $urx, $ury) = $!afm.BBox{schar} >>*>> $!sf; # adjust for the desired font size
     0.5 * ($ury - $lly)
 }
-method sp(Str $s?) {
-    self.StrikethroughPosition($s)
+method sp {
+    self.StrikethroughPosition
 }
 
 #| Not having found any other source to dispute this, use same as underline thickness
 method StrikethroughThickness {
     $!afm.UnderlineThickness * $!sf # adjust for the desired font size
 }
-method st(Str $s?) {
-    self.StrikethroughThickness($s)
+method st {
+    self.StrikethroughThickness
 }
 
 # See Font::AFM for details.
@@ -210,7 +210,7 @@ method UnderlinePosition {
     $!afm.UnderlinePosition * $!sf # adjust for the desired font size
 }
 method up {
-    self.UnderlinePositon
+    self.UnderlinePosition
 }
 
 #| UnderlineThickness

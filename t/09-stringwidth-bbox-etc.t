@@ -57,16 +57,36 @@ is $width2, $width;
 note "width 3 with :!kern: $width" if $debug;
 
 $bbox1 = string-bbox $text, :$name, :size($fontsize);
-$bbox2 = $f.StringBBox: $text, :$name, :size($fontsize);
-is-deeply $bbox2, $bbox1;
+$bbox2 = $f.StringBBox: $text;
+is-deeply $bbox2, $bbox1, "StringBBox";
+
+my ($RB1, $RB2);
 
 $bbox1 = string-bbox $text, :$name, :size($fontsize), :kern;
-$bbox2 = $f.StringBBox: $text, :$name, :size($fontsize), :kern;
-is-deeply $bbox2, $bbox1;
+$bbox2 = $f.StringBBox: $text, :kern;
+is-deeply $bbox2, $bbox1, "StringBBox, kern";
+$bbox2 = $f.sbb: $text, :kern;
+is-deeply $bbox2, $bbox1, "StringBBox, kern, alias";
+
+# right bearing
+$RB1 = $bbox1[2];
+$RB2 = $f.RightBearing: $text, :kern;
+is $RB2, $RB1, "RightBearing, kern";
+$RB2 = $f.rb:  $text, :kern;
+is $RB2, $RB1, "RightBearing, kern, alias";
 
 $bbox1 = string-bbox $text, :$name, :size($fontsize), :!kern;
-$bbox2 = $f.StringBBox: $text, :$name, :size($fontsize), :!kern;
-is-deeply $bbox2, $bbox1;
+$bbox2 = $f.StringBBox: $text, :!kern;
+is-deeply $bbox2, $bbox1, "StringBBox, no kern";
+$bbox2 = $f.sbb: $text, :!kern;
+is-deeply $bbox2, $bbox1, "StringBBox, no kern, alias";
+
+# right bearing
+$RB1 = $bbox1[2];
+$RB2 = $f.RightBearing: $text, :!kern;
+is $RB2, $RB1, "RightBearing, no kern";
+$RB2 = $f.rb:  $text, :!kern;
+is $RB2, $RB1, "RightBearing, no kern, alias";
 
 done-testing;
 
@@ -143,7 +163,7 @@ is $got, $exp, "RightBearing with input string 2";
 
 # StringBBox
 $text = "Fo Ko Oo Po Ro To Uo Vo Wo Yo";
-  
+
 $llx = 0;
 $lly = 0;
 $ury = 0;
@@ -190,4 +210,3 @@ $urx = $width - $wlchar + $urx;
 $exp = ($llx, $lly, $urx, $ury);
 $got = $f.StringBBox($text, :kern);
 is-deeply $got, $exp, "StringBBox, with kern";
-
