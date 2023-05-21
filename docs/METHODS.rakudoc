@@ -20,12 +20,13 @@ A glyph is a character in the chosen font and it has the following metric charac
 described for our use in placing the character:
 
 =item Origin - Vertically centered on the baseline of the line of text, it is the reference point to
-be used when placing the glyph on the baseline
+be used when placing the glyph on the desired baseline.
 
 =item Bounding box ('bbox' or 'BBox') - (1) The rectangle that bounds the horizontal and vertical 
 limits of the outline of a glyph; the bounding box is described as a list of four numbers, 
 expressed as PostScript points (72 per inch),
-representing the C<x> and C<y> of the lower-left corner and the C<x> and C<y> of the upper-right corner 
+representing the C<x> and C<y> coordinates of the lower-left corner and the C<x> and C<y> 
+coordinates of the upper-right corner 
 from the glyph's origin. (2) The same as the first definition but applied to a set of glyphs as
 a line of text.
 
@@ -33,7 +34,7 @@ a line of text.
 next glyph's origin is designed to be placed. (2) The same as the first definition but applied to
 a set of glyphs as a line of text.
 
-=item Font bounding box - The rectangle that bounds the smallest outline which compasses all the glyphs
+=item Font bounding box - The rectangle that bounds the smallest outline which encompasses all the glyphs
 in the font when placed with their origins at the same point.
  
 =item Left bearing - The C<x> value of the left side of a glyph's bounding box.
@@ -46,8 +47,8 @@ Scale factor - A font's metrics are typically described as being in a rectangula
 system with a width of 1000 units. To get the equivalent of the dimensions in the chosen point
 size the values are multiplied by a scale factor: point size / 1000.
 
-For example, given a character, say 'B', in a font with size of 12.3 points and the
-character's raw metrics width ia 700 units, find the character's final width in points: 
+For example, given a character, say 'B', in a font with a size of 12.3 points and the
+character's raw metrics width is 700 units, find the character's final width in points: 
 
 =begin code
 scale factor = 12.3/1000 = 0.0123
@@ -73,7 +74,7 @@ method StrikethroughThickness {...}
 =end code
 
 =head3 B<>
-Yhe left sidebearing is defined as the first character's BBox[0] distance, positive to the right of the origin.
+The left sidebearing is defined as the first character's BBox[0] distance from its origin.
 =begin code
 method LeftBearing(Str $s) {...}
 =end code
