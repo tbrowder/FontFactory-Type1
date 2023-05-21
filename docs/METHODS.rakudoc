@@ -97,6 +97,7 @@ method StrikethroughThickness {...}
 alias: C<st>
 
 =head3 B<LeftBearing>
+
 The left sidebearing is defined as the first character's BBox[0] distance from its origin.
 =begin code
 method LeftBearing(Str $s?) {...}
