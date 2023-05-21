@@ -58,25 +58,33 @@ Provides the suggested thickness of the strikethrough line for the font size
 
 alias: `st`
 
-### **LeftBearing** The left sidebearing is defined as the first character's BBox[0] distance from its origin.
+### **LeftBearing**
+
+The left sidebearing is defined as the first character's BBox[0] distance from its origin.
 
     method LeftBearing(Str $s?) {...}
 
 alias: `lb`
 
-### **RightBearing** Get the value of the rightmost outline in a character or string
+### **RightBearing**
+
+Get the value of the rightmost outline in a character or string
 
     method RightBearing(Str $s?) {...}
 
 alias: `rb`
 
-### **TopBearing** Get the value of the topmost outline in a character or string
+### **TopBearing**
+
+Get the value of the topmost outline in a character or string
 
     method TopBearing(Str $s?) {...}
 
 alias: `tb`
 
-### **BottomBearing** Get the value of the bottommost outline in a character or string
+### **BottomBearing**
+
+Get the value of the bottommost outline in a character or string
 
     method BottomBearing(Str $s?) {...}
 
@@ -90,7 +98,9 @@ Returns a list of the bounding box of the input string or the FontBBox if a stri
 
 alias: `sbb`
 
-### **LineHeight** Get the maximum vertical space required for any single line of text or, optionally, for a specific string
+### **LineHeight**
+
+Get the maximum vertical space required for any single line of text or, optionally, for a specific string
 
     method LineHeight(Str $s?) {...}
 
@@ -101,29 +111,41 @@ alias: `lh`
 
 The following methods return the data extracted from Adobe's `afm` file for the given font. The data returned by this module has the values adjusted for the `DocFont` object's font size.
 
-### **Wx** Hash of glyph names and their width
+### **Wx**
+
+Hash of glyph names and their width
 
     method Wx(--> Hash) {...}
 
-### **BBox** Hash of glyph names and their bounding boxes
+### **BBox**
+
+Hash of glyph names and their bounding boxes
 
     method BBox(--> Hash) {...}
 
-### **stringwidth** Provides the width of string for the font size. The kerned width is provided if `$kern` is `True`.
+### **stringwidth**
+
+Provides the width of string for the font size. The kerned width is provided if `$kern` is `True`.
 
     method stringwidth($string, Bool :$kern) {...}
 
-### **FontBBox** Array of the overall font bounding box
+### **FontBBox**
+
+Array of the overall font bounding box
 
     method FontBBox(--> Array) {...}
 
-### **UnderlinePosition** Provides the designed distance of the underline below the baseline for the font size
+### **UnderlinePosition**
+
+Provides the designed distance of the underline below the baseline for the font size
 
     method UnderlinePosition {...}
 
 alias: `up`
 
-### **UnderlineThickness** Provides the designed thickness of the underline for the font size
+### **UnderlineThickness**
+
+Provides the designed thickness of the underline for the font size
 
     method UnderlineThickness {...}
 
@@ -133,7 +155,9 @@ alias: `ut`
 
     method IsFixedPitch {...}
 
-### **FontName** Usually with no spaces
+### **FontName**
+
+Usually with no spaces
 
     method FontName {...}
 
@@ -190,11 +214,15 @@ Not needed by the normal user
 
 The following two methods are included for completeness, but should not be needed. The author believes they should be `private` methods only used during the construction of the C>Font::AFM> class.
 
-### **kern** Kern the string. Returns an array of string segments, separated by numeric kerning distances, and the overall width of the string.
+### **kern**
+
+Kern the string. Returns an array of string segments, separated by numeric kerning distances, and the overall width of the string.
 
     method kern($string --> List) {...}
 
-### **KernData** A two-dimensional hash containing glyphs as keys, each with a hash of kerning characters and kern widths for the top-level glyph.
+### **KernData**
+
+A two-dimensional hash containing glyphs as keys, each with a hash of kerning characters and kern widths for the top-level glyph.
 
     method KernData(--> Hash) {...}
 
