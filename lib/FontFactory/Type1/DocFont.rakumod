@@ -86,7 +86,7 @@ method RightBearing(Str $s?, :$kern) {
     $str-rb
 }
 method rb(Str $s?, :$kern) {
-    self.RightBearing($s)
+    self.RightBearing($s, :$kern)
 }
 
 # Returns a list of the bounding box of the input string or the
