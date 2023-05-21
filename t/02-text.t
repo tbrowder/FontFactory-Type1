@@ -2,8 +2,10 @@ use Test;
 use PDF::Content;
 use PDF::Lite;
 use Font::AFM;
+
 use FontFactory::Type1;
-use FontFactory::Type1::Utils;
+use FontFactory::Type1::Subs;
+use FontFactory::Type1::FontList;
 
 plan 38;
 
@@ -26,7 +28,7 @@ lives-ok {
    $pdf = PDF::Lite.new;
 }, "checking pdf instantiation";
 
-for %MyFonts.keys {
+for %Fonts.keys {
     # distinguish between PDF core font objects (BaseFont) 
     # and higher-level composite ones (DocFont)
 

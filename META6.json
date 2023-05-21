@@ -1,4 +1,5 @@
 {
+  "api": 2,
   "auth": "zef:tbrowder",
   "authors": [
     "Tom Browder"
@@ -19,7 +20,10 @@
   "perl": "6.d",
   "provides": {
     "FontFactory::Type1": "lib/FontFactory/Type1.rakumod",
-    "FontFactory::Type1::Utils": "lib/FontFactory/Type1/Utils.rakumod"
+    "FontFactory::Type1::BaseFont": "lib/FontFactory/Type1/BaseFont.rakumod",
+    "FontFactory::Type1::DocFont": "lib/FontFactory/Type1/DocFont.rakumod",
+    "FontFactory::Type1::FontList": "lib/FontFactory/Type1/FontList.rakumod",
+    "FontFactory::Type1::Subs": "lib/FontFactory/Type1/Subs.rakumod"
   },
   "resources": [
     "fonts/MICREncoding.pfa",
@@ -30,6 +34,8 @@
     "PDF Fonts"
   ],
   "test-depends": [
+    "Data::Dump",
+    "Data::Dump::Tree"
   ],
   "version": "0.0.1"
 }

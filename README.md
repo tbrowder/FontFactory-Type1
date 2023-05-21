@@ -3,7 +3,9 @@
 NAME
 ====
 
-**FontFactory::Type1** - Provides the standard *Adobe PostScript* fonts in a friendly package for use with many *PDF::** modules
+**FontFactory::Type1** - Provides the standard *Adobe PostScript* fonts in a friendly package for use with many *PDF::** modules.
+
+**WARNING** The previous version had some erroneous methods and shoud not be used!>
 
 WARNING: THIS VERSION (v.0.0.1) HAS SERIOUS PROBLEMS AND IT SHOULD NOT BE USED. A NEW VERSION WILL BE RELEASED SOON
 ==================================================================================================================
@@ -15,9 +17,9 @@ Find the fonts available in the current version along with their aliases:
 
 ```raku
 use FontFactory::Type1;
-use FontFactory::Type1::Utils;
+use FontFactory::Type1::Subs;
 
-show-myfonts;
+show-fonts;
 
 # output:
 Font family: 'Courier'               (alias: 'c')
@@ -61,7 +63,7 @@ say "name: {$c10.name}"; # OUTPUT: «name: Courier␤»
 say "size: {$c10.size}"; # OUTOUT: «size: 10␤»
 ```
 
-In addition to those attributes, all the attributes from `Font::AFM` are also available, For example:
+In addition to those attributes, all the attributes from `Font::AFM` are also available plus some added for convenience, For example:
 
     # for typesetting, find the width of a kerned string in PostScript points (72/inch):
     my $text = "Some string of text to be typeset in a beautiful PDF document.";
@@ -71,7 +73,7 @@ In addition to those attributes, all the attributes from `Font::AFM` are also av
 DESCRIPTION
 ===========
 
-**FontFactory** provides easy access to the Adobe standard Type 1 fonts (and their metrics) as used in PDF document creation using modules such as:
+**FontFactory::Type1** provides easy access to the Adobe standard Type 1 fonts (and their metrics) as used in PDF document creation using modules such as:
 
   * PDF::Lite
 
@@ -84,6 +86,8 @@ DESCRIPTION
   * CheckWriter (WIP)
 
 A future module, **FontFactory::TT**, will provide the same benefits for *TrueType* (and *OpenType*) fonts, but it will require the user to provide his or her own font files (the author recommends using Google's free fonts as a starting point for a collection of fonts);
+
+See the accompanying [METHODS](METHODS.md) for details on the methods and their use in your own PDF document.
 
 MICR Encoding (MICRE) font
 --------------------------

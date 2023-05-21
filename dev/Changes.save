@@ -10,19 +10,23 @@ Revision history for FontFactory::Type1
     - Put the font list into new file FontList.rakumod as template
       for upcoming Build method for module FontFactory::TT
     - Added new DocFont methods currently not found in Font::AFM:
-      + StrikethroughPosition - at the midpoint height of the 'm' character
+      + StrikethroughPosition - at the midpoint height of the'm' character
       + StrikethroughThickness - same as UnderlineThickness
-      + LineHeight - the maximum vertical space required for any single line of 
-        text or, optionally, for a specific string
       + TopBearing    - topmost stroke of the font's BBox or the optional input string
+      + LeftBearing   - leftmost stroke of the font's BBox or the optional input string
+      + RightBearing  - rightmost stroke of the font's BBox or the optional input string
       + BottomBearing - bottommost stroke of the font's BBox or the optional input string
-      + LeftBearing   - leftmost stroke of the first character in input string
-      + RightBearing  - rightmost stroke of the first character in the input string
 
         Note bearing distances are in points from the appropiate origin: first character in
         any input string for the left- and right-bearing, highest character for the
         top-bearing, lowest character for bottom-bearing, and the FontBBox
         for no string
+
+    - Added aliases for commonly used methods:
+      + tb (TopBearing)
+      + lb (LeftBearing)
+      + rb (RightBearing)
+      + bb (BottomBearing)
 
 0.0.1  2023-04-30T19:50:06-05:00
     - Initial version

@@ -1,20 +1,21 @@
+use FontFactory::Type1::Subs;
+use FontFactory::Type1::BaseFont;
+use FontFactory::Type1::DocFont;
+
 unit class FontFactory::Type1;
 
 use PDF::Lite;
-use PDF::Content;
-use Text::Utils :wrap-text;
 use Font::AFM;
 
-use FontFactory::Type1::Utils;
 
 # needed to access corefonts
 has PDF::Lite $.pdf; # can be provided by the caller
 
 # hash of BaseFonts keyed by their alias name
-has BaseFont %.basefonts;
+has FontFactory::Type1::BaseFont %.basefonts;
 
 # hash of DocFonts keyed by an alias name which includes the font's size
-has DocFont %.docfonts;
+has FontFactory::Type1::DocFont %.docfonts;
 
 submethod TWEAK {
     # provide if using standalone

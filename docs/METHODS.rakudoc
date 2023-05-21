@@ -1,0 +1,318 @@
+=begin pod
+
+=head1 B<Digital Typesetting>
+
+Modern typesetting involves using text and digital typefaces (fonts)
+placed on a page mimicing the earlier printing era with hand-placed
+lead type on a printing press, covered with a thin layer of ink, and
+pressed against paper to produce a printed page. While retaining some
+of the old terminology, modern typesetting results in more accurate
+and easier production of beautiful printed products.
+
+A few terms need to be explained to understand the application of
+digital fonts using this module as well as B<Font::AFM> which is
+central to it.
+
+Placing a single line of text using a font of a specific size
+(expressed as a hight of N points where there are 72 points per inch)
+involves knowledge both a single character's metrics as well as its
+collective metrics when gathered as a multi-glyph line.
+
+A glyph is a digital character in the chosen font and it has the
+following metric characteristics described for our use in placing the
+character:
+
+=item Origin - Vertically centered on the baseline of the line of
+text, it is the reference point to be used when placing the glyph on
+the desired baseline.
+
+=item Bounding box ('bbox' or 'BBox') - (1) The rectangle that bounds
+the horizontal and vertical limits of the outline of a glyph; the
+bounding box is described as a list of four numbers, expressed as
+PostScript points (72 per inch), representing the C<x> and C<y>
+coordinates of the lower-left corner and the C<x> and C<y> coordinates
+of the upper-right corner from the glyph's origin. (2) The same as the
+first definition but applied to a set of glyphs as a line of text.
+
+=item Width - (1) The horizontal distance from a glyph's origin to the
+right to the point where the next glyph's origin is designed to be
+placed. (2) The same as the first definition but applied to a set of
+glyphs as a line of text.
+
+=item Font bounding box - The rectangle that bounds the smallest
+outline which encompasses all the glyphs in the font when placed with
+their origins at the same point.
+
+=item Left bearing - The C<x> value of the left side of a glyph's bounding box.
+=item Top bearing - The C<y> value of the top side of of a glyph's bounding box.
+=item Bottom bearing - The C<y> value of the bottom side of a glyph's bounding box.
+=item Right bearing - The C<x> value of the right side of a glyph's bounding box.
+
+=begin item
+Scale factor - A font's metrics are typically described as being in a
+rectangular coordinate system with a width of 1000 units. To get the
+equivalent of the dimensions in the chosen point size the values are
+multiplied by a scale factor: point size / 1000.
+
+For example, given a character, say 'B', in a font with a size of 12.3
+points with its glyph's raw metrics width being 700 units, find the
+glyph's final width in points:
+
+=begin code
+scale factor = 12.3/1000 = 0.0123
+width = 0.0123 x 700 = 8.61
+=end code
+
+=end item
+
+=head1 B<class DocFont methods>
+
+The following methods are convenience methods not found in module
+C<Font::AFM> but are constructed fron data therein and have been
+adjusted for the C<DocFont> object's font size.
+
+Some methods have short aliases for convenience in coding.
+
+=head2 B<Methods not in Font::AFM>
+
+=head3 B<StrikethroughPosition>
+
+Provides the position of the strikethrough line as the midheight of
+the lower-case 'm'
+
+=begin code
+method StrikethroughPosition {...}
+=end code
+
+alias: C<sp>
+
+=head3 B<StrikethroughThickness>
+
+Provides the suggested thickness of the strikethrough line for the font size
+
+=begin code
+method StrikethroughThickness {...}
+=end code
+
+alias: C<st>
+
+=head3 B<LeftBearing>
+
+The left sidebearing is defined as the first character's BBox[0] distance from its origin.
+
+=begin code
+method LeftBearing(Str $s?) {...}
+=end code
+
+alias: C<lb>
+
+=head3 B<RightBearing>
+
+Get the value of the rightmost outline in a character or string
+=begin code
+method RightBearing(Str $s?) {...}
+=end code
+
+alias: C<rb>
+
+=head3 B<TopBearing>
+
+Get the value of the topmost outline in a character or string
+=begin code
+method TopBearing(Str $s?) {...}
+=end code
+
+alias: C<tb>
+
+=head3 B<BottomBearing>
+
+Get the value of the bottommost outline in a character or string
+=begin code
+method BottomBearing(Str $s?) {...}
+=end code
+
+alias: C<bb>
+
+=head3 B<StringBBox>
+
+Returns a list of the bounding box of the input string or the FontBBox
+if a string is not provided.  The user may choose to to kern the
+string.
+
+=begin code
+method StringBBox(Str $s?, :$kern --> List) {...}
+=end code
+
+alias: C<sbb>
+
+=head3 B<LineHeight>
+
+Get the maximum vertical space required for any single line of
+text or, optionally, for a specific string
+=begin code
+method LineHeight(Str $s?) {...}
+=end code
+
+alias: C<lh>
+
+=head2 B<Methods found in Font::AFM>
+
+The following methods return the data extracted from Adobe's C<afm>
+file for the given font. The data returned by this module has the
+values adjusted for the C<DocFont> object's font size.
+
+=head3 B<Wx>
+
+Hash of glyph names and their width
+=begin code
+method Wx(--> Hash) {...}
+=end code
+
+=head3 B<BBox>
+
+Hash of glyph names and their bounding boxes
+=begin code
+method BBox(--> Hash) {...}
+=end code
+
+=head3 B<stringwidth>
+
+Provides the width of string for the font size. The kerned width is provided
+if C<$kern> is C<True>.
+=begin code
+method stringwidth($string, Bool :$kern) {...}
+=end code
+
+=head3 B<FontBBox>
+
+Array of the overall font bounding box
+=begin code
+method FontBBox(--> Array) {...}
+=end code
+
+=head3 B<UnderlinePosition>
+
+Provides the designed distance of the underline below the baseline for the font size
+=begin code
+method UnderlinePosition {...}
+=end code
+
+alias: C<up>
+
+=head3 B<UnderlineThickness>
+
+Provides the designed thickness of the underline for the font size
+=begin code
+method UnderlineThickness {...}
+=end code
+
+alias: C<ut>
+
+=head3 B<IsFixedPitch>
+
+=begin code
+method IsFixedPitch {...}
+=end code
+
+=head3 B<FontName>
+
+Usually with no spaces
+=begin code
+method FontName {...}
+=end code
+
+=head3 B<FullName>
+
+=begin code
+method FullName {...}
+=end code
+
+=head3 B<FamilyName>
+
+=begin code
+method FamilyName {...}
+=end code
+
+=head3 B<Weight>
+
+=begin code
+method Weight {...}
+=end code
+
+=head3 B<ItalicAngle>
+
+=begin code
+method ItalicAngle {...}
+=end code
+
+=head3 B<Version>
+
+=begin code
+method Version {...}
+=end code
+
+=head3 B<Notice>
+
+=begin code
+method Notice {...}
+=end code
+
+=head3 B<Comment>
+
+=begin code
+method Comment {...}
+=end code
+
+=head3 B<>
+
+=begin code
+method X() {...}
+=end code
+
+=head3 B<EncodingScheme>
+
+=begin code
+method EncodingScheme {...}
+=end code
+
+=head3 B<CapHeight>
+
+=begin code
+method CapHeight {...}
+=end code
+
+=head3 B<XHeight>
+
+=begin code
+method XHeight {...}
+=end code
+
+=head3 B<Ascender>
+
+=begin code
+method Ascender {...}
+=end code
+
+=head2 Not needed by the normal user
+
+The following two methods are included for completeness, but should
+not be needed. The author believes they should be C<private> methods
+only used during the construction of the C>Font::AFM> class.
+
+=head3 B<kern>
+
+Kern the string. Returns an array of string segments, separated
+by numeric kerning distances, and the overall width of the string.
+=begin code
+method kern($string --> List) {...}
+=end code
+
+=head3 B<KernData>
+
+A two-dimensional hash containing glyphs as keys, each with a hash of kerning characters and kern widths for the top-level glyph.
+=begin code
+method KernData(--> Hash) {...}
+=end code
+
+
+=end pod
