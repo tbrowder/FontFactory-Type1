@@ -7,9 +7,6 @@ NAME
 
 **WARNING** The previous version had some erroneous methods and shoud not be used!>
 
-WARNING: THIS VERSION (v.0.0.1) HAS SERIOUS PROBLEMS AND IT SHOULD NOT BE USED. A NEW VERSION WILL BE RELEASED SOON
-==================================================================================================================
-
 SYNOPSIS
 ========
 
