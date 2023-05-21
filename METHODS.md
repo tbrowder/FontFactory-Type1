@@ -161,61 +161,87 @@ alias: `ut`
 
 ### **IsFixedPitch**
 
+If true, the font is a fixed-pitch (monospaced) font, e.g., 'Courier'.
+
     method IsFixedPitch {...}
 
 ### **FontName**
 
-Usually with no spaces
+The name of the font as presented to the PostScript language `findfont` operator, e.g., 'Times-Roman'.
 
     method FontName {...}
 
 ### **FullName**
 
+Unique, human-readable name for an individual font, e.g., 'Times Roman'.
+
     method FullName {...}
 
 ### **FamilyName**
+
+Human-readable name for a group of fonts that are stylistic variants of a single design', e.g., 'Times'.
 
     method FamilyName {...}
 
 ### **Weight**
 
+Human-readable name for the weight or "boldness" attribute of a font. Examples are 'Roman', 'Bold', and 'Light'.
+
     method Weight {...}
 
 ### **ItalicAngle**
+
+Angle in degrees counterclockwise from the vertical of the dominate vertical strokes of the font.
 
     method ItalicAngle {...}
 
 ### **Version**
 
+Version of the font.
+
     method Version {...}
 
 ### **Notice**
+
+Trademark or copyright notice, if applicable.
 
     method Notice {...}
 
 ### **Comment**
 
+Comments found in the AFM file.
+
     method Comment {...}
 
-### ****
-
-    method X() {...}
-
 ### **EncodingScheme**
+
+The name of the standard encoding scheme for the font. Most Adobe fonts use the 'AdobeStandardEncoding'. Special fonts might state 'FontSpecific'.
 
     method EncodingScheme {...}
 
 ### **CapHeight**
 
+Usually the y-value of the top of the capital 'H'.
+
     method CapHeight {...}
 
 ### **XHeight**
+
+Typically the y-value of the top of the lowercase 'x'.
 
     method XHeight {...}
 
 ### **Ascender**
 
+Typically the y-value of the top of the lowercase 'd'.
+
     method Ascender {...}
+
+### **Descender**
+
+Typically the y-value of the bottom of the lowercase 'p'.
+
+    method Descender {...}
 
 Not needed by the normal user
 -----------------------------

@@ -221,87 +221,106 @@ alias: C<ut>
 
 =head3 B<IsFixedPitch>
 
+If true, the font is a fixed-pitch (monospaced) font, e.g., 'Courier'.
 =begin code
 method IsFixedPitch {...}
 =end code
 
 =head3 B<FontName>
 
-Usually with no spaces
+The name of the font as presented to the PostScript language
+C<findfont> operator, e.g., 'Times-Roman'.
 =begin code
 method FontName {...}
 =end code
 
 =head3 B<FullName>
 
+Unique, human-readable name for an individual font, e.g., 'Times Roman'.
 =begin code
 method FullName {...}
 =end code
 
 =head3 B<FamilyName>
 
+Human-readable name for a group of fonts that are stylistic variants of
+a single design', e.g., 'Times'.
 =begin code
 method FamilyName {...}
 =end code
 
 =head3 B<Weight>
 
+Human-readable name for the weight or "boldness" attribute of a font.
+Examples are 'Roman', 'Bold', and 'Light'.
 =begin code
 method Weight {...}
 =end code
 
 =head3 B<ItalicAngle>
 
+Angle in degrees counterclockwise from the vertical of the dominate 
+vertical strokes of the font.
 =begin code
 method ItalicAngle {...}
 =end code
 
 =head3 B<Version>
 
+Version of the font.
 =begin code
 method Version {...}
 =end code
 
 =head3 B<Notice>
 
+Trademark or copyright notice, if applicable.
 =begin code
 method Notice {...}
 =end code
 
 =head3 B<Comment>
 
+Comments found in the AFM file.
 =begin code
 method Comment {...}
 =end code
 
-=head3 B<>
-
-=begin code
-method X() {...}
-=end code
-
 =head3 B<EncodingScheme>
 
+The name of the standard encoding scheme for the font.
+Most Adobe fonts use the 'AdobeStandardEncoding'.
+Special fonts might state 'FontSpecific'.
 =begin code
 method EncodingScheme {...}
 =end code
 
 =head3 B<CapHeight>
 
+Usually the y-value of the top of the capital 'H'.
 =begin code
 method CapHeight {...}
 =end code
 
 =head3 B<XHeight>
 
+Typically the y-value of the top of the lowercase 'x'.
 =begin code
 method XHeight {...}
 =end code
 
 =head3 B<Ascender>
 
+Typically the y-value of the top of the lowercase 'd'.
 =begin code
 method Ascender {...}
+=end code
+
+=head3 B<Descender>
+
+Typically the y-value of the bottom of the lowercase 'p'.
+=begin code
+method Descender {...}
 =end code
 
 =head2 Not needed by the normal user
