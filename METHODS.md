@@ -98,14 +98,6 @@ Get the value of the bottommost outline in a character or string
 
 alias: `bb`
 
-### **StringBBox**
-
-Returns a list of the bounding box of the input string or the FontBBox if a string is not provided. The user may choose to to kern the string.
-
-    method StringBBox(Str $s?, :$kern --> List) {...}
-
-alias: `sbb`
-
 ### **LineHeight**
 
 Get the maximum vertical space required for any single line of text or, optionally, for a specific string
@@ -113,6 +105,14 @@ Get the maximum vertical space required for any single line of text or, optional
     method LineHeight(Str $s?) {...}
 
 alias: `lh`
+
+### **StringBBox**
+
+Returns a list of the bounding box of the input string or the FontBBox if a string is not provided. The user may choose to to kern the string.
+
+    method StringBBox(Str $s?, Bool :$kern --> List) {...}
+
+alias: `sbb`
 
 **Methods found in Font::AFM**
 ------------------------------
