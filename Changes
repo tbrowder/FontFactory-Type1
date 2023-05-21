@@ -1,6 +1,8 @@
 Revision history for FontFactory::Type1
 
 {{$NEXT}}
+
+1.0.0  2023-05-21T14:33:55-05:00
     - Changed 'MyFonts' to 'Fonts'
     - All DocBox methods have correct adjustments for scale factor
     - Corrected scale factor calculations
