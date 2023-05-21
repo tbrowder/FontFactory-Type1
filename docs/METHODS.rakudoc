@@ -169,7 +169,7 @@ alias: C<sbb>
 =head2 B<Methods found in Font::AFM>
 
 The following methods return the data extracted from Adobe's C<afm>
-file for the given font. The data returned by this module has the
+file for the given font. The data returned by this module have the
 values adjusted for the C<DocFont> object's font size.
 
 =head3 B<Wx>

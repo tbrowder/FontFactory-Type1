@@ -117,7 +117,7 @@ alias: `sbb`
 **Methods found in Font::AFM**
 ------------------------------
 
-The following methods return the data extracted from Adobe's `afm` file for the given font. The data returned by this module has the values adjusted for the `DocFont` object's font size.
+The following methods return the data extracted from Adobe's `afm` file for the given font. The data returned by this module have the values adjusted for the `DocFont` object's font size.
 
 ### **Wx**
 
