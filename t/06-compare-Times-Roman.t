@@ -1,4 +1,4 @@
-use Test; 
+use Test;
 use Font::AFM;
 use FontFactory::Type1;
 use lib <./t/lib>;
@@ -32,7 +32,7 @@ subtest {
     test2 :$afm-obj, :$fontsize, :$ff-font;
 }
 
-=begin comment 
+=begin comment
 if 0 {
     # this line is wrong in PDF::AFM: my Font::AFM $a .= core-font: $name;
     my Font::AFM $a .= core-font: $name;
@@ -57,7 +57,7 @@ if 0 {
 }
 =end comment
 
-sub test2(Font::AFM :$afm-obj!, 
+sub test2(Font::AFM :$afm-obj!,
           :$fontsize!,
           :$ff-font!,
          ) {
@@ -107,7 +107,7 @@ sub test2(Font::AFM :$afm-obj!,
 
     # test 8
     # two-dimensional hash
-    # see helper prog /dev/try-db1-hash.raku 
+    # see helper prog /dev/try-db1-hash.raku
     # hash -> hash -> number
     $av = $a.KernData.deepmap({ $_ * $sf });
     # hash -> hash -> number
@@ -116,7 +116,7 @@ sub test2(Font::AFM :$afm-obj!,
 
     =begin comment
     # unpack the structure to multiply Font::AFM values by the scale factor
-    # see helper prog /dev/try-db1-hash.raku 
+    # see helper prog /dev/try-db1-hash.raku
     for $av.keys -> $k {
         for $av{$k}.kv -> $k2, $v is copy {
             $av{$k}{$k2} = $v *= $sf;
@@ -183,7 +183,7 @@ sub test2(Font::AFM :$afm-obj!,
     if 0 {
         for $av.keys -> $k {
             my $v = $av{$k} * $sf;
-            $av{$k} = $v; #.Array; #List; 
+            $av{$k} = $v; #.Array; #List;
         }
     }
 
@@ -210,11 +210,11 @@ sub test2(Font::AFM :$afm-obj!,
     is $av, $bv, "compare stringwidth, no kern";
 
     # The following tests are not really needed because method 'kern'
-    # is used internally by method 'stringwidth' and thus not 
+    # is used internally by method 'stringwidth' and thus not
     # needed by this caller.
 
     my ($akerned, $awidth) = $a.kern($string, $fontsize, :kern);
-    my ($bkerned, $bwidth) = $b.kern($string, $fontsize, :kern);
+    my ($bkerned, $bwidth) = $b.kern($string, :kern);
 
     # test 23
     is $awidth, $bwidth, "compare kerned letters/width";
