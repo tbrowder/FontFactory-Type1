@@ -1,6 +1,8 @@
 Revision history for FontFactory::Type1
 
 {{$NEXT}}
+
+1.0.1  2023-05-22T18:10:32-05:00
     - Added new DocFont methods currently not found in Font::AFM:
       + StringBBox (actually added in v1.0.0 but it was missing from Changes)
     - Corrected a typo in the docs
