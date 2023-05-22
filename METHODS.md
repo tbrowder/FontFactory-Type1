@@ -246,7 +246,7 @@ Typically the y-value of the bottom of the lowercase 'p'.
 Not needed by the normal user
 -----------------------------
 
-The following two methods are included for completeness, but should not be needed. The author believes they should be `private` methods only used during the construction of the C>Font::AFM> class.
+The following two methods are included for completeness, but should not be needed. The author believes they should be `private` methods only used during the construction of the C<Font::AFM> class.
 
 ### **kern**
 
