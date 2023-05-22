@@ -327,7 +327,7 @@ method Descender {...}
 
 The following two methods are included for completeness, but should
 not be needed. The author believes they should be C<private> methods
-only used during the construction of the C>Font::AFM> class.
+only used during the construction of the C<Font::AFM> class.
 
 =head3 B<kern>
 
