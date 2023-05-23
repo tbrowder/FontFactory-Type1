@@ -9,8 +9,6 @@ constant LLY  = 1; # bbox index for lower bound
 constant URX  = 2; # bbox index for right bound
 constant URY  = 3; # bbox index for upper bound
 
-#use Data::Dump;
-
 #| This class represents the final font object and it includes the final size
 has BaseFont $.basefont is required;
 has          $.name     is required; #= font name or alias

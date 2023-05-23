@@ -84,7 +84,7 @@ DESCRIPTION
 
   * CheckWriter (WIP)
 
-A future module, **FontFactory::TT**, will provide the same benefits for *TrueType* (and *OpenType*) fonts, but it will require the user to provide his or her own font files (the author recommends using Google's free fonts as a starting point for a collection of fonts);
+A future module, **FontFactory**, will provide the same benefits for *TrueType*, *OpenType*, and *Type 1* fonts, but it will require the user to rely on system fonts or provide his or her own font files (the author recommends using Google's free fonts as a starting point for a collection of fonts).
 
 See the accompanying [METHODS](METHODS.md) for details on the methods and their use in your own PDF document.
 

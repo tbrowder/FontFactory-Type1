@@ -7,7 +7,6 @@ unit class FontFactory::Type1;
 use PDF::Lite;
 use Font::AFM;
 
-
 # needed to access corefonts
 has PDF::Lite $.pdf; # can be provided by the caller
 
@@ -36,7 +35,7 @@ method get-font($name --> DocFont) {
     my $sizfrac;
     # examples of valid names:
     #   t12, t2d3, cbo10, ho12d5
-    if $name ~~ /^ (<[A..Za..z-]>+) (\d+)  ['d' (\d+)]? $/ {
+    if $name ~~ /^ (<[A..Za..z-]>+) (\d+)  [['d'|'.'] (\d+)]? $/ {
         $alias   = ~$0;
         $sizint  = ~$1;
 
