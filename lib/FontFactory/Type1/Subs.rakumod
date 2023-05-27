@@ -66,8 +66,7 @@ sub find-basefont(PDF::Lite :$pdf!,
         $rawafm = Font::AFM.core-font($fnam);
     }
 
-    my $BF = BaseFont.new: :$pdf, :name($fnam), :$rawfont, :$rawafm, :$is-corefont;
-    $BF
+    BaseFont.new: :$pdf, :name($fnam), :$rawfont, :$rawafm, :$is-corefont;
 }
 
 sub select-docfont(BaseFont :$basefont!,
