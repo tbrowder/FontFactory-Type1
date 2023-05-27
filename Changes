@@ -1,6 +1,12 @@
 Revision history for FontFactory::Type1
 
 {{$NEXT}}
+    - Added a new DocFont method currently not found in Font::AFM:
+      + FontWx
+      + added tests for the new method
+    - Added method 'RightBearingFT' (and alias 'lbrt') to return
+      the horizontal distance as defined by Free Type Project ('FreeType')
+      + added tests for the new methods
     - Added clarification of terminology compared to that of FreeType
     - Corrected the name of the Unicode font factory module to: FontFactory (removed the '::TT')
     - Removed the square brackets around the Fonts hash

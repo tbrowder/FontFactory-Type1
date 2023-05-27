@@ -21,8 +21,7 @@ class StrBBox is export {
     has       $.size = 10.3;
     has       $.text = Text;
 
-    #has $.type is required; # afm, ff, mix
-    has $.type = 'ff'; #is required; # afm, ff, mix
+    has $.type = 'ff'; 
     has $.kern is required;
 
     # calculated values returned by running the sub

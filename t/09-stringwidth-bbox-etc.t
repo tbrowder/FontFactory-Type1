@@ -75,6 +75,24 @@ is $RB2, $RB1, "RightBearing, kern";
 $RB2 = $f.rb:  $text, :kern;
 is $RB2, $RB1, "RightBearing, kern, alias";
 
+# right bearing FT
+my $LC = $text.comb.tail;
+my $W = $afm.Wx{$LC};
+my $RBFT1 = ($W - $afm.BBox{$LC}[2]) * $f.sf;
+my $RBFT2 = $f.RightBearingFT($text);
+is $RBFT2, $RBFT1, "RightBearingFT";
+$RBFT2 = $f.rbft($text);
+is $RBFT2, $RBFT1, "rbft";
+
+# FontWx
+my $WW1 = 0;
+for $afm.Wx.kv -> $c, $w {
+    $WW1 = $w if $w > $WW1;
+}
+$WW1 *= $f.sf;
+my $WW2 = $f.FontWx;
+is $WW2, $WW1;
+
 $bbox1 = string-bbox $text, :$name, :size($fontsize), :!kern;
 $bbox2 = $f.StringBBox: $text, :!kern;
 is-deeply $bbox2, $bbox1, "StringBBox, no kern";

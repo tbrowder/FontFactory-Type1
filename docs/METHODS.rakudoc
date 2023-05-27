@@ -57,8 +57,9 @@ their origins at the same point.
 =item Top bearing - The C<y> value of the top side of of a glyph's bounding box.
 =item Bottom bearing - The C<y> value of the bottom side of a glyph's bounding box.
 =item Right bearing - The C<x> value of the right side of a glyph's bounding box. 
-(Note I<FreeType> defines this differently: the distance between the rightmost bbox 
-edge of the glyph and the [advance] point.)
+(Note the I<Free Type Project> defines this differently: the distance between the rightmost bbox 
+edge of the glyph and the [advance] point. See more information at
+L<https://freetype.org>.)
 
 =begin item
 Scale factor - A font's metrics are typically described as being in a
@@ -86,6 +87,13 @@ adjusted for the C<DocFont> object's font size.
 Some methods have short aliases for convenience in coding.
 
 =head2 B<Methods not in Font::AFM>
+
+=head3 B<FontWx>
+
+Provides the maximum [advance] width of the font's glyphs
+=begin code
+method FontWx {...}
+=end code
 
 =head3 B<StrikethroughPosition>
 
@@ -120,10 +128,23 @@ alias: C<lb>
 
 =head3 B<RightBearing>
 
-Get the value of the rightmost outline in a character or string
+Get the C<x> value of the rightmost outline in a character or string.
+(Note this is not the same value as used in FreeType's definition.
+See method 'RightBearingFT' and its alias 'rbft'.)
 =begin code
 method RightBearing(Str $s?) {...}
 =end code
+
+=head3 B<RightBearingFT>
+
+The distance difference between the rightmost outline in a character or string
+and the [advance] width point (the origin of the following character).
+=begin code
+method RightBearingFT(Str $s?) {...}
+=end code
+
+alias: C<rbft>
+
 
 alias: C<rb>
 

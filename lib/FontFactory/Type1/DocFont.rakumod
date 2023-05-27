@@ -87,6 +87,33 @@ method rb(Str $s?, :$kern) {
     self.RightBearing($s, :$kern)
 }
 
+#| Get the value of the [advance] width less the rightmost outline in a string.
+#| If the string is not provided, the minimum such value for all glyphs in
+#| the font is returned.
+method RightBearingFT(Str $s?, :$kern) {
+    if not $s.defined {
+        my $minrbft = self.FontWx;
+        for self.Wx.kv -> $c, $w {
+            my $bbox = self.BBox{$c};
+            my $rb = $w - $bbox[2];
+            $minrbft = $rb if $rb < $minrbft;
+        }
+        return $minrbft
+    }
+    # get the horizontal bound
+    #    my $delta = $Last-width - $Last-urx; # amount of width past the $ux of the last char
+
+    my $last-char = $s.comb.tail;
+    $last-char    = 'space' if $last-char !~~ /\S/;
+    my $lc-w      = self.Wx{$last-char};
+    my $bbox      = self.BBox{$last-char};
+    my $rbft      = $lc-w - $bbox[2];
+    $rbft
+}
+method rbft(Str $s?, :$kern) {
+    self.RightBearingFT($s, :$kern)
+}
+
 # Returns a list of the bounding box of the input string or the
 # FontBBox if a string is not provided.  The user may choose to to kern
 # the string.
@@ -314,6 +341,15 @@ method Descender {
 #| Hash of glyph names and their width
 method Wx(--> Hash) {
     $!afm.Wx.deepmap({ $_ * $!sf }) # adjust for the desired font size
+}
+
+#| Provides the maximum [advance] width of the font's glyphs
+method FontWx {
+    my $maxw = 0;
+    for $!afm.Wx.kv -> $c, $w {
+        $maxw = $w if $w > $maxw;
+    }
+    $maxw * $!sf # adjust for the desired font size
 }
 
 #| Hash of glyph names and their bounding boxes

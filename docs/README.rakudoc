@@ -10,7 +10,7 @@ provides all the methods available in module C<Font::AFM>
 plus some extra convenient methods (and aliases). All its methods 
 provide outputs properly scaled for its font and point size.
 
-B<WARNING> The previous version had some erroneous methods and should not be used!
+B<WARNING> Versions before v1.0.0 had some erroneous methods and should not be used!
 
 =head1 SYNOPSIS
 
