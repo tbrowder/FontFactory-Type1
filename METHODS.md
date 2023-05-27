@@ -19,7 +19,7 @@ A glyph is a digital character in the chosen font and it has the following metri
 
   * Width 
 
-    1 - The horizontal distance from a glyph's origin to the right to the point where the next glyph's origin is designed to be placed. 
+    1 - The horizontal distance from a glyph's origin to the right to the point where the next glyph's origin is designed to be placed. (Note this is somtimes referred to as *advance-width*.) 
 
     2 - The same as the first definition but applied to a set of glyphs as a line of text.
 
@@ -31,7 +31,7 @@ A glyph is a digital character in the chosen font and it has the following metri
 
   * Bottom bearing - The `y` value of the bottom side of a glyph's bounding box.
 
-  * Right bearing - The `x` value of the right side of a glyph's bounding box.
+  * Right bearing - The `x` value of the right side of a glyph's bounding box. (Note *FreeType* defines this differently: the distance between the rightmost bbox edge of the glyph and the [advance] point.)
 
   * Scale factor - A font's metrics are typically described as being in a rectangular coordinate system with a width of 1000 units. To get the equivalent of the dimensions in the chosen point size the values are multiplied by a scale factor: point size / 1000.
 
@@ -121,7 +121,7 @@ The following methods return the data extracted from Adobe's `afm` file for the 
 
 ### **Wx**
 
-Hash of glyph names and their width
+Hash of glyph names and their [advance] width
 
     method Wx(--> Hash) {...}
 
