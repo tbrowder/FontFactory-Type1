@@ -3,8 +3,7 @@ Revision history for FontFactory::Type1
 {{$NEXT}}
     - Added clarification of terminology compared to that of FreeType
     - Corrected the name of the Unicode font factory module to: FontFactory (removed the '::TT')
-    - Made all subs FontFactory::Type1 class methods
-      + deprecated the subs
+    - Removed the square brackets around the Fonts hash
 
 1.0.1  2023-05-22T18:10:32-05:00
     - Added new DocFont methods currently not found in Font::AFM:

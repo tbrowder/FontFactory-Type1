@@ -1,6 +1,6 @@
 unit module FontFactory::Type1::FontList;
 
-constant %Fonts is export = [
+constant %Fonts is export = 
     # These are the "core" fonts from PostScript (Type 1)
     Courier               => "c",
     Courier-Oblique       => "co",
@@ -19,7 +19,7 @@ constant %Fonts is export = [
 
     # Additional fonts:
     MICREncoding          => "m", # converted from .ttf via fontforge
-];
+;
 
 # invert the hash and have short names (aliases) as keys
 our %FontAliases is export = %Fonts.invert;

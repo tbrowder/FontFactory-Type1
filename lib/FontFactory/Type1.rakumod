@@ -1,6 +1,7 @@
 use FontFactory::Type1::Subs;
 use FontFactory::Type1::BaseFont;
 use FontFactory::Type1::DocFont;
+use FontFactory::Type1::FontList;
 
 unit class FontFactory::Type1;
 
@@ -79,4 +80,4 @@ method get-font($name --> DocFont) {
         %!docfonts{$key} = $docfont;
         return %!docfonts{$key};
     }
-} # end fontfactory
+} # end method get-font
