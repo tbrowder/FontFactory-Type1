@@ -7,7 +7,7 @@ NAME
 
 A `DocFont` object is a Type 1 font of a specific name and point size. It provides all the methods available in module `Font::AFM` plus some extra convenient methods (and aliases). All its methods provide outputs properly scaled for its font and point size.
 
-**WARNING** The previous version had some erroneous methods and should not be used!
+**WARNING** Versions before v1.0.0 had some erroneous methods and should not be used!
 
 SYNOPSIS
 ========

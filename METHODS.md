@@ -31,7 +31,7 @@ A glyph is a digital character in the chosen font and it has the following metri
 
   * Bottom bearing - The `y` value of the bottom side of a glyph's bounding box.
 
-  * Right bearing - The `x` value of the right side of a glyph's bounding box. (Note *FreeType* defines this differently: the distance between the rightmost bbox edge of the glyph and the [advance] point.)
+  * Right bearing - The `x` value of the right side of a glyph's bounding box. (Note the *Free Type Project* defines this differently: the distance between the rightmost bbox edge of the glyph and the [advance] point. See more information at [https://freetype.org](https://freetype.org).)
 
   * Scale factor - A font's metrics are typically described as being in a rectangular coordinate system with a width of 1000 units. To get the equivalent of the dimensions in the chosen point size the values are multiplied by a scale factor: point size / 1000.
 
@@ -49,6 +49,12 @@ Some methods have short aliases for convenience in coding.
 
 **Methods not in Font::AFM**
 ----------------------------
+
+### **FontWx**
+
+Provides the maximum [advance] width of the font's glyphs
+
+    method FontWx {...}
 
 ### **StrikethroughPosition**
 
@@ -76,9 +82,17 @@ alias: `lb`
 
 ### **RightBearing**
 
-Get the value of the rightmost outline in a character or string
+Get the `x` value of the rightmost outline in a character or string. (Note this is not the same value as used in FreeType's definition. See method 'RightBearingFT' and its alias 'rbft'.)
 
     method RightBearing(Str $s?) {...}
+
+### **RightBearingFT**
+
+The distance difference between the rightmost outline in a character or string and the [advance] width point (the origin of the following character).
+
+    method RightBearingFT(Str $s?) {...}
+
+alias: `rbft`
 
 alias: `rb`
 
