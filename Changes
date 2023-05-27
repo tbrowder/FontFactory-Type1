@@ -1,6 +1,7 @@
 Revision history for FontFactory::Type1
 
 {{$NEXT}}
+    - Documented all new methods
     - Added a new DocFont method currently not found in Font::AFM:
       + FontWx
       + added tests for the new method
