@@ -12,3 +12,9 @@ if not @*ARGS.elems {
     exit;
 }
 
+my $f = PDF::Content::Font::CoreFont.load-font: :family<Helvetica>;
+
+say $f.FontBBox;
+
+
+

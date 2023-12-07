@@ -7,10 +7,10 @@
   "build-depends": [
   ],
   "depends": [
+    "PDF::Content::Font::CoreFont",
     "Proc::Easier",
-    "PDF::Lite",
     "Text::Utils",
-    "PDF::Font::Loader",
+    "PDF::Font::Loader:ver<0.7.8>",
     "File::Find",
     "Font::AFM"
   ],

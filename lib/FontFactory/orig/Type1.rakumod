@@ -5,15 +5,11 @@ use FontFactory::Type1::FontList;
 
 unit class FontFactory::Type1;
 
-#use PDF::Lite;
+use PDF::Lite;
 use Font::AFM;
-# needed to access corefonts
-use PDF::Content::Font::CoreFont;
 
 # needed to access corefonts
-#has PDF::Lite $.pdf; # can be provided by the caller
-# keep without type for now
-has $.pdf; # can be provided by the caller
+has PDF::Lite $.pdf; # can be provided by the caller
 
 # hash of BaseFonts keyed by their alias name
 has FontFactory::Type1::BaseFont %.basefonts;
@@ -23,8 +19,8 @@ has FontFactory::Type1::DocFont %.docfonts;
 
 submethod TWEAK {
     # provide if using standalone
-    #return if $!pdf;
-    #$!pdf = PDF::Lite.new;
+    return if $!pdf;
+    $!pdf = PDF::Lite.new;
 }
 
 method get-font($name --> DocFont) {

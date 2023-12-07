@@ -1,7 +1,6 @@
 unit module FontFactory::Type1::Subs;
 
-use PDF::Content::Font::CoreFont;
-#use PDF::Lite;
+use PDF::Lite;
 use Font::AFM;
 
 use FontFactory::Type1::FontList;
@@ -23,7 +22,7 @@ sub show-fonts is export {
     }
 }
 
-sub find-basefont(:$pdf!,
+sub find-basefont(PDF::Lite :$pdf!,
                   :$name!,  # full or alias
                   --> BaseFont) is export {
     my $fnam; # to hold the recognized font name

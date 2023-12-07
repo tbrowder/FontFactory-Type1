@@ -1,6 +1,10 @@
 Revision history for FontFactory::Type1
 
 {{$NEXT}}
+    - Major change to dependency to ensure "real" PostScript standard
+      fonts are used
+    - Added new tests
+      + Helvetica
 
 1.1.0  2023-05-27T18:08:24-05:00
     - Documented all new methods
@@ -11,7 +15,8 @@ Revision history for FontFactory::Type1
       the horizontal distance as defined by Free Type Project ('FreeType')
       + added tests for the new methods
     - Added clarification of terminology compared to that of FreeType
-    - Corrected the name of the Unicode font factory module to: FontFactory (removed the '::TT')
+    - Corrected the name of the Unicode font factory module to: 
+      FontFactory (removed the '::TT')
     - Removed the square brackets around the Fonts hash
 
 1.0.1  2023-05-22T18:10:32-05:00

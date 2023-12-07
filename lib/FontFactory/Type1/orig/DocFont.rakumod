@@ -1,8 +1,6 @@
 unit class FontFactory::Type1::DocFont is export;
 
-# needed to access corefonts
-use PDF::Content::Font::CoreFont;
-#use PDF::Lite;
+use PDF::Lite;
 use Font::AFM;
 use FontFactory::Type1::BaseFont;
 
@@ -15,11 +13,8 @@ constant URY  = 3; # bbox index for upper bound
 has BaseFont $.basefont is required;
 has          $.name     is required; #= font name or alias
 has          $.size     is required; #= desired size in points
-has          $.afm      is required; #= the Font::AFM object 
-                                     # (note the object is immutable)
-#has          $.font     is required; #= the PDF::Lite font object
-has          $.font     is required; #= the PDF::Content::Font::CoreFont object
-
+has          $.afm      is required; #= the Font::AFM object (note the object is immutable)
+has          $.font     is required; #= the PDF::Lite font object
 # convenience attrs
 has          $.sf;                   #= scale factor for the afm attrs vs the font size
 
