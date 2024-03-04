@@ -14,6 +14,9 @@ my ($ff, $f, $f2, $v, $a, $afm, $afm2, $text, $bbox, $bbox2);
 my ($width, $llx, $lly, $urx, $ury);
 my ($got, $exp);
 
+# use the same string for $text
+$text = slurp "t/data/xmas-test-string.csv";
+
 plan 41;
 
 lives-ok {
@@ -46,9 +49,6 @@ is $a, $v;
 $v = $f.st;
 is $a, $v, "st alias";
 
-# an input string =====
-$text = 'a \& \' Spoor';
-
 $bbox = $afm.BBox<S> >>*>> $f.sf;
 $a = $bbox[3]; $bbox = $afm.BBox<S> >>*>> $f.sf;
 $v = $f.TopBearing($text);
@@ -66,7 +66,6 @@ if 0 {
     note "DEBUG early exit"; exit;
 }
 
-$text = 'a \& \' Spoor';
 $bbox = $afm.BBox<a> >>*>> $f.sf;
 $a = $bbox[0];
 $v = $f.LeftBearing($text);
@@ -74,7 +73,6 @@ is $a, $v, "LeftBearing with input string";
 $v = $f.lb($text);
 is $a, $v, "LeftBearing with input string, alias";
 
-$text = 'a \& \' Spoor';
 $bbox = $afm.BBox<p> >>*>> $f.sf;
 $a = $bbox[1];
 $v = $f.BottomBearing($text);
@@ -98,8 +96,6 @@ $v = $f.bb;
 is $a, $v, "BottomBearing without input string, alias";
 
 #===== more new methods =====
-# with an input line
-$text = 'a \& \' Spoor';
 $a = $afm.BBox<S>[3] - $afm.BBox<p>[1];
 $a *= $f.sf;
 $v = $f.LineHeight($text);

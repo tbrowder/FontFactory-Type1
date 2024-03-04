@@ -33,10 +33,14 @@ DEBUG character not known : 'APOSTROPHE' (from FF-T1/DocFont.rakumod)
 DEBUG character not known : 'AMPERSAND' (from FF-T1/DocFont.rakumod)
 
 DEBUG character not known : 'REVERSE SOLIDUS' (from FF-T1/DocFont.rakumod)
+Unknown Adobe PS name for uniname 'VERTICAL LINE' ('|')
+Unknown Adobe PS name for uniname 'DIGIT TWO' ('2')
+Unknown Adobe PS name for uniname '<control-000A>' ('
 =end comment
 
-# .uniname to Adobe PS name 
-sub uni2ps($c is copy  --> Str) {
+# .uniname to Adobe PS name
+#sub uni2ps($c is copy  --> Str) {
+sub uni2ps($c is copy) {
     my $aname;
     my $u = $c.uniname;
     with $u {
@@ -50,7 +54,17 @@ sub uni2ps($c is copy  --> Str) {
             $aname = $_.lc;
         }
         when /:i reverse \h+ solidus  / {
-            $aname = "backslash";;
+            $aname = "backslash";
+        }
+        when /:i vertical \h+ line / {
+            $aname = "bar";
+        }
+        when /:i digit \h+ two / {
+            $aname = "bar";
+        }
+        when /:i '<control-000A>' / {
+            # really a NEWLINE
+            $aname = "";
         }
         default {
             note "Unknown Adobe PS name for uniname '$_' ('$c')";
@@ -117,7 +131,7 @@ method RightBearing(Str $s?, :$kern) {
         return self.FontBBox[URX]
     }
     # get the horizontal bound
-    #    my $delta = $Last-width - $Last-urx; 
+    #    my $delta = $Last-width - $Last-urx;
     # amount of width past the $ux of the last char
 
     my $str-width = self.stringwidth($s, :$kern);
@@ -156,19 +170,19 @@ method RightBearingFT(Str $s?, :$kern) {
         return $minrbft
     }
     # get the horizontal bound
-    #    my $delta = $Last-width - $Last-urx; 
+    #    my $delta = $Last-width - $Last-urx;
     # amount of width past the $ux of the last char
 
     my $last-char = $s.comb.tail;
     my ($lc-w, $bbox);
     if self.BBox{$last-char}:exists {
-        $lc-w      = self.Wx{$last-char}; 
+        $lc-w      = self.Wx{$last-char};
         $bbox      = self.BBox{$last-char};
     }
     else {
         $last-char = uni2ps $last-char;
         die "FATAL: unknown PS char $last-char" unless self.BBox{$last-char}:exists;
-        $lc-w      = self.Wx{$last-char}; 
+        $lc-w      = self.Wx{$last-char};
         $bbox      = self.BBox{$last-char};
     }
     my $rbft      = $lc-w - $bbox[2];
@@ -207,7 +221,7 @@ method StringBBox(Str $s?, :$kern --> List) {
     }
 
     # get the horizontal bounds
-    #    my $delta = $Last-width - $Last-urx; 
+    #    my $delta = $Last-width - $Last-urx;
     # amount of width past the $ux of the last char
     my $width;
     if $kern {
@@ -263,12 +277,12 @@ method TopBearing(Str $s?) {
     for @chars -> $c is copy {
         my $y;
         if self.BBox{$c}:exists {
-            $y = self.BBox{$c};
+            $y = self.BBox{$c}[URY];
         }
         else {
             $c = uni2ps $c;
             die "FATAL: unknown PS char $c" unless self.BBox{$c}:exists;
-            $y = self.BBox{$c};
+            $y = self.BBox{$c}[URY];
         }
         $ury = $y if $y > $ury;
     }
@@ -279,13 +293,13 @@ method tb(Str $s?) {
 }
 
 #| Get the value of the lowest outline outline in a string or the
-#| entire font if no string is provided 
+#| entire font if no string is provided
 method BottomBearing(Str $s?) {
-    if not $s.defined { 
-        return self.FontBBox[LLY]; 
-    } 
-    my $lly = 0; 
-    my @chars = $s.comb; 
+    if not $s.defined {
+        return self.FontBBox[LLY];
+    }
+    my $lly = 0;
+    my @chars = $s.comb;
     for @chars -> $c is copy {
         my $y;
         if self.BBox{$c}:exists {
