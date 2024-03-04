@@ -12,9 +12,9 @@ my $debug = 0;
 my $name  = "Times-Roman";
 my $name2 = "Courier";
 my $fontsize  = 10.3;
-my $fontsize2 = 10;
+my $fontsize2 = 10; # use for OTF
 
-my ($ff, $f, $f2, $v, $a, $afm, $afm2, $text, $text2, $bbox, $bbox1, $bbox2);
+my ($ff, $f, $f2, $fOTF, $v, $a, $afm, $afm2, $text, $text2, $bbox, $bbox1, $bbox2);
 my ($width, $width2, $llx, $lly, $urx, $ury);
 my ($got, $exp);
 
@@ -35,21 +35,44 @@ lives-ok {
 lives-ok {
     $f2 = $ff.get-font("c10");
 }
+lives-ok {
+    $fOTF = $ff.get-font("t10");
+}
 
 $text = 'a Spoor';
 $text = 'Bo Do Fo Io Jo Ko Oo Po To Uo Vo Wo Yo';
+# compare with OTF tests in FontFactory
+$text2 = 'For aWard';
 #$text = 'BoDoFoIoJoKoOoPoToUoVoWoYo';
 
 # test use of kern with afm.stringwidth
+
+#============================================
+# $text (no kern)
 $width  = $afm.stringwidth: $text, $fontsize;
 $width2 = $f.stringwidth: $text;
 is $width2, $width;
 note "width 1 without kern: $width" if $debug;
-
+# $text (WITH kern)
 $width  = $afm.stringwidth: $text, $fontsize, :kern;
 $width2 = $f.stringwidth: $text, :kern;
 is $width2, $width;
 note "width 2 with :kern: $width" if $debug;
+
+#============================================
+# compare with OTF tests
+# $text2 (no kern)
+$width  = $afm.stringwidth: $text2, $fontsize2;
+$width2 = $fOTF.stringwidth: $text2;
+is $width2, $width, "OTF no kern, width: $width";
+note "OTF width 1 without kern: $width" if $debug;
+# $text2 (WITH kern)
+$width  = $afm.stringwidth: $text2, $fontsize2, :kern;
+$width2 = $fOTF.stringwidth: $text2, :kern;
+is $width2, $width, "OTF WIDTH kern, width: $width";
+note "OTF width 2 with :kern: $width" if $debug;
+
+
 
 $width  = $afm.stringwidth: $text, $fontsize, :!kern;
 $width2 = $f.stringwidth: $text, :!kern;

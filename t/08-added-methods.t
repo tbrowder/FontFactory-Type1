@@ -47,7 +47,7 @@ $v = $f.st;
 is $a, $v, "st alias";
 
 # an input string =====
-$text = 'a Spoor';
+$text = 'a \& \' Spoor';
 
 $bbox = $afm.BBox<S> >>*>> $f.sf;
 $a = $bbox[3]; $bbox = $afm.BBox<S> >>*>> $f.sf;
@@ -66,7 +66,7 @@ if 0 {
     note "DEBUG early exit"; exit;
 }
 
-$text = 'a Spoor';
+$text = 'a \& \' Spoor';
 $bbox = $afm.BBox<a> >>*>> $f.sf;
 $a = $bbox[0];
 $v = $f.LeftBearing($text);
@@ -74,9 +74,7 @@ is $a, $v, "LeftBearing with input string";
 $v = $f.lb($text);
 is $a, $v, "LeftBearing with input string, alias";
 
-$text = 'a Spoor';
-
-$text = 'a Spoor';
+$text = 'a \& \' Spoor';
 $bbox = $afm.BBox<p> >>*>> $f.sf;
 $a = $bbox[1];
 $v = $f.BottomBearing($text);
@@ -101,7 +99,7 @@ is $a, $v, "BottomBearing without input string, alias";
 
 #===== more new methods =====
 # with an input line
-$text = 'a Spoor';
+$text = 'a \& \' Spoor';
 $a = $afm.BBox<S>[3] - $afm.BBox<p>[1];
 $a *= $f.sf;
 $v = $f.LineHeight($text);
