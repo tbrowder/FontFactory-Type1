@@ -7,6 +7,7 @@ my Font::AFM $afm .= core-font: 'Helvetica';
 use lib <../lib>;
 use FontFactory::Type1::DocFont;
 
+my $ofil = "../t/data/short-test-string.txt";
 my $ifil = "../t/data/xmas-test-string.csv";
 if not @*ARGS {
     print qq:to/HERE/;
@@ -19,23 +20,15 @@ if not @*ARGS {
 
 my %h;
 for $ifil.IO.lines -> $line {
-    COMB: for $line.comb -> $c is copy {
-        if $afm.BBox{$c}:exists {
-            %h{$c} = 1;
-            next COMB;
-        }
-
-        my $x = uni2ps $c;
-        if $x eq '<control-00A>' {
-            next COMB;
-        }
-
+    for $line.comb -> $c {
         %h{$c} = 1;
     }
 }
 
 my $s = %h.keys.sort.join("");
 say "Test sstring: ", $s;
+spurt $ofil, $s;;
+say "See output test file: ", $ofil;
 
 =finish
 

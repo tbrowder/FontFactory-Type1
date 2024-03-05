@@ -52,8 +52,16 @@ sub find-basefont(PDF::Lite :$pdf!,
         # the MICREncoding font is in resources:
         #   /resources/fonts/MICREncoding.pfa
         #   /resources/fonts/MICREncoding.afm
-        my $pfa = %?RESOURCES<fonts/MICREncoding.pfa>.absolute;
-        my $afm = %?RESOURCES<fonts/MICREncoding.afm>.absolute;
+        my $pfa-str = %?RESOURCES<fonts/MICREncoding.pfa>.slurp; # get the file contents
+        my $afm-str = %?RESOURCES<fonts/MICREncoding.afm>.slurp; # get the file contents
+        # Create a temp files to bass to the font loader
+
+        my $tdir = "/tmp/fonts";
+        mkdir $tdir unless $tdir.IO.d;
+        spurt "$tdir/pfa", $pfa-str;
+        spurt "$tdir/afm", $afm-str;
+        my $pfa = "$tdir/pfa";
+        my $afm = "$tdir/afm";
 
         # the PDF::Content::FontObj:
         $rawfont = load-font :file($pfa); # use the .pfa for PostScript Type 1 fonts

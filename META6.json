@@ -22,6 +22,7 @@
     "FontFactory::Type1": "lib/FontFactory/Type1.rakumod",
     "FontFactory::Type1::BaseFont": "lib/FontFactory/Type1/BaseFont.rakumod",
     "FontFactory::Type1::DocFont": "lib/FontFactory/Type1/DocFont.rakumod",
+    "FontFactory::Type1::DocFont::StringSub": "lib/FontFactory/Type1/DocFont/StringSub.rakumod",
     "FontFactory::Type1::FontList": "lib/FontFactory/Type1/FontList.rakumod",
     "FontFactory::Type1::Subs": "lib/FontFactory/Type1/Subs.rakumod"
   },

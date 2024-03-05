@@ -1,6 +1,8 @@
 Revision history for FontFactory::Type1
 
 {{$NEXT}}
+    - Added capability to handle extended Type 1 chars using
+        a sub uni2ps to convert .uniname to PostScript name
 
 1.1.0  2023-05-27T18:08:24-05:00
     - Documented all new methods

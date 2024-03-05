@@ -3,6 +3,7 @@ unit class FontFactory::Type1::DocFont is export;
 use PDF::Lite;
 use Font::AFM;
 use FontFactory::Type1::BaseFont;
+use FontFactory::Type1::DocFont::StringSub;
 
 constant LLX  = 0; # bbox index for left bound
 constant LLY  = 1; # bbox index for lower bound
@@ -10,7 +11,7 @@ constant URX  = 2; # bbox index for right bound
 constant URY  = 3; # bbox index for upper bound
 
 #| This class represents the final font object and it includes the
-#| final size
+#| final font size
 has BaseFont $.basefont is required;
 has          $.name     is required; #= font name or alias
 has          $.size     is required; #= desired size in points
@@ -25,17 +26,9 @@ submethod TWEAK {
 }
 
 =begin comment
-# These chars need translation into names known by PostScript.
-# The list may grow and I may mechanically create it.
-
-DEBUG character not known : 'SPACE' (from FF-T1/DocFont.rakumod)
-DEBUG character not known : 'APOSTROPHE' (from FF-T1/DocFont.rakumod)
-DEBUG character not known : 'AMPERSAND' (from FF-T1/DocFont.rakumod)
-
-DEBUG character not known : 'REVERSE SOLIDUS' (from FF-T1/DocFont.rakumod)
-Unknown Adobe PS name for uniname 'VERTICAL LINE' ('|')
-Unknown Adobe PS name for uniname 'DIGIT TWO' ('2')
-Unknown Adobe PS name for uniname '<control-000A>' ('
+# Many chars need translation into names known by PostScript.  The
+# list may grow and I may mechanically create it.  For now it is a
+# manual process from analysis of my Christmas mailing address file.
 =end comment
 
 # .uniname to Adobe PS name
@@ -100,6 +93,7 @@ sub uni2ps($c is copy) is export {
             # really a NEWLINE
             # a '' won't work, need a work-around
             # for now, use a period, later define a 'nospace' character'
+            # with zero metrics
             $aname = "period";
         }
         default {
@@ -115,7 +109,8 @@ sub uni2ps($c is copy) is export {
 #| the lower-case 'm'
 method StrikethroughPosition {
     my constant \schar = 'm';
-    my ($llx, $lly, $urx, $ury) = $!afm.BBox{schar} >>*>> $!sf; # adjust for the desired font size
+    # adjust for the desired font size with $!sf:
+    my ($llx, $lly, $urx, $ury) = $!afm.BBox{schar} >>*>> $!sf;
     0.5 * ($ury - $lly)
 }
 method sp {
@@ -125,7 +120,8 @@ method sp {
 #| Not having found any other source to dispute this, use same as
 #| underline thickness
 method StrikethroughThickness {
-    $!afm.UnderlineThickness * $!sf # adjust for the desired font size
+    # adjust for the desired font size with $!sf:
+    $!afm.UnderlineThickness * $!sf
 }
 method st {
     self.StrikethroughThickness
@@ -142,11 +138,19 @@ method st {
 #| right sidebearing as total stringwidth less the last char's width
 #| plus the right char's right bearing.
 
+# The individual methods ar extremely slow in aggregate because the
+# string is analyzed char by char each time. Work on a way to avoid
+# redoing the analysis for the same string.
+
+#=begin comment
+#class String {
+
 #| Get the value of the leftmost outline in a string
 method LeftBearing(Str $s?) {
     if not $s.defined {
         return self.FontBBox[LLX]
     }
+    my String $cs = get-string-metrics($s);
     my $c = $s.comb.head;
     if self.BBox{$c}:exists {
         return self.BBox{$c}[LLX]
@@ -262,7 +266,6 @@ method StringBBox(Str $s?, :$kern --> List) {
     my $width;
     if $kern {
         $width = self.stringwidth($s, :kern);  # kerned
-        #$width = $!afm.stringwidth($s, self.size, :kern);  # kerned
     }
     else {
         $width = self.stringwidth($s, :!kern); # not kerned
@@ -385,41 +388,11 @@ method LineHeight(Str $s?) {
 method lh(Str $s?) {
     self.LineHeight($s)
 }
+#} # end class String
+#=end comment
 
 # FontAFM standard methods follow: ==============================
 
-#| UnderlinePosition
-method UnderlinePosition {
-    $!afm.UnderlinePosition * $!sf # adjust for the desired font size
-}
-method up {
-    self.UnderlinePosition
-}
-
-#| UnderlineThickness
-method UnderlineThickness {
-    $!afm.UnderlineThickness * $!sf # adjust for the desired font size
-}
-method ut {
-    self.UnderlineThickness
-}
-
-# ($kerned, $width) = $afm.kern($string, $fontsize?, :%glyphs?)
-# Kern the string. Returns an array of string segments, separated
-# by numeric kerning distances, and the overall width of the string.
-method kern($string) {
-    $!afm.kern($string, $!size); #, :%glyphs;
-}
-
-#| A two-dimensional hash containing from and to glyphs and kerning widths.
-method KernData {
-    # hash -> hash -> number
-    # lizmat's solution
-    #$!afm.KernData.deepmap({$_ *= $!sf }) # adjust for the desired font size
-    $!afm.KernData.deepmap({$_ * $!sf }) # adjust for the desired font size
-}
-
-# $afm.stringwidth($string, $fontsize?, Bool:$kern is copy, :%glyphs)
 #| stringwidth
 method stringwidth($string, :$kern) {
     if $kern {
@@ -428,6 +401,40 @@ method stringwidth($string, :$kern) {
     else {
         $!afm.stringwidth: $string, $!size, :!kern
     }
+}
+
+#| UnderlinePosition
+method UnderlinePosition {
+    # adjust for the desired font size with $!sf:
+    $!afm.UnderlinePosition * $!sf
+}
+method up {
+    self.UnderlinePosition
+}
+
+#| UnderlineThickness
+method UnderlineThickness {
+    # adjust for the desired font size with $!sf:
+    $!afm.UnderlineThickness * $!sf
+}
+method ut {
+    self.UnderlineThickness
+}
+
+# ($kerned, $width) = $afm.kern($string, $fontsize?, :%glyphs?)  Kern
+# the string. Returns an array of string segments, separated by
+# numeric kerning distances, and the overall width of the string.
+method kern($string) {
+    $!afm.kern($string, $!size);
+}
+
+#| A two-dimensional hash containing from and to glyphs and kerning
+#| widths.
+method KernData {
+    # hash -> hash -> number
+    # lizmat's solution
+    # adjust for the desired font size with $!sf:
+    $!afm.KernData.deepmap({$_ * $!sf })
 }
 
 method IsFixedPitch {
@@ -453,7 +460,8 @@ method ItalicAngle {
 
 #| Array of the overall font bounding box
 method FontBBox {
-    $!afm.FontBBox >>*>> $!sf # adjust for the desired font size
+    # adjust for the desired font size with $!sf:
+    $!afm.FontBBox >>*>> $!sf
 }
 
 #|
@@ -478,27 +486,32 @@ method EncodingScheme {
 
 #|
 method CapHeight {
-    $!afm.CapHeight * $!sf # adjust for the desired font size
+    # adjust for the desired font size with $!sf:
+    $!afm.CapHeight * $!sf
 }
 
 #|
 method XHeight {
-    $!afm.XHeight * $!sf # adjust for the desired font size
+    # adjust for the desired font size with $!sf:
+    $!afm.XHeight * $!sf
 }
 
 #|
 method Ascender {
-    $!afm.Ascender * $!sf # adjust for the desired font size
+    # adjust for the desired font size with $!sf:
+    $!afm.Ascender * $!sf
 }
 
 #|
 method Descender {
-    $!afm.Descender * $!sf # adjust for the desired font size
+    # adjust for the desired font size with $!sf:
+    $!afm.Descender * $!sf
 }
 
 #| Hash of glyph names and their width
 method Wx(--> Hash) {
-    $!afm.Wx.deepmap({ $_ * $!sf }) # adjust for the desired font size
+    # adjust for the desired font size with $!sf:
+    $!afm.Wx.deepmap({ $_ * $!sf })
 }
 
 #| Provides the maximum [advance] width of the font's glyphs
@@ -507,10 +520,12 @@ method FontWx {
     for $!afm.Wx.kv -> $c, $w {
         $maxw = $w if $w > $maxw;
     }
-    $maxw * $!sf # adjust for the desired font size
+    # adjust for the desired font size with $!sf:
+    $maxw * $!sf
 }
 
 #| Hash of glyph names and their bounding boxes
 method BBox(--> Hash) {
-    $!afm.BBox.deepmap({ $_ * $!sf }) # adjust for the desired font size
+    # adjust for the desired font size with $!sf:
+    $!afm.BBox.deepmap({ $_ * $!sf })
 }

@@ -1,4 +1,6 @@
-tests 1-4 ok
-test 5 failed at line 32
+Note test:
 
-see DocFont line 178
+    xt-save/long-running-added-methods.t
+
+currently takes 6+ minutes due to multiple loops over a
+23,785-character test string.
