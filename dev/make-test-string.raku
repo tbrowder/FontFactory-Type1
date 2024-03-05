@@ -1,6 +1,13 @@
 #!/bin/env raku
 
-my $ifil = "xmas-test-string.csv";
+use Font::AFM;
+
+my Font::AFM $afm .= core-font: 'Helvetica';
+
+use lib <../lib>;
+use FontFactory::Type1::DocFont;
+
+my $ifil = "../t/data/xmas-test-string.csv";
 if not @*ARGS {
     print qq:to/HERE/;
     Usage: {$*PROGRAM.basename} go
@@ -12,7 +19,17 @@ if not @*ARGS {
 
 my %h;
 for $ifil.IO.lines -> $line {
-    for $line.comb -> $c {
+    COMB: for $line.comb -> $c is copy {
+        if $afm.BBox{$c}:exists {
+            %h{$c} = 1;
+            next COMB;
+        }
+
+        my $x = uni2ps $c;
+        if $x eq '<control-00A>' {
+            next COMB;
+        }
+
         %h{$c} = 1;
     }
 }

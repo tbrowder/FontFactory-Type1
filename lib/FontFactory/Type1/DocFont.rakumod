@@ -39,8 +39,8 @@ Unknown Adobe PS name for uniname '<control-000A>' ('
 =end comment
 
 # .uniname to Adobe PS name
-#sub uni2ps($c is copy  --> Str) {
-sub uni2ps($c is copy) {
+#sub uni2ps($c is copy  --> Str) is export {
+sub uni2ps($c is copy) is export {
     my $aname;
     my $u = $c.uniname;
     with $u {
@@ -62,9 +62,45 @@ sub uni2ps($c is copy) {
         when /:i digit \h+ two / {
             $aname = "bar";
         }
-        when /:i '<control-000A>' / {
+        when /:i number \h+ sign / {
+            $aname = "numbersign";
+        }
+        when /:i equals \h+ sign / {
+            $aname = "equal";
+        }
+        when /:i quotation \h+ mark / {
+            $aname = "quotedbl";
+        }
+        when /:i right \h+ parenthesis / {
+            $aname = "parenright";
+        }
+        when /:i left \h+ parenthesis / {
+            $aname = "parenleft";
+        }
+        when /:i hyphen '-' minus / {
+            $aname = "minus";
+        }
+        when /:i asterisk / {
+            $aname = "asterisk";
+        }
+        when /:i comma  / {
+            $aname = "comma";
+        }
+        when /:i colon  / {
+            $aname = "colon";
+        }
+        when /:i solidus  / {
+            $aname = "slash";
+        }
+        when /:i digit \h+ (\S+) / {
+            my $num = ~$0.lc;
+            $aname = $num;
+        }
+        when /:i control / {
             # really a NEWLINE
-            $aname = "";
+            # a '' won't work, need a work-around
+            # for now, use a period, later define a 'nospace' character'
+            $aname = "period";
         }
         default {
             note "Unknown Adobe PS name for uniname '$_' ('$c')";
@@ -117,7 +153,7 @@ method LeftBearing(Str $s?) {
     }
     else {
         $c = uni2ps $c;
-        die "FATAL: unknown PS char $c" unless self.BBox{$c}:exists;
+        die "FATAL: unknown PS char '$c'" unless self.BBox{$c}:exists;
         return self.BBox{$c}[LLX];
     }
 }
@@ -144,7 +180,7 @@ method RightBearing(Str $s?, :$kern) {
     }
     else {
         $last-char = uni2ps $last-char;
-        die "FATAL: unknown PS char $last-char" unless self.BBox{$last-char}:exists;
+        die "FATAL: unknown PS char '$last-char'" unless self.BBox{$last-char}:exists;
         $lc-urx    = self.BBox{$last-char}[URX];
         $lc-w      = self.Wx{$last-char};
     }
@@ -181,7 +217,7 @@ method RightBearingFT(Str $s?, :$kern) {
     }
     else {
         $last-char = uni2ps $last-char;
-        die "FATAL: unknown PS char $last-char" unless self.BBox{$last-char}:exists;
+        die "FATAL: unknown PS char '$last-char'" unless self.BBox{$last-char}:exists;
         $lc-w      = self.Wx{$last-char};
         $bbox      = self.BBox{$last-char};
     }
@@ -212,7 +248,7 @@ method StringBBox(Str $s?, :$kern --> List) {
         }
         else {
             $c = uni2ps $c;
-            die "FATAL: unknown PS char $c" unless self.BBox{$c}:exists;
+            die "FATAL: unknown PS char '$c'" unless self.BBox{$c}:exists;
             $uy = self.BBox{$c}[URY];
             $ly = self.BBox{$c}[LLY];
         }
@@ -241,7 +277,7 @@ method StringBBox(Str $s?, :$kern --> List) {
     }
     else {
         $Fchar = uni2ps $Fchar;
-        die "FATAL: unknown PS char $Fchar" unless self.BBox{$Fchar}:exists;
+        die "FATAL: unknown PS char '$Fchar'" unless self.BBox{$Fchar}:exists;
         $Flb  = self.BBox{$Fchar}[LLX]; # first character left bearing
     }
     if self.BBox{$Lchar}:exists {
@@ -250,7 +286,7 @@ method StringBBox(Str $s?, :$kern --> List) {
     }
     else {
         $Lchar = uni2ps $Lchar;
-        die "FATAL: unknown PS char $Lchar" unless self.BBox{$Lchar}:exists;
+        die "FATAL: unknown PS char '$Lchar'" unless self.BBox{$Lchar}:exists;
         $Lrb  = self.BBox{$Lchar}[URX]; # last character right bearing
         $Lwid = self.Wx{$Lchar};        # last character width
     }
@@ -281,7 +317,7 @@ method TopBearing(Str $s?) {
         }
         else {
             $c = uni2ps $c;
-            die "FATAL: unknown PS char $c" unless self.BBox{$c}:exists;
+            die "FATAL: unknown PS char '$c'" unless self.BBox{$c}:exists;
             $y = self.BBox{$c}[URY];
         }
         $ury = $y if $y > $ury;
@@ -307,7 +343,7 @@ method BottomBearing(Str $s?) {
         }
         else {
             $c = uni2ps $c;
-            die "FATAL: unknown PS char $c" unless self.BBox{$c}:exists;
+            die "FATAL: unknown PS char '$c'" unless self.BBox{$c}:exists;
             $y = self.BBox{$c}[LLY];
         }
         $lly = $y if $y < $lly;
@@ -336,7 +372,7 @@ method LineHeight(Str $s?) {
         }
         else {
             $c = uni2ps $c;
-            die "FATAL: unknown PS char $c" unless self.BBox{$c}:exists;
+            die "FATAL: unknown PS char '$c'" unless self.BBox{$c}:exists;
             $ly = self.BBox{$c}[LLY];
             $uy = self.BBox{$c}[URY];
         }
