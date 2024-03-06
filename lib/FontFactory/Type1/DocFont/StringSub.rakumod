@@ -3,7 +3,8 @@ unit module FontFactory::Type1::DocFont::StringSub;
 use experimental :cached;
 
 class String is export {
-    has $.string
+    has $.string;
+    has $.left-bearing;
 }
 
 sub get-string-metrics($s --> String) is export {
