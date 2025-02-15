@@ -7,6 +7,7 @@
   "build-depends": [
   ],
   "depends": [
+    "File::Temp",
     "Proc::Easier",
     "PDF::Lite",
     "Text::Utils",
@@ -27,8 +28,6 @@
     "FontFactory::Type1::Subs": "lib/FontFactory/Type1/Subs.rakumod"
   },
   "resources": [
-    "fonts/MICREncoding.pfa",
-    "fonts/MICREncoding.afm"
   ],
   "source-url": "https://github.com/tbrowder/FontFactory-Type1.git",
   "tags": [
@@ -38,5 +37,5 @@
     "Data::Dump",
     "Data::Dump::Tree"
   ],
-  "version": "1.1.0"
+  "version": "1.1.1"
 }

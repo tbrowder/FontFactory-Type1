@@ -1,6 +1,14 @@
-Note test:
+# things to add:
 
-    xt-save/long-running-added-methods.t
+- Add the capability to handle extended Type 1 chars using a new,
+    exported 'sub uni2ps' to convert .uniname to the equivalent
+    PostScript glyph name
 
-currently takes 6+ minutes due to multiple loops over a
-23,785-character test string.
+  See Font:Utils for inspiration
+
+  Add test
+
++ parse a string to convert '\nnn' to a glyph
++ parse a string to convert '\c[nnnn]' to a glyph
++ parse a string to convert 'E<0xN>' to a glyph
+

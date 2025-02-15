@@ -2,6 +2,7 @@ unit module FontFactory::Type1::Subs;
 
 use PDF::Lite;
 use Font::AFM;
+use File::Temp;
 
 use FontFactory::Type1::FontList;
 use FontFactory::Type1::BaseFont;
@@ -52,12 +53,12 @@ sub find-basefont(PDF::Lite :$pdf!,
         # the MICREncoding font is in resources:
         #   /resources/fonts/MICREncoding.pfa
         #   /resources/fonts/MICREncoding.afm
+
+        # new code
         my $pfa-str = %?RESOURCES<fonts/MICREncoding.pfa>.slurp; # get the file contents
         my $afm-str = %?RESOURCES<fonts/MICREncoding.afm>.slurp; # get the file contents
         # Create a temp files to bass to the font loader
-
-        my $tdir = "/tmp/fonts";
-        mkdir $tdir unless $tdir.IO.d;
+        my $tdir = tempdir; # from File::Temp
         spurt "$tdir/pfa", $pfa-str;
         spurt "$tdir/afm", $afm-str;
         my $pfa = "$tdir/pfa";

@@ -11,7 +11,7 @@ constant URX  = 2; # bbox index for right bound
 constant URY  = 3; # bbox index for upper bound
 
 #| This class represents the final font object and it includes the
-#| final font size
+#| final font size (if any)
 has BaseFont $.basefont is required;
 has          $.name     is required; #= font name or alias
 has          $.size     is required; #= desired size in points

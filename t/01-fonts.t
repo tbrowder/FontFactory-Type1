@@ -8,8 +8,6 @@ use FontFactory::Type1::BaseFont;
 use FontFactory::Type1::DocFont;
 use FontFactory::Type1::FontList;
 
-plan 119;
-
 my $pdf;
 my $rawfont;
 my $rawafm;
@@ -62,3 +60,15 @@ for %FontAliases.keys {
         $docfont = select-docfont :$basefont, :size(10);
     }, "checking select-font by alias, : $A, size: $size";
 }
+
+my $ff = FontFactory::Type1.new;
+my $f = $ff.get-font: "c";
+is $f.size, 0, "font with no size";
+$f = $ff.get-font: "c";
+is $f.size, 0, "font with no size";
+
+lives-ok {
+    show-fonts
+}, "ff1-showfonts";
+
+done-testing;

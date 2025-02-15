@@ -7,8 +7,6 @@ use FontFactory::Type1;
 use FontFactory::Type1::Subs;
 use FontFactory::Type1::FontList;
 
-plan 38;
-
 my $title = 'text.pdf';
 my $pdf;
 my $basefont;
@@ -78,3 +76,6 @@ lives-ok {
 lives-ok {
     my $f = $ffact.get-font: 't12';
 }, "getting a font from the -font factory";
+
+done-testing;
+

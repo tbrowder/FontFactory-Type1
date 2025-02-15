@@ -36,12 +36,25 @@ method get-font($name --> DocFont) {
     my $sizfrac;
     # examples of valid names:
     #   t12, t2d3, cbo10, ho12d5
-    if $name ~~ /^ (<[A..Za..z-]>+) (\d+)  [['d'|'.'] (\d+)]? $/ {
-        $alias   = ~$0;
-        $sizint  = ~$1;
+    # also, without size
+    #   tbi, tib
+    if $name ~~ /^ (<[A..Za..z-]>+) # font abbrev
 
-        $key  = $alias ~ $sizint;
-        $size = $sizint;
+                   (\d+)?           # optional font size
+                   [
+                      ['d'|'.']         # fractional size indicator
+                      (\d+)             # the fraction
+                   ]?               # optional fractional size part
+                $/ {
+
+        $alias   = ~$0;
+        $sizint  = ~$1 if $1.defined;
+
+        $key  = $alias;
+        $size = 0;
+        if $sizint {
+            $size = $sizint;
+        }
 
         # optional decimal fraction
         $sizfrac = ~$2 if $2.defined;
@@ -49,15 +62,16 @@ method get-font($name --> DocFont) {
             $key  ~= 'd' ~ $sizfrac;
             $size ~= '.' ~ $sizfrac;
         }
-        $size .= Real;
+        $size .= Numeric;
     }
     else {
         note "FATAL: You entered the desired font name '$name'.";
         die q:to/HERE/;
-        The desired font name must be in the format "<name><size>"
-        where "<name>" is a valid font name or alias and "<size>"
-        is either an integral number or a decimal number in
-        the form "\d+d\d+" (e.g., '12d5' which mean '12.5' PS points).
+        The desired font name must be in the format "<name>" or
+        "<name><size>" where "<name>" is a valid font family/weight/slant
+        name or alias and "<size>" is either an integral number or a 
+        decimal number in the form '12d5' or '12.5' which means '12.5' 
+        PS points.
         HERE
     }
 

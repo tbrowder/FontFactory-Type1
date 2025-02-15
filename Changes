@@ -1,8 +1,16 @@
 Revision history for FontFactory::Type1
 
 {{$NEXT}}
-    - Added capability to handle extended Type 1 chars using
-        a sub uni2ps to convert .uniname to PostScript name
+    - Add program 'ff1-showfonts'
+    - Fix short-name error for Courier-Oblique
+    - Allow loading a font without a size being specified
+    - Accept both 'oblique' and 'italic' for the 'slant' parameter
+    - Allow variation in alias names to accept weight and slant
+      initials in any order; example: "tbi" or "tib"
+    - Removed the /resources font files due to license concerns
+    - Added the capability to handle extended Type 1 chars using a new,
+        exported 'sub uni2ps' to convert .uniname to the equivalent
+        PostScript glyph name
 
 1.1.0  2023-05-27T18:08:24-05:00
     - Documented all new methods
@@ -13,7 +21,8 @@ Revision history for FontFactory::Type1
       the horizontal distance as defined by Free Type Project ('FreeType')
       + added tests for the new methods
     - Added clarification of terminology compared to that of FreeType
-    - Corrected the name of the Unicode font factory module to: FontFactory (removed the '::TT')
+    - Corrected the name of the Unicode font factory module to: FontFactory
+        (removed the '::TT')
     - Removed the square brackets around the Fonts hash
 
 1.0.1  2023-05-22T18:10:32-05:00
@@ -33,7 +42,7 @@ Revision history for FontFactory::Type1
     - Added new DocFont methods currently not found in Font::AFM:
       + StrikethroughPosition - at the midpoint height of the 'm' character
       + StrikethroughThickness - same as UnderlineThickness
-      + LineHeight - the maximum vertical space required for any single line of 
+      + LineHeight - the maximum vertical space required for any single line of
         text or, optionally, for a specific string
       + TopBearing    - topmost stroke of the font's BBox or the optional input string
       + BottomBearing - bottommost stroke of the font's BBox or the optional input string

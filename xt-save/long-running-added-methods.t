@@ -35,6 +35,9 @@ lives-ok {
 lives-ok {
     $f2 = $ff.get-font("c10");
 }
+lives-ok {
+    my $f = $ff.get-font("c");
+}
 
 $a = $afm.BBox<m>[3] * $f.sf * 0.5;
 $v = $f.StrikethroughPosition;

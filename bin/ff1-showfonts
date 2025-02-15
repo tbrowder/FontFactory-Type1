@@ -1,0 +1,6 @@
+#!/usr/bin/env raku
+
+use FontFactory::Type1;
+use FontFactory::Type1::Subs;
+
+show-fonts
