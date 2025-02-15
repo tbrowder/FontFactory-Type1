@@ -1,12 +1,6 @@
 # things to add:
 
-- Add the capability to handle extended Type 1 chars using a new,
-    exported 'sub uni2ps' to convert .uniname to the equivalent
-    PostScript glyph name
-
-  See Font:Utils for inspiration
-
-  Add test
+Test selection by family, weight, slant via :find-font
 
 + parse a string to convert '\nnn' to a glyph
 + parse a string to convert '\c[nnnn]' to a glyph

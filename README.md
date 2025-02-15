@@ -7,7 +7,7 @@ NAME
 
 A `DocFont` object is a Type 1 font of a specific name and point size. It provides all the methods available in module `Font::AFM` plus some extra convenient methods (and aliases). All its methods provide outputs properly scaled for its font and point size.
 
-One can also use fonts without any specific size.
+One can also use fonts *without* any specific size.
 
 SYNOPSIS
 ========
@@ -40,7 +40,7 @@ Get a copy of the factory for use in your program:
 my $ff = FontFactory::Type1.new;
 ```
 
-Define a `DocFont`. Use a name that indicates its face and size for easy use later. For fractional points use a 'd' (or a '.')for the decimal point:
+Define a `DocFont`. Use a name that indicates its face and size for easy use later. For fractional points use a 'd' for the decimal point:
 
 ```raku
 my $t12d1 = $ff.get-font: 't12d1';

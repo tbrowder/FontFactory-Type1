@@ -14,7 +14,7 @@ constant URY  = 3; # bbox index for upper bound
 #| final font size (if any)
 has BaseFont $.basefont is required;
 has          $.name     is required; #= font name or alias
-has          $.size     is required; #= desired size in points
+has          $.size;                 #= desired size in points
 has          $.afm      is required; #= the Font::AFM object (note the object is immutable)
 has          $.font     is required; #= the PDF::Lite font object
 # convenience attrs
@@ -22,7 +22,12 @@ has          $.sf;                   #= scale factor for the afm attrs vs the fo
 
 #| calculate the scale factor
 submethod TWEAK {
-    $!sf = $!size / 1000.0;
+    if $!size.defined {
+        $!sf = $!size / 1000.0;
+    }
+    else {
+        ; # ok
+    }
 }
 
 =begin comment
@@ -32,7 +37,6 @@ submethod TWEAK {
 =end comment
 
 # .uniname to Adobe PS name
-#sub uni2ps($c is copy  --> Str) is export {
 sub uni2ps($c is copy) is export {
     my $aname;
     my $u = $c.uniname;

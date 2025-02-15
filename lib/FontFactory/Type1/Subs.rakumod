@@ -23,9 +23,11 @@ sub show-fonts is export {
     }
 }
 
-sub find-basefont(PDF::Lite :$pdf!,
-                  :$name!,  # full or alias
-                  --> BaseFont) is export {
+sub find-basefont(
+    PDF::Lite :$pdf!,
+              :$name!,  # full or alias
+    --> BaseFont
+    ) is export {
     my $fnam; # to hold the recognized font name
     if %Fonts{$name}:exists {
         $fnam = $name;
@@ -42,33 +44,11 @@ sub find-basefont(PDF::Lite :$pdf!,
 
     # get the PDF::Content::FontObj, if any exists in the core fonts
     $rawfont = $pdf.core-font(:family($fnam));
-
     my $is-corefont;
-
     if not $rawfont  {
-        $is-corefont = False;
-        use PDF::Font::Loader :&load-font;
-        use PDF::Content::FontObj;
-
-        # the MICREncoding font is in resources:
-        #   /resources/fonts/MICREncoding.pfa
-        #   /resources/fonts/MICREncoding.afm
-
-        # new code
-        my $pfa-str = %?RESOURCES<fonts/MICREncoding.pfa>.slurp; # get the file contents
-        my $afm-str = %?RESOURCES<fonts/MICREncoding.afm>.slurp; # get the file contents
-        # Create a temp files to bass to the font loader
-        my $tdir = tempdir; # from File::Temp
-        spurt "$tdir/pfa", $pfa-str;
-        spurt "$tdir/afm", $afm-str;
-        my $pfa = "$tdir/pfa";
-        my $afm = "$tdir/afm";
-
-        # the PDF::Content::FontObj:
-        $rawfont = load-font :file($pfa); # use the .pfa for PostScript Type 1 fonts
-
-        # also get the afm file
-        $rawafm = Font::AFM.new: :name($afm);
+        note "FATAL: font '$fnam' is not a core-font.";
+        note "       Exiting...";
+        exit;
     }
     else {
         $is-corefont = True;
@@ -78,9 +58,11 @@ sub find-basefont(PDF::Lite :$pdf!,
     BaseFont.new: :$pdf, :name($fnam), :$rawfont, :$rawafm, :$is-corefont;
 }
 
-sub select-docfont(BaseFont :$basefont!,
-                   Real :$size!
-                   --> DocFont) is export {
+sub select-docfont(
+    BaseFont :$basefont!,
+             :$size,
+    --> DocFont
+    ) is export {
     DocFont.new: :$basefont,
                  :name($basefont.name),
                  :font($basefont.rawfont),

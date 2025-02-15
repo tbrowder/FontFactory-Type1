@@ -51,8 +51,7 @@ method get-font($name --> DocFont) {
         $sizint  = ~$1 if $1.defined;
 
         $key  = $alias;
-        $size = 0;
-        if $sizint {
+        if $sizint.defined {
             $size = $sizint;
         }
 
@@ -62,7 +61,10 @@ method get-font($name --> DocFont) {
             $key  ~= 'd' ~ $sizfrac;
             $size ~= '.' ~ $sizfrac;
         }
-        $size .= Numeric;
+
+        unless $size.defined {
+            $size = False;
+        }
     }
     else {
         note "FATAL: You entered the desired font name '$name'.";
@@ -82,7 +84,13 @@ method get-font($name --> DocFont) {
     elsif %!basefonts{$alias}:exists {
         # do we have the basefont?
         my $basefont = %!basefonts{$alias};
-        my $docfont = select-docfont :$basefont, :$size;
+        my $docfont;
+        if $size.defined {
+            $docfont = select-docfont :$basefont, :$size;
+        }
+        else {
+            $docfont = $basefont;
+        }
         %!docfonts{$key} = $docfont;
         return %!docfonts{$key};
     }

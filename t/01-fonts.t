@@ -30,12 +30,15 @@ for %Fonts.keys {
     lives-ok {
        $basefont = find-basefont :name($_), :$pdf;
     }, "checking find-font, name: $_";
+
     lives-ok {
         $docfont = select-docfont :$basefont, :size(10);
     }, "checking select-docfont, name: $_, size: $size";
+
     lives-ok {
         $up = $docfont.UnderlinePosition;
     }, "checking font afm use for UnderlinePosition";
+
     lives-ok {
        $ut = $docfont.UnderlineThickness;
     }, "checking font afm use for UnderlineThickness";
@@ -53,9 +56,11 @@ for %Fonts.keys {
 
 for %FontAliases.keys {
     my $A = $_.uc;
+
     lives-ok {
         $basefont = find-basefont :name($A), :$pdf;
     }, "checking find-font by alias, alias: $A";
+
     lives-ok {
         $docfont = select-docfont :$basefont, :size(10);
     }, "checking select-font by alias, : $A, size: $size";
@@ -63,9 +68,9 @@ for %FontAliases.keys {
 
 my $ff = FontFactory::Type1.new;
 my $f = $ff.get-font: "c";
-is $f.size, 0, "font with no size";
+is $f.size, False, "font with no size";
 $f = $ff.get-font: "c";
-is $f.size, 0, "font with no size";
+is $f.size, False, "font with no size";
 
 lives-ok {
     show-fonts

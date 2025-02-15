@@ -92,14 +92,14 @@ sub afmBBox($name = "Times-Roman", :$size = 10.3, :$sf --> Hash) is export {
 sub string-bbox(
     # defaults:
     $text = Text, 
+    Numeric $size = 10.3, 
     :$name = <Times-Roman>, 
-    :$size = 10.3, 
     #:$type!, # = 'ff', # afm, mix, ff
-    :$type= 'ff'; #!, # = 'ff', # afm, mix, ff
+    :$type = 'ff'; #!, # = 'ff', # afm, mix, ff
     # options
     :$kern, 
-    StrBBox :$box, # export all data for debugging
     :$debug,
+    --> List # StrBBox :$box, # export all data for debugging
 ) is export {
     # for convenience
     my $s = $text;
@@ -176,6 +176,7 @@ sub string-bbox(
     #$urx = $width - $Last-width + $Last-urx;
     $urx = $width - $delta; #$Last-width + $Last-urx;
 
+    =begin comment
     if $box.defined {
         # fill in with current data
         $box.llx = $llx; 
@@ -191,6 +192,7 @@ sub string-bbox(
         # extra for debugging
         $box.delta = $delta;
     }
+    =end comment
 
     # return the solution
     $llx, $lly, $urx, $ury

@@ -19,15 +19,19 @@ plan 41;
 lives-ok {
     $afm = Font::AFM.new: :$name;
 }
+
 lives-ok {
     $afm2 = Font::AFM.new: :name($name2);
 }
+
 lives-ok {
     $ff = FontFactory::Type1.new;
 }
+
 lives-ok {
     $f = $ff.get-font("t10d3");
 }
+
 lives-ok {
     $f2 = $ff.get-font("c10");
 }

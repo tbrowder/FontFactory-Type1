@@ -20,4 +20,7 @@ for @c { lives-ok { $f = $ff.get-font($_); }, "testing no-size Courier";     }
 for @h { lives-ok { $f = $ff.get-font($_); }, "testing no-size Helvetica";   }
 for @t { lives-ok { $f = $ff.get-font($_); }, "testing no-size Times-Roman"; }
 
+$f = $ff.get-font: "c";
+is $f.size, False;
+
 done-testing;

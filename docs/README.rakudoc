@@ -10,7 +10,7 @@ provides all the methods available in module C<Font::AFM>
 plus some extra convenient methods (and aliases). All its methods 
 provide outputs properly scaled for its font and point size.
 
-One can also use fonts without any specific size.
+One can also use fonts I<without> any specific size.
 
 =head1 SYNOPSIS
 
@@ -44,7 +44,7 @@ my $ff = FontFactory::Type1.new;
 =end code
 
 Define a C<DocFont>. Use a name that indicates its face and size for easy
-use later. For fractional points use a 'd' (or a '.')for the decimal point:
+use later. For fractional points use a 'd' for the decimal point:
 
 =begin code :lang<raku>
 my $t12d1 = $ff.get-font: 't12d1';

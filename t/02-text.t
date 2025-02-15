@@ -31,14 +31,13 @@ for %Fonts.keys {
     # and higher-level composite ones (DocFont)
 
     # basefonts
-    when $_ !~~ /^:i micre / {
-        lives-ok {
-            $rawfont = $pdf.core-font(:family($_));
-        }, "checking raw font access, name: $_";
-        lives-ok {
-            $rawafm  = Font::AFM.core-font($_);
-        }, "checking raw Font afm access, name: $_";
-    }
+    lives-ok {
+        $rawfont = $pdf.core-font(:family($_));
+    }, "checking raw font access, name: $_";
+
+    lives-ok {
+        $rawafm  = Font::AFM.core-font($_);
+    }, "checking raw Font afm access, name: $_";
 
     # docfonts
     lives-ok {
@@ -48,13 +47,14 @@ for %Fonts.keys {
     lives-ok {
         $docfont = select-docfont :$basefont, :size(10);
     }, "checking select-docfont, name: $_, size: $size";
+
     lives-ok {
         $up   = $docfont.UnderlinePosition;
     }, "checking font afm use for UnderlinePosition";
+
     lives-ok {
        $ut = $docfont.UnderlineThickness;
     }, "checking font afm use for UnderlineThickness";
-    #last;
 }
 
 lives-ok {
