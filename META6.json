@@ -34,6 +34,8 @@
     "PDF Fonts"
   ],
   "test-depends": [
+    "Fontconfig:ver<0.1.5>",
+    "Font::FreeType:ver<0.15.13>",
     "Data::Dump",
     "Data::Dump::Tree"
   ],
