@@ -5,7 +5,6 @@
     "Tom Browder"
   ],
   "build-depends": [
-    "FontConfig:ver<0.1.6>"
   ],
   "depends": [
     "File::Temp",
