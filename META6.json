@@ -8,9 +8,7 @@
   ],
   "depends": [
     "Font::AFM",
-    "FontConfig",
     "PDF::Content",
-    "Font::FreeType",
     "PDF::Lite",
     "File::Temp",
     "PDF::Font::Loader",

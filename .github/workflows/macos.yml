@@ -27,5 +27,8 @@ jobs:
           brew install fontconfig
           brew install freetype
           brew install harfbuzz
-          zef install --/test --test-depends --deps-only .
-          zef install . 
+          brew install --cask font-freefont
+          brew install --cask font-liberation
+          zef install --/test --deps-only .
+      - name: Install
+        run: zef install --debug .
