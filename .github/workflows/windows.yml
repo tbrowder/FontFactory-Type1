@@ -23,8 +23,9 @@ jobs:
         with:
           raku-version: ${{ matrix.raku-version }}
       - name: Install Dependencies
-        run: zef install --/test --test-depends --deps-only .
-      - name: Install App::Prove6
-        run: zef install --/test App::Prove6
-      - name: Run Tests
-        run: prove6 -I. t
+        run: |
+            choco install rakudostar
+            choco install wget
+            choco install noto
+            zef --exclude="z" install --/test --deps-only .
+            zef install .
