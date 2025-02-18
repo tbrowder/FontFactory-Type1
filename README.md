@@ -15,7 +15,7 @@ SYNOPSIS
 Find the fonts available in the current version along with their aliases:
 
 ```raku
-ff1-showfonts
+$ ff1-showfonts
 
 # output:
 Font family: 'Courier'               (alias: 'c')
@@ -45,7 +45,7 @@ Define a `DocFont`. Use a name that indicates its face and size for easy use lat
 ```raku
 my $t12d1 = $ff.get-font: 't12d1';
 say "name: {$t12d1.name}"; # OUTPUT: «name: Times-Roman␤»
-say "size: {$t12d1.size}"; # OUTOUT: «size: 12.1␤»
+say "size: {$t12d1.size}"; # OUTPUT: «size: 12.1␤»
 ```
 
 Define another `DocFont`:
@@ -53,7 +53,7 @@ Define another `DocFont`:
 ```raku
 my $c10 = $ff.get-font: 'c';
 say "name: {$c10.name}"; # OUTPUT: «name: Courier␤»
-say "size: {$c10.size}"; # OUTOUT: «size: 0␤»
+say "size: {$c10.size}"; # OUTPUT: «size: 0␤»
 ```
 
 As stated above, in addition to those attributes, all the attributes from `Font::AFM` are also available plus some added for convenience. For example:
