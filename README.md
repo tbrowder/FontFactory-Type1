@@ -52,13 +52,13 @@ Define another `DocFont`:
 
 ```raku
 my $c10 = $ff.get-font: 'c';
-say "name: {$c10.name}"; # OUTPUT: «name: Courier␤»
-say "size: {$c10.size}"; # OUTPUT: «size: 0␤»
+say "name: ", $c10.name; # OUTPUT: «name: Courier␤»
+say "size: ", $c10.size; # OUTPUT: «size: 0␤»
 ```
 
 As stated above, in addition to those attributes, all the attributes from `Font::AFM` are also available plus some added for convenience. For example:
 
-    # for typesetting, find the width of a kerned string in PostScript points (72/inch):
+    # For typesetting, find the width of a kerned string in PostScript points (72/inch):
     my $text = "Some string of text to be typeset in a beautiful PDF document.";
     my $wk = $t12d1.stringwidth($text, :kern);
     say "kerned width: $wk"; # OUTPUT: «kerned width: 302.3064␤»
