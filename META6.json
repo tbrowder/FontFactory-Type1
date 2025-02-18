@@ -7,13 +7,16 @@
   "build-depends": [
   ],
   "depends": [
-    "File::Temp",
-    "Proc::Easier",
+    "Font::AFM",
+    "FontConfig",
+    "PDF::Content",
+    "Font::FreeType",
     "PDF::Lite",
-    "Text::Utils",
+    "File::Temp",
     "PDF::Font::Loader",
-    "File::Find",
-    "Font::AFM"
+    "Proc::Easier",
+    "Text::Utils",
+    "File::Find"
   ],
   "description": "Provides the standard PostSript fonts in a friendly package for use with many 'PDF::*' modules",
   "license": "Artistic-2.0",
