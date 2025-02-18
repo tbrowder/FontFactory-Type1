@@ -20,7 +20,7 @@ aliases:
 =begin code :lang<raku>
 $ ff1-showfonts
 
-# output:
+# OUTPUT:
 Font family: 'Courier'               (alias: 'c')
 Font family: 'Courier-Bold'          (alias: 'ch')
 Font family: 'Courier-BoldOblique'   (alias: 'cbo')
@@ -48,8 +48,8 @@ use later. For fractional points use a 'd' for the decimal point:
 
 =begin code :lang<raku>
 my $t12d1 = $ff.get-font: 't12d1';
-say "name: {$t12d1.name}"; # OUTPUT: «name: Times-Roman␤»
-say "size: {$t12d1.size}"; # OUTPUT: «size: 12.1␤»
+say "name: ", $t12d1.name; # OUTPUT: «name: Times-Roman␤»
+say "size: ", $t12d1.size; # OUTPUT: «size: 12.1␤»
 =end code
 
 Define another C<DocFont>:

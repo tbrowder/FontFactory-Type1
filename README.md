@@ -17,7 +17,7 @@ Find the fonts available in the current version along with their aliases:
 ```raku
 $ ff1-showfonts
 
-# output:
+# OUTPUT:
 Font family: 'Courier'               (alias: 'c')
 Font family: 'Courier-Bold'          (alias: 'ch')
 Font family: 'Courier-BoldOblique'   (alias: 'cbo')
@@ -44,8 +44,8 @@ Define a `DocFont`. Use a name that indicates its face and size for easy use lat
 
 ```raku
 my $t12d1 = $ff.get-font: 't12d1';
-say "name: {$t12d1.name}"; # OUTPUT: «name: Times-Roman␤»
-say "size: {$t12d1.size}"; # OUTPUT: «size: 12.1␤»
+say "name: ", $t12d1.name; # OUTPUT: «name: Times-Roman␤»
+say "size: ", $t12d1.size; # OUTPUT: «size: 12.1␤»
 ```
 
 Define another `DocFont`:
