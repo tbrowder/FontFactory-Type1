@@ -1,3 +1,4 @@
+use MacOS::NativeLib "*";
 use FontFactory::Type1::Subs;
 use FontFactory::Type1::BaseFont;
 use FontFactory::Type1::DocFont;
