@@ -2,6 +2,7 @@ Revision history for FontFactory::Type1
 
 {{$NEXT}}
     - Add program 'ff1-showfonts'
+    - Replace prove6 with zef for all workflows test files
     - Fix short-name error for Courier-Oblique
     - Allow loading a font without a size being specified
     - Accept both 'oblique' and 'italic' for the 'slant' parameter
