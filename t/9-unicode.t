@@ -5,6 +5,7 @@ use PDF::Lite;
 use Font::AFM;
 
 use FontFactory::Type1;
+use FontFactory::Type1::DocFont;
 use FontFactory::Type1::Subs;
 use FontFactory::Type1::FontList;
 
@@ -35,6 +36,12 @@ my $text = "Le Caf\xe7 Marly";
 lives-ok {
     $page = $pdf.add-page;
 }, "checking pdf page generation";
+
+lives-ok {
+    my $c = " ";
+    my $u = uni2ps $c;
+    is $u, "space";
+}, "checking sub uni2ps";
 
 done-testing;
 

@@ -274,3 +274,9 @@ A two-dimensional hash containing glyphs as keys, each with a hash of kerning ch
 
     method KernData(--> Hash) {...}
 
+### **sub uni2ps**
+
+PostScript glyph names are somtimes different from Unicode glyph names. One can use the exported sub `uni2ps` and enter the PostScript glyph to see the Unicode glyph name returned.
+
+sub uni2ps($c is copy) is export {...}
+
