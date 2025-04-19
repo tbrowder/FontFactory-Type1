@@ -3,9 +3,6 @@ use Font::AFM;
 
 use FontFactory::Type1;
 
-#use lib "t";
-#use Utils;
-
 my $afm  = Font::AFM.new: :name<Times-Roman>;
 my $size = 10.3;
 my $ff   = FontFactory::Type1.new;
