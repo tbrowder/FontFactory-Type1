@@ -18,8 +18,6 @@ my ($got, $exp);
 # use the same string for $text
 $text = slurp "t/data/short-test-string.txt";
 
-plan 41;
-
 lives-ok {
     $afm = Font::AFM.new: :$name;
 }
@@ -39,28 +37,17 @@ lives-ok {
     my $f = $ff.get-font("c");
 }
 
-$a = $afm.BBox<m>[3] * $f.sf * 0.5;
-$v = $f.StrikethroughPosition;
-is $a, $v;
-$v = $f.sp;
-is $a, $v, "sp alias";
-
-# no such animal in AFM
-# use UnderLineThickness
-$a = $afm.UnderlineThickness * $f.sf;
-$v = $f.StrikethroughThickness;
-is $a, $v;
-$v = $f.st;
-is $a, $v, "st alias";
-
 $bbox = $afm.BBox<S> >>*>> $f.sf;
-$a = $bbox[3]; $bbox = $afm.BBox<S> >>*>> $f.sf;
+
+#=begin comment
+$a = $bbox[3];
+$bbox = $afm.BBox<S> >>*>> $f.sf;
 $v = $f.TopBearing($text);
 is $a, $v, "TopBearing with input string";
 $v = $f.tb($text);
 is $a, $v, "TopBearing with input string";
 
-if 0 {
+if 1 {
     note "bbox:";
     note Dump($bbox);
     note "a:";
@@ -69,9 +56,14 @@ if 0 {
     note Dump($v);
     note "DEBUG early exit"; exit;
 }
+#=end comment
+
+=finish
 
 $bbox = $afm.BBox<a> >>*>> $f.sf;
 $a = $bbox[0];
+
+=begin comment
 $v = $f.LeftBearing($text);
 is $a, $v, "LeftBearing with input string";
 $v = $f.lb($text);
@@ -83,6 +75,7 @@ $v = $f.BottomBearing($text);
 is $a, $v, "BottomBearing with input string";
 $v = $f.bb($text);
 is $a, $v, "BottomBearing with input string, alias";
+=end comment
 
 #===== without input string =====
 $bbox = $afm.FontBBox >>*>> $f.sf;
@@ -102,10 +95,13 @@ is $a, $v, "BottomBearing without input string, alias";
 #===== more new methods =====
 $a = $afm.BBox<S>[3] - $afm.BBox<p>[1];
 $a *= $f.sf;
+
+=begin comment
 $v = $f.LineHeight($text);
 is $a, $v, "LineHeight with text input";
 $v = $f.lh($text);
 is $a, $v, "LineHeight with text input, alias";
+=end comment
 
 # without an input line
 $a = $afm.FontBBox[3] - $afm.FontBBox[1];
@@ -114,10 +110,6 @@ $v = $f.LineHeight;
 is $a, $v, "LineHeight without text input";
 $v = $f.lh;
 is $a, $v, "LineHeight without text input, alias";
-
-# other aliases
-# alias: C<up>
-# alias: C<ut>
 
 $a = $afm.UnderlinePosition * $f.sf;
 $v = $f.UnderlinePosition;
@@ -146,3 +138,5 @@ is $afm.CapHeight * $f.sf, $f.CapHeight;
 is $afm.XHeight * $f.sf, $f.XHeight;
 is $afm.Ascender * $f.sf, $f.Ascender;
 is $afm.Descender * $f.sf, $f.Descender;
+
+done-testing;

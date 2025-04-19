@@ -62,7 +62,10 @@ method get-font($name --> DocFont) {
             $size ~= '.' ~ $sizfrac;
         }
 
-        unless $size.defined {
+        if $size.defined {
+            $size .= Numeric;
+        }
+        else {
             $size = False;
         }
     }

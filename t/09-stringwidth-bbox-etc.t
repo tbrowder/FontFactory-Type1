@@ -72,8 +72,6 @@ $width2 = $fOTF.stringwidth: $text2, :kern;
 is $width2, $width, "OTF WIDTH kern, width: $width";
 note "OTF width 2 with :kern: $width" if $debug;
 
-
-
 $width  = $afm.stringwidth: $text, $fontsize, :!kern;
 $width2 = $f.stringwidth: $text, :!kern;
 is $width2, $width;

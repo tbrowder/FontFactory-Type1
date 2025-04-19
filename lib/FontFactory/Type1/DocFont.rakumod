@@ -14,7 +14,7 @@ constant URY  = 3; # bbox index for upper bound
 #| final font size (if any)
 has BaseFont $.basefont is required;
 has          $.name     is required; #= font name or alias
-has          $.size;                 #= desired size in points
+has  Numeric $.size;                 #= desired size in points
 has          $.afm      is required; #= the Font::AFM object (note the object is immutable)
 has          $.font     is required; #= the PDF::Lite font object
 # convenience attrs
@@ -400,10 +400,10 @@ method lh(Str $s?) {
 #| stringwidth
 method stringwidth($string, :$kern) {
     if $kern {
-        $!afm.stringwidth: $string, $!size, :kern
+        $!afm.stringwidth($string, $!size.Numeric, :kern);
     }
     else {
-        $!afm.stringwidth: $string, $!size, :!kern
+        $!afm.stringwidth($string, $!size.Numeric, :!kern);
     }
 }
 

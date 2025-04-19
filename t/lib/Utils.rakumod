@@ -92,7 +92,7 @@ sub afmBBox($name = "Times-Roman", :$size = 10.3, :$sf --> Hash) is export {
 sub string-bbox(
     # defaults:
     $text = Text, 
-    Numeric $size = 10.3, 
+    Numeric :$size = 10.3, 
     :$name = <Times-Roman>, 
     #:$type!, # = 'ff', # afm, mix, ff
     :$type = 'ff'; #!, # = 'ff', # afm, mix, ff
