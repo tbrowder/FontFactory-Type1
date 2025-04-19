@@ -1,7 +1,6 @@
 #!/bin/env raku
 
 use Data::Dump;
-use Data::Dump::Tree;
 use Font::AFM;
 use Test;
 use lib <../lib>;

@@ -1,6 +1,8 @@
 Revision history for FontFactory::Type1
 
 {{$NEXT}}
+    - Remove use of Data::Dump::Tree which was causing failures on other
+        than Linux
     - Use MacOS::NativeLib
     - Add program 'ff1-showfonts'
     - Replace prove6 with zef for all workflows test files
