@@ -1,6 +1,8 @@
 Revision history for FontFactory::Type1
 
 {{$NEXT}}
+
+1.1.1  2025-04-19T19:24:44-05:00
     - Remove use of Data::Dump::Tree which was causing failures on other
         than Linux
     - Use MacOS::NativeLib
